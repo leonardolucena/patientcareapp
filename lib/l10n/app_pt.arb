@@ -487,6 +487,71 @@
   "cancel": "Cancelar",
   "@cancel": {
     "description": "Botão cancelar"
+  },
+
+  "createAccount": "Criar Conta",
+  "@createAccount": {
+    "description": "Título da tela de cadastro"
+  },
+
+  "registerSubtitle": "Preencha os dados para começar",
+  "@registerSubtitle": {
+    "description": "Subtítulo da tela de cadastro"
+  },
+
+  "confirmPassword": "Confirmar Senha",
+  "@confirmPassword": {
+    "description": "Label do campo confirmar senha"
+  },
+
+  "confirmPasswordHint": "••••••••",
+  "@confirmPasswordHint": {
+    "description": "Hint do campo confirmar senha"
+  },
+
+  "confirmPasswordRequired": "Por favor, confirme sua senha",
+  "@confirmPasswordRequired": {
+    "description": "Mensagem de erro quando confirmar senha está vazia"
+  },
+
+  "passwordsDoNotMatch": "As senhas não coincidem",
+  "@passwordsDoNotMatch": {
+    "description": "Mensagem de erro quando as senhas não coincidem"
+  },
+
+  "alreadyHaveAccount": "Já tem uma conta? ",
+  "@alreadyHaveAccount": {
+    "description": "Texto perguntando se já tem conta"
+  },
+
+  "registerSuccess": "Cadastro realizado com sucesso!",
+  "@registerSuccess": {
+    "description": "Mensagem de sucesso ao cadastrar"
+  },
+
+  "registerError": "Erro ao realizar cadastro",
+  "@registerError": {
+    "description": "Mensagem de erro ao cadastrar"
+  },
+
+  "emailAlreadyExists": "Este email já está cadastrado",
+  "@emailAlreadyExists": {
+    "description": "Mensagem de erro quando email já existe"
+  },
+
+  "back": "Voltar",
+  "@back": {
+    "description": "Texto do botão voltar"
+  },
+
+  "invalidCredentials": "Email ou senha inválidos",
+  "@invalidCredentials": {
+    "description": "Mensagem de erro quando credenciais são inválidas"
+  },
+
+  "loginError": "Erro ao fazer login",
+  "@loginError": {
+    "description": "Mensagem de erro genérico de login"
   }
 }
 

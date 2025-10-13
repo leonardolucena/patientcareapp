@@ -94,6 +94,71 @@
   "reviewsCount": "{count} reviews",
   "logout": "Logout",
   "logoutConfirm": "Do you really want to logout?",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "Register screen title"
+  },
+
+  "registerSubtitle": "Fill in the details to get started",
+  "@registerSubtitle": {
+    "description": "Register screen subtitle"
+  },
+
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+
+  "confirmPasswordHint": "••••••••",
+  "@confirmPasswordHint": {
+    "description": "Confirm password field hint"
+  },
+
+  "confirmPasswordRequired": "Please confirm your password",
+  "@confirmPasswordRequired": {
+    "description": "Error message when confirm password is empty"
+  },
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Error message when passwords don't match"
+  },
+
+  "alreadyHaveAccount": "Already have an account? ",
+  "@alreadyHaveAccount": {
+    "description": "Text asking if user already has an account"
+  },
+
+  "registerSuccess": "Registration successful!",
+  "@registerSuccess": {
+    "description": "Success message after registration"
+  },
+
+  "registerError": "Registration error",
+  "@registerError": {
+    "description": "Error message during registration"
+  },
+
+  "emailAlreadyExists": "This email is already registered",
+  "@emailAlreadyExists": {
+    "description": "Error message when email already exists"
+  },
+
+  "back": "Back",
+  "@back": {
+    "description": "Back button text"
+  },
+
+  "invalidCredentials": "Invalid email or password",
+  "@invalidCredentials": {
+    "description": "Error message when credentials are invalid"
+  },
+
+  "loginError": "Login error",
+  "@loginError": {
+    "description": "Generic login error message"
+  }
 }
 

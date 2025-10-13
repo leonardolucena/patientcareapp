@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:patientcareapp/routes/app_router.dart';
 import 'package:patientcareapp/theme/app_theme.dart';
 import 'package:patientcareapp/theme/theme_provider.dart';
@@ -11,12 +12,17 @@ import 'package:patientcareapp/presentation/providers/clinics_provider.dart';
 import 'package:patientcareapp/presentation/providers/reviews_provider.dart';
 import 'package:patientcareapp/presentation/providers/users_provider.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
+import 'package:patientcareapp/data/models/local_user_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Inicializa o Dependency Injection
+  // Inicializa o Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalUserModelAdapter());
+  
+  // Inicializa o Dependency Injection (inclui AuthService)
   await initializeDependencies();
   
   runApp(

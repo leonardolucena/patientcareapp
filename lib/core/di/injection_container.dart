@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:patientcareapp/core/network/api_gateway.dart';
+import 'package:patientcareapp/core/services/auth_service.dart';
 import 'package:patientcareapp/data/datasources/local_clinics_datasource.dart';
 import 'package:patientcareapp/data/datasources/local_doctors_datasource.dart';
 import 'package:patientcareapp/data/datasources/local_reviews_datasource.dart';
@@ -34,6 +35,13 @@ import 'package:patientcareapp/domain/usecases/search_users_usecase.dart';
 final getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  // ==================== SERVICES ====================
+  
+  // AuthService (Singleton)
+  final authService = AuthService();
+  await authService.initialize();
+  getIt.registerSingleton<AuthService>(authService);
+
   // ==================== NETWORK ====================
   
   // API Gateway (Singleton)

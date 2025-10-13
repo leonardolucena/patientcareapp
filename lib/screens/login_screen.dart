@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:patientcareapp/theme/theme_provider.dart';
 import 'package:patientcareapp/providers/locale_provider.dart';
+import 'package:patientcareapp/core/services/auth_service.dart';
+import 'package:patientcareapp/core/di/injection_container.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,16 +30,48 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _handleLogin() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     setState(() => _isLoading = true);
     
-    // Simula um pequeno delay de autenticação
-    await Future.delayed(const Duration(milliseconds: 500));
-    
-    setState(() => _isLoading = false);
-    
-    if (mounted) {
-      // Navega para a tela de busca de clínicas
-      context.go('/search-clinics');
+    try {
+      final authService = getIt<AuthService>();
+      
+      // Tenta fazer login
+      final user = await authService.login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+      
+      setState(() => _isLoading = false);
+      
+      if (mounted) {
+        if (user != null) {
+          // Login bem-sucedido
+          context.go('/search-clinics');
+        } else {
+          // Credenciais inválidas
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.invalidCredentials),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.loginError),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -218,12 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // TODO: Navegar para tela de cadastro
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(l10n.featureInDevelopment),
-                            ),
-                          );
+                          context.go('/register');
                         },
                         child: Text(
                           l10n.signUp,

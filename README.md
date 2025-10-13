@@ -70,6 +70,11 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 
 ### 🔐 Autenticação
 - **Tela de Login**: Interface moderna com validação de formulário
+- **Tela de Cadastro**: Registro de novos usuários com validação de email e senha
+- **Cache Local**: Persistência de dados usando Hive (NoSQL)
+- **Hash de Senhas**: Criptografia SHA256 para segurança
+- **Gerenciamento de Sessão**: Controle de usuário logado
+- **Validação de Email**: Verificação de duplicidade e formato
 - **Alternância de Tema**: Botão para alternar entre light e dark mode
 - **Seletor de Idioma**: Menu para escolher entre Português 🇧🇷 e English 🇺🇸
 - **Logout**: Botão de logout com confirmação em todas as telas principais
@@ -134,22 +139,43 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Cards Expansíveis**: Detalhes completos de cada usuário (email, telefone, empresa, endereço)
 - **Arquitetura SOLID**: Remote Datasource, Repository, Use Cases e Provider
 
+### 💾 Cache Local e Autenticação
+- **Hive Database**: NoSQL local para persistência de dados
+- **AuthService**: Serviço completo de autenticação
+  - Cadastro de usuários com validação
+  - Login com verificação de credenciais
+  - Hash de senhas (SHA256)
+  - Gerenciamento de sessão
+  - Verificação de email duplicado
+- **LocalUserModel**: Model persistido com Hive TypeAdapter
+- **Dependency Injection**: AuthService registrado no GetIt
+- **Fluxo Completo**: Login → Cadastro → Validação → Persistência
+
 ## 🏗️ Arquitetura SOLID
 
 O projeto segue os princípios **SOLID** e **Clean Architecture** com separação clara em camadas:
 
 ```
 lib/
-├── main.dart                           # Ponto de entrada
+├── main.dart                           # Ponto de entrada (inicializa Hive + DI)
 ├── core/                               # Funcionalidades compartilhadas
 │   ├── constants/                      # Constantes da aplicação
 │   ├── network/                        # API Gateway e cliente HTTP
 │   ├── services/                       # Serviços utilitários
+│   │   ├── auth_service.dart           # 🆕 Autenticação local
+│   │   └── specialty_translation_service.dart
 │   ├── utils/                          # Helpers e formatadores
 │   └── di/                             # Dependency Injection (GetIt)
 ├── data/                               # Camada de Dados
 │   ├── models/                         # Models (DTOs)
+│   │   ├── local_user_model.dart       # 🆕 Model para usuário local (Hive)
+│   │   ├── user_model.dart             # Model da API
+│   │   ├── doctor_model.dart
+│   │   └── ...
 │   ├── datasources/                    # Fontes de dados (local/API)
+│   │   ├── local_doctors_datasource.dart
+│   │   ├── remote_users_datasource.dart
+│   │   └── ...
 │   └── repositories/                   # Implementações de repositórios
 ├── domain/                             # Camada de Domínio (Regras de Negócio)
 │   ├── repositories/                   # Contratos (interfaces abstratas)
@@ -158,6 +184,10 @@ lib/
 │   ├── providers/                      # State management (ChangeNotifier)
 │   ├── screens/                        # Telas da aplicação
 │   └── widgets/                        # Widgets reutilizáveis
+├── screens/                            # Telas principais
+│   ├── login_screen.dart
+│   ├── register_screen.dart            # 🆕 Tela de cadastro
+│   └── ...
 ├── providers/                          # Providers globais
 │   └── locale_provider.dart
 ├── routes/
@@ -197,6 +227,13 @@ dependencies:
   provider: ^6.1.2            # Gerenciamento de estado
   get_it: ^7.6.4              # Dependency Injection (Service Locator)
   http: ^1.2.0                # Cliente HTTP para chamadas de API
+  hive: ^2.2.3                # Cache local NoSQL
+  hive_flutter: ^1.1.0        # Hive para Flutter
+  crypto: ^3.0.3              # Hash de senhas (SHA256)
+
+dev_dependencies:
+  hive_generator: ^2.0.1      # Gerador de adapters Hive
+  build_runner: ^2.4.9        # Code generation
 ```
 
 ## 🎨 Paleta de Cores
@@ -273,6 +310,12 @@ flutter build ios --release
 - **GoRouter**: Navegação declarativa com rotas nomeadas
 - **Provider**: Gerenciamento de estado para tema, idioma e features
 
+### Persistência e Cache
+- **Hive**: Banco de dados NoSQL local
+- **Hive Flutter**: Integração otimizada para Flutter
+- **TypeAdapter**: Serialização automática de models
+- **Crypto**: Hash SHA256 para senhas
+
 ### Internacionalização
 - **flutter_localizations**: Suporte oficial a múltiplos idiomas
 - **intl**: Internacionalização com ARB files
@@ -307,15 +350,22 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 
 ### Dados Locais (Mockados)
 - **3 Clínicas**: Com endereços e distâncias simuladas
-- **80 Médicos**: 10 médicos para cada uma das 8 especialidades
+- **40 Médicos**: 5 médicos para cada uma das 8 especialidades (nomes da API)
 - **Avaliações**: Reviews fictícios com notas de 1 a 5 estrelas
 - **Horários**: Disponibilidade de 8h às 12h
 - **Dias**: Semana completa com alguns dias indisponíveis
+
+### Dados Persistidos (Hive)
+- **Usuários Locais**: Cadastro com email e senha (hash SHA256)
+- **Sessão**: Controle de usuário logado
+- **Box Hive**: `users` para usuários, `preferences` para configurações
+- **Validação**: Email único, senha mínima de 6 caracteres
 
 ### Dados da API Real
 - **10 Usuários**: Da API [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
 - **Endpoints Ativos**: GET `/users`, `/users/{id}`, POST/PUT/DELETE (simulados)
 - **Dados Completos**: Nome, email, telefone, endereço, empresa, website
+- **Integração**: Nomes dos médicos vêm da API real
 - **Tela Funcional**: `/users` - Acesse navegando para esta rota
 
 ## 🎯 Próximos Passos
@@ -338,6 +388,8 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Testes unitários (Use Cases, Repositories)~~ ✅ **29 testes passando**
 - [x] ~~Testes de Widget~~ ✅
 - [x] ~~Refatorar todas as Screens para usar nova arquitetura~~ ✅
+- [x] ~~Integração com API real (JSONPlaceholder)~~ ✅
+- [x] ~~Cache local (Hive/SQLite)~~ ✅ **Hive implementado**
 - [ ] Testes de Integração
 - [ ] Aumentar cobertura de testes (> 80%)
 
@@ -349,14 +401,14 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Remote Datasource com tratamento de erros~~ ✅
 
 ### Próximas Features 🚧
-- [ ] Integração com API de saúde real
-- [ ] Autenticação com Firebase
-- [ ] Cache local (Hive/SQLite)
+- [ ] Autenticação com Firebase (OAuth, Google Sign-In)
+- [x] ~~Cache local (Hive)~~ ✅ **Sistema de autenticação local implementado**
 - [ ] Integração com Google Maps real
-- [ ] Sistema de notificações
-- [ ] Histórico de consultas
-- [ ] Perfil do usuário
+- [ ] Sistema de notificações push
+- [ ] Histórico de consultas persistido
+- [ ] Perfil do usuário editável
 - [ ] Sistema de favoritos persistente
+- [ ] Sincronização com backend
 - [ ] Chat com médicos
 - [ ] Pagamento online
 - [ ] Prescrições digitais
