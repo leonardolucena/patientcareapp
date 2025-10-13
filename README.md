@@ -279,7 +279,6 @@ O app utiliza dados fictícios para fins de demonstração:
 - [ ] Chat com médicos
 - [ ] Pagamento online
 - [ ] Prescrições digitais
-- [ ] Mais idiomas (Espanhol, Francês, etc.)
 
 ## 📄 Licença
 
