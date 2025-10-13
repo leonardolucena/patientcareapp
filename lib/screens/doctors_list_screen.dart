@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DoctorsListScreen extends StatefulWidget {
   final String clinicName;
@@ -721,27 +722,26 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.white,
+        elevation: 2,
+        shadowColor: Colors.black.withOpacity(0.1),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
+        title: Text(
+          widget.clinicName,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: [
-          // Título centralizado com nome da clínica
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
-              widget.clinicName,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
 
           // Banner com foto da médica
           Padding(
@@ -755,7 +755,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     Theme.of(context).primaryColor.withOpacity(0.7),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
@@ -1088,12 +1088,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Navegar para tela do médico
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Abrindo perfil de ${doctor['name']}'),
-                    ),
-                  );
+                  context.push('/doctor-profile', extra: doctor);
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
