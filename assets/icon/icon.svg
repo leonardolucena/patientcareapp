@@ -1,0 +1,18 @@
+<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#FFFFFF" rx="200"/>
+  
+  <!-- Hospital Cross (Primary Teal #3F7884) -->
+  <g transform="translate(512, 512)">
+    <!-- Vertical bar -->
+    <rect x="-85" y="-280" width="170" height="560" fill="#3F7884" rx="20"/>
+    <!-- Horizontal bar -->
+    <rect x="-280" y="-85" width="560" height="170" fill="#3F7884" rx="20"/>
+  </g>
+  
+  <!-- Optional: Add subtle shadow for depth -->
+  <g opacity="0.1">
+    <ellipse cx="512" cy="820" rx="300" ry="40" fill="#000000"/>
+  </g>
+</svg>
+
