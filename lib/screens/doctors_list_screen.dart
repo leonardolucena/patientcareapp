@@ -1088,7 +1088,10 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  context.push('/doctor-profile', extra: doctor);
+                  context.push('/doctor-profile', extra: {
+                    'doctor': doctor,
+                    'clinicName': widget.clinicName,
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
