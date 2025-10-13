@@ -26,19 +26,22 @@ class AppointmentConfirmationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Theme.of(context).shadowColor.withOpacity(0.1),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           doctorName,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
@@ -76,12 +79,12 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: Colors.green[600],
+                              color: Theme.of(context).colorScheme.primary,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.check,
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               size: 24,
                             ),
                           ),
@@ -97,7 +100,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green[700],
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -108,7 +111,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                     'Seu agendamento foi confirmado com $doctorName',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey[700],
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                       height: 1.5,
                     ),
                     textAlign: TextAlign.center,
@@ -118,11 +121,11 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   // Card com informações
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Theme.of(context).shadowColor.withOpacity(0.05),
                           blurRadius: 10,
                           offset: const Offset(0, 2),
                         ),
@@ -131,43 +134,50 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         _buildInfoRow(
+                          context,
                           'Clínica',
                           clinicName,
                           Icons.local_hospital_outlined,
                           isFirst: true,
                         ),
-                        _buildDivider(),
+                        _buildDivider(context),
                         _buildInfoRow(
+                          context,
                           'Médico',
                           doctorName,
                           Icons.person_outline,
                         ),
-                        _buildDivider(),
+                        _buildDivider(context),
                         _buildInfoRow(
+                          context,
                           'Data',
                           '$dayName, dia $dayNumber',
                           Icons.calendar_today_outlined,
                         ),
-                        _buildDivider(),
+                        _buildDivider(context),
                         _buildInfoRow(
+                          context,
                           'Horário',
                           time,
                           Icons.access_time_outlined,
                         ),
-                        _buildDivider(),
+                        _buildDivider(context),
                         _buildInfoRow(
+                          context,
                           'Tipo',
                           consultationType,
                           Icons.medical_services_outlined,
                         ),
-                        _buildDivider(),
+                        _buildDivider(context),
                         _buildInfoRow(
+                          context,
                           'Prioridade',
                           priority,
                           Icons.flag_outlined,
                         ),
-                        _buildDivider(),
+                        _buildDivider(context),
                         _buildInfoRow(
+                          context,
                           'Pagamento',
                           paymentMethod,
                           Icons.payment_outlined,
@@ -182,10 +192,10 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.blue[50],
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.blue[200]!,
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                         width: 1,
                       ),
                     ),
@@ -193,7 +203,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.info_outline,
-                          color: Colors.blue[700],
+                          color: Theme.of(context).colorScheme.primary,
                           size: 24,
                         ),
                         const SizedBox(width: 12),
@@ -202,7 +212,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                             'Você receberá um lembrete 1 dia antes da sua consulta',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.blue[900],
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ),
@@ -218,10 +228,10 @@ class AppointmentConfirmationScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 36),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Theme.of(context).shadowColor.withOpacity(0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -2),
                 ),
@@ -256,6 +266,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
   }
 
   Widget _buildInfoRow(
+    BuildContext context,
     String label,
     String value,
     IconData icon, {
@@ -274,13 +285,13 @@ class AppointmentConfirmationScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.blue[50],
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
               icon,
               size: 20,
-              color: Colors.blue[700],
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           const SizedBox(width: 16),
@@ -293,7 +304,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[600],
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -301,10 +312,10 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                 Expanded(
                   child: Text(
                     value,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     textAlign: TextAlign.right,
                   ),
@@ -317,12 +328,12 @@ class AppointmentConfirmationScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDivider() {
+  Widget _buildDivider(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Divider(
         height: 1,
-        color: Colors.grey[200],
+        color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
       ),
     );
   }

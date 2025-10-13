@@ -720,19 +720,22 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Theme.of(context).shadowColor.withOpacity(0.1),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           widget.clinicName,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
@@ -765,10 +768,10 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Cuidando da sua saúde\ncom excelência e carinho',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             height: 1.3,
@@ -785,8 +788,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Theme.of(context).primaryColor,
+                            backgroundColor: Theme.of(context).colorScheme.surface,
+                            foregroundColor: Theme.of(context).colorScheme.primary,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
                               vertical: 8,
@@ -862,12 +865,12 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                             height: 54,
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.white,
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: Theme.of(context).shadowColor.withOpacity(0.05),
                                   blurRadius: 5,
                                   offset: const Offset(0, 2),
                                 ),
@@ -876,8 +879,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                             child: Icon(
                               specialty['icon'],
                               color: isSelected
-                                  ? Colors.white
-                                  : Theme.of(context).primaryColor,
+                                  ? Theme.of(context).colorScheme.onPrimary
+                                  : Theme.of(context).colorScheme.primary,
                               size: 28,
                             ),
                           ),
@@ -890,8 +893,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                                   ? FontWeight.bold
                                   : FontWeight.normal,
                               color: isSelected
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.grey[600],
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                             ),
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -928,8 +931,6 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                filled: true,
-                fillColor: Colors.white,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 12,
@@ -990,11 +991,11 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Theme.of(context).shadowColor.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -1007,7 +1008,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
             width: 70,
             height: 70,
             decoration: BoxDecoration(
-              color: Colors.blue[50],
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
@@ -1035,7 +1036,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                   doctor['specialty'],
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[600],
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   ),
                 ),
                 const SizedBox(height: 8),

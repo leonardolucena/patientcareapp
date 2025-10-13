@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:patientcareapp/theme/theme_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -38,31 +40,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Logo ou Ícone
-                  Icon(
-                    Icons.local_hospital_rounded,
-                    size: 80,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  const SizedBox(height: 16),
+        child: Stack(
+          children: [
+            Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Logo ou Ícone
+                      Icon(
+                        Icons.local_hospital_rounded,
+                        size: 80,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(height: 16),
                   
                   // Título
                   Text(
                     'PatientCare',
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -70,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Bem-vindo de volta',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Colors.grey[600],
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -87,8 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[50],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -126,8 +130,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[50],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -169,12 +171,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       child: _isLoading
-                          ? const SizedBox(
+                          ? SizedBox(
                               height: 24,
                               width: 24,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: Colors.white,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             )
                           : const Text(
@@ -194,7 +196,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         'Não tem uma conta? ',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -211,11 +215,60 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ],
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+            
+            // Botão de alternar tema no canto superior direito
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) {
+                      return RotationTransition(
+                        turns: animation,
+                        child: FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      themeProvider.isDarkMode
+                          ? Icons.light_mode_rounded
+                          : Icons.dark_mode_rounded,
+                      key: ValueKey(themeProvider.isDarkMode),
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 24,
+                    ),
+                  ),
+                  onPressed: () {
+                    themeProvider.toggleTheme();
+                  },
+                  tooltip: themeProvider.isDarkMode
+                      ? 'Modo Claro'
+                      : 'Modo Escuro',
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

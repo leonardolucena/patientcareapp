@@ -81,8 +81,6 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[50],
                     ),
                     onChanged: (value) {
                       setState(() {});
@@ -104,9 +102,9 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Colors.blue[50]!,
-                          Colors.green[50]!,
-                          Colors.blue[100]!,
+                          Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                          Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                          Theme.of(context).colorScheme.tertiary.withOpacity(0.15),
                         ],
                       ),
                     ),
@@ -129,26 +127,26 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                                   Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: Colors.red,
+                                      color: Theme.of(context).colorScheme.error,
                                       borderRadius: BorderRadius.circular(20),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withOpacity(0.3),
+                                          color: Theme.of(context).shadowColor.withOpacity(0.3),
                                           blurRadius: 6,
                                           offset: const Offset(0, 3),
                                         ),
                                       ],
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.local_hospital,
-                                      color: Colors.white,
+                                      color: Theme.of(context).colorScheme.onError,
                                       size: 24,
                                     ),
                                   ),
                                   Container(
                                     width: 3,
                                     height: 12,
-                                    color: Colors.red,
+                                    color: Theme.of(context).colorScheme.error,
                                   ),
                                 ],
                               ),
@@ -162,7 +160,8 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                           right: 16,
                           child: FloatingActionButton(
                             mini: true,
-                            backgroundColor: Colors.white,
+                            backgroundColor: Theme.of(context).colorScheme.surface,
+                            foregroundColor: Theme.of(context).colorScheme.primary,
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -171,10 +170,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                                 ),
                               );
                             },
-                            child: Icon(
-                              Icons.my_location,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                            child: const Icon(Icons.my_location),
                           ),
                         ),
                         
@@ -214,44 +210,45 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
   }
 
   List<Widget> _buildStreetLines() {
+    final lineColor = Theme.of(context).colorScheme.outline.withOpacity(0.3);
     return [
       // Linhas horizontais
       Positioned(
         top: 100,
         left: 0,
         right: 0,
-        child: Container(height: 2, color: Colors.grey[300]),
+        child: Container(height: 2, color: lineColor),
       ),
       Positioned(
         top: 200,
         left: 0,
         right: 0,
-        child: Container(height: 2, color: Colors.grey[300]),
+        child: Container(height: 2, color: lineColor),
       ),
       Positioned(
         top: 300,
         left: 0,
         right: 0,
-        child: Container(height: 2, color: Colors.grey[300]),
+        child: Container(height: 2, color: lineColor),
       ),
       // Linhas verticais
       Positioned(
         top: 0,
         bottom: 0,
         left: 100,
-        child: Container(width: 2, color: Colors.grey[300]),
+        child: Container(width: 2, color: lineColor),
       ),
       Positioned(
         top: 0,
         bottom: 0,
         left: 200,
-        child: Container(width: 2, color: Colors.grey[300]),
+        child: Container(width: 2, color: lineColor),
       ),
       Positioned(
         top: 0,
         bottom: 0,
         left: 300,
-        child: Container(width: 2, color: Colors.grey[300]),
+        child: Container(width: 2, color: lineColor),
       ),
     ];
   }
@@ -290,12 +287,19 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  const Icon(Icons.location_on, size: 20, color: Colors.grey),
+                  Icon(
+                    Icons.location_on,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       clinic['address'],
-                      style: const TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ],
@@ -303,11 +307,18 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Icon(Icons.directions_walk, size: 20, color: Colors.grey),
+                  Icon(
+                    Icons.directions_walk,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     clinic['distance'],
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                 ],
               ),
@@ -325,6 +336,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                   label: const Text('Agendar Consulta'),
                 ),
               ),
+              const SizedBox(height: 24),
             ],
           ),
         );
