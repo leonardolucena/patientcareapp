@@ -1,16 +1,56 @@
-# patientcareapp
+# PatientCare App
 
-A new Flutter project.
+Aplicativo de gerenciamento de cuidados com pacientes.
 
-## Getting Started
+## 🚀 Estrutura do Projeto
 
-This project is a starting point for a Flutter application.
+```
+lib/
+├── main.dart                 # Ponto de entrada da aplicação
+├── routes/
+│   └── app_router.dart      # Configuração de rotas com GoRouter
+└── screens/
+    └── login_screen.dart    # Tela de login
+```
 
-A few resources to get you started if this is your first Flutter project:
+## 📦 Dependências Principais
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter SDK**: ^3.6.1
+- **go_router**: ^14.6.2 - Gerenciamento de rotas
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🏃 Como Executar
+
+```bash
+# Instalar dependências
+flutter pub get
+
+# Executar no emulador/dispositivo
+flutter run
+
+# Build para Android
+flutter build apk
+
+# Build para iOS
+flutter build ios
+```
+
+## 🎨 Funcionalidades Implementadas
+
+- ✅ Tela de login com validação
+- ✅ Gerenciamento de rotas com GoRouter
+- ✅ Design moderno e responsivo
+- ✅ Tema Material 3
+
+## 📝 TODOs
+
+- [ ] Implementar autenticação real
+- [ ] Adicionar tela de cadastro
+- [ ] Implementar recuperação de senha
+- [ ] Adicionar tela principal (home)
+- [ ] Implementar gerenciamento de estado
+
+## 🔧 Configurações
+
+O projeto está configurado para as plataformas:
+- Android
+- iOS
