@@ -222,10 +222,6 @@ O app utiliza dados fictícios para fins de demonstração:
 
 Este projeto é um estudo de caso para fins educacionais.
 
-## 👨‍💻 Desenvolvido com
-
-Desenvolvido com ❤️ usando Flutter
-
 ---
 
 **PatientCare** - Cuidando da sua saúde com excelência e carinho 🏥✨
