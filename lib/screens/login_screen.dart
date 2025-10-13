@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:patientcareapp/theme/theme_provider.dart';
@@ -46,7 +47,18 @@ class _LoginScreenState extends State<LoginScreen> {
     final localeProvider = Provider.of<LocaleProvider>(context);
     final l10n = AppLocalizations.of(context)!;
     
-    return Scaffold(
+    // Configurar a cor da status bar baseada no tema
+    final isDark = themeProvider.isDarkMode;
+    
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+        statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+        systemNavigationBarColor: isDark ? const Color(0xFF1C1B1F) : Colors.white,
+        systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      ),
+      child: Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
@@ -326,6 +338,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
