@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorsListScreen extends StatefulWidget {
   final String clinicName;
@@ -14,21 +15,68 @@ class DoctorsListScreen extends StatefulWidget {
 }
 
 class _DoctorsListScreenState extends State<DoctorsListScreen> {
-  String _selectedSpecialty = 'Todos';
+  late String _selectedSpecialty;
   final TextEditingController _searchController = TextEditingController();
 
-  // Lista de especialidades
-  final List<Map<String, dynamic>> _specialties = [
-    {'name': 'Todos', 'icon': Icons.medical_services},
-    {'name': 'Cardiologia', 'icon': Icons.favorite},
-    {'name': 'Dermatologia', 'icon': Icons.face},
-    {'name': 'Ortopedia', 'icon': Icons.accessibility_new},
-    {'name': 'Pediatria', 'icon': Icons.child_care},
-    {'name': 'Neurologia', 'icon': Icons.psychology},
-    {'name': 'Oftalmologia', 'icon': Icons.remove_red_eye},
-    {'name': 'Ginecologia', 'icon': Icons.pregnant_woman},
-    {'name': 'Psiquiatria', 'icon': Icons.mood},
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final l10n = AppLocalizations.of(context)!;
+    _selectedSpecialty = l10n.all;
+  }
+
+  // Mapeamento de nomes traduzidos para nomes em português (nos dados)
+  String _getSpecialtyKey(String translatedName, AppLocalizations l10n) {
+    if (translatedName == l10n.all) return 'Todos';
+    if (translatedName == l10n.cardiology) return 'Cardiologia';
+    if (translatedName == l10n.dermatology) return 'Dermatologia';
+    if (translatedName == l10n.orthopedics) return 'Ortopedia';
+    if (translatedName == l10n.pediatrics) return 'Pediatria';
+    if (translatedName == l10n.neurology) return 'Neurologia';
+    if (translatedName == l10n.ophthalmology) return 'Oftalmologia';
+    if (translatedName == l10n.gynecology) return 'Ginecologia';
+    if (translatedName == l10n.psychiatry) return 'Psiquiatria';
+    return translatedName;
+  }
+
+  // Mapeamento inverso: português (dos dados) para traduzido
+  String _translateSpecialty(String portugueseName, AppLocalizations l10n) {
+    switch (portugueseName) {
+      case 'Cardiologia':
+        return l10n.cardiology;
+      case 'Dermatologia':
+        return l10n.dermatology;
+      case 'Ortopedia':
+        return l10n.orthopedics;
+      case 'Pediatria':
+        return l10n.pediatrics;
+      case 'Neurologia':
+        return l10n.neurology;
+      case 'Oftalmologia':
+        return l10n.ophthalmology;
+      case 'Ginecologia':
+        return l10n.gynecology;
+      case 'Psiquiatria':
+        return l10n.psychiatry;
+      default:
+        return portugueseName;
+    }
+  }
+
+  // Função para obter especialidades com base no l10n
+  List<Map<String, dynamic>> _getSpecialties(AppLocalizations l10n) {
+    return [
+      {'name': l10n.all, 'icon': Icons.medical_services},
+      {'name': l10n.cardiology, 'icon': Icons.favorite},
+      {'name': l10n.dermatology, 'icon': Icons.face},
+      {'name': l10n.orthopedics, 'icon': Icons.accessibility_new},
+      {'name': l10n.pediatrics, 'icon': Icons.child_care},
+      {'name': l10n.neurology, 'icon': Icons.psychology},
+      {'name': l10n.ophthalmology, 'icon': Icons.remove_red_eye},
+      {'name': l10n.gynecology, 'icon': Icons.pregnant_woman},
+      {'name': l10n.psychiatry, 'icon': Icons.mood},
+    ];
+  }
 
   // Lista de médicos fictícios (10+ por especialidade)
   final List<Map<String, dynamic>> _doctors = [
@@ -695,13 +743,15 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
     super.dispose();
   }
 
-  List<Map<String, dynamic>> get _filteredDoctors {
+  List<Map<String, dynamic>> _getFilteredDoctors(AppLocalizations l10n) {
     List<Map<String, dynamic>> filtered = _doctors;
 
     // Filtrar por especialidade
-    if (_selectedSpecialty != 'Todos') {
+    if (_selectedSpecialty != l10n.all) {
+      // Converter o nome traduzido para o nome em português usado nos dados
+      final specialtyKey = _getSpecialtyKey(_selectedSpecialty, l10n);
       filtered = filtered
-          .where((doctor) => doctor['specialty'] == _selectedSpecialty)
+          .where((doctor) => doctor['specialty'] == specialtyKey)
           .toList();
     }
 
@@ -719,6 +769,10 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final specialties = _getSpecialties(l10n);
+    final filteredDoctors = _getFilteredDoctors(l10n);
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -769,7 +823,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Cuidando da sua saúde\ncom excelência e carinho',
+                          l10n.healthBanner,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary,
                             fontSize: 16,
@@ -782,8 +836,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                         ElevatedButton(
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Funcionalidade em desenvolvimento'),
+                              SnackBar(
+                                content: Text(l10n.featureInDevelopment),
                               ),
                             );
                           },
@@ -798,9 +852,9 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: const Text(
-                            'Saiba mais',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          child: Text(
+                            l10n.learnMore,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -841,9 +895,9 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              itemCount: _specialties.length,
+              itemCount: specialties.length,
               itemBuilder: (context, index) {
-                final specialty = _specialties[index];
+                final specialty = specialties[index];
                 final isSelected = _selectedSpecialty == specialty['name'];
 
                 return Padding(
@@ -916,7 +970,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Buscar médico pelo nome',
+                hintText: l10n.searchDoctorByName,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -950,8 +1004,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  _selectedSpecialty == 'Todos'
-                      ? 'Todos os Médicos'
+                  _selectedSpecialty == l10n.all
+                      ? l10n.allDoctors
                       : _selectedSpecialty,
                   style: const TextStyle(
                     fontSize: 20,
@@ -959,7 +1013,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                   ),
                 ),
                 Text(
-                  '${_filteredDoctors.length} disponíveis',
+                  l10n.availableCount(filteredDoctors.length),
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
@@ -974,10 +1028,10 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              itemCount: _filteredDoctors.length,
+              itemCount: filteredDoctors.length,
               itemBuilder: (context, index) {
-                final doctor = _filteredDoctors[index];
-                return _buildDoctorCard(doctor);
+                final doctor = filteredDoctors[index];
+                return _buildDoctorCard(doctor, l10n);
               },
             ),
           ),
@@ -986,7 +1040,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
     );
   }
 
-  Widget _buildDoctorCard(Map<String, dynamic> doctor) {
+  Widget _buildDoctorCard(Map<String, dynamic> doctor, AppLocalizations l10n) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -1033,7 +1087,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  doctor['specialty'],
+                  _translateSpecialty(doctor['specialty'], l10n),
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -1103,7 +1157,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text('Ver'),
+                child: Text(l10n.view),
               ),
             ],
           ),

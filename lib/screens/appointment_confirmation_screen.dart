@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppointmentConfirmationScreen extends StatelessWidget {
   final String doctorName;
@@ -25,6 +26,8 @@ class AppointmentConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -96,7 +99,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
 
                   // Agendamento Confirmado
                   Text(
-                    'Agendamento Confirmado',
+                    l10n.appointmentConfirmed,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -108,7 +111,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
 
                   // Mensagem de confirmação
                   Text(
-                    'Seu agendamento foi confirmado com $doctorName',
+                    l10n.appointmentConfirmedMessage(doctorName),
                     style: TextStyle(
                       fontSize: 16,
                       color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
@@ -135,7 +138,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                       children: [
                         _buildInfoRow(
                           context,
-                          'Clínica',
+                          l10n.clinic,
                           clinicName,
                           Icons.local_hospital_outlined,
                           isFirst: true,
@@ -143,42 +146,42 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                         _buildDivider(context),
                         _buildInfoRow(
                           context,
-                          'Médico',
+                          l10n.doctor,
                           doctorName,
                           Icons.person_outline,
                         ),
                         _buildDivider(context),
                         _buildInfoRow(
                           context,
-                          'Data',
-                          '$dayName, dia $dayNumber',
+                          l10n.date,
+                          '$dayName, ${l10n.day} $dayNumber',
                           Icons.calendar_today_outlined,
                         ),
                         _buildDivider(context),
                         _buildInfoRow(
                           context,
-                          'Horário',
+                          l10n.time,
                           time,
                           Icons.access_time_outlined,
                         ),
                         _buildDivider(context),
                         _buildInfoRow(
                           context,
-                          'Tipo',
+                          l10n.type,
                           consultationType,
                           Icons.medical_services_outlined,
                         ),
                         _buildDivider(context),
                         _buildInfoRow(
                           context,
-                          'Prioridade',
+                          l10n.priority,
                           priority,
                           Icons.flag_outlined,
                         ),
                         _buildDivider(context),
                         _buildInfoRow(
                           context,
-                          'Pagamento',
+                          l10n.payment,
                           paymentMethod,
                           Icons.payment_outlined,
                           isLast: true,
@@ -209,7 +212,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'Você receberá um lembrete 1 dia antes da sua consulta',
+                            l10n.reminderMessage,
                             style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).colorScheme.onSurface,
@@ -250,9 +253,9 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Voltar para Clínicas',
-                  style: TextStyle(
+                child: Text(
+                  l10n.backToClinics,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),

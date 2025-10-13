@@ -1,0 +1,492 @@
+{
+  "@@locale": "pt",
+  
+  "appTitle": "PatientCare",
+  "@appTitle": {
+    "description": "Título do aplicativo"
+  },
+  
+  "welcomeBack": "Bem-vindo de volta",
+  "@welcomeBack": {
+    "description": "Mensagem de boas-vindas na tela de login"
+  },
+  
+  "email": "Email",
+  "@email": {
+    "description": "Label do campo de email"
+  },
+  
+  "emailHint": "seu.email@exemplo.com",
+  "@emailHint": {
+    "description": "Hint do campo de email"
+  },
+  
+  "password": "Senha",
+  "@password": {
+    "description": "Label do campo de senha"
+  },
+  
+  "passwordHint": "••••••••",
+  "@passwordHint": {
+    "description": "Hint do campo de senha"
+  },
+  
+  "forgotPassword": "Esqueci minha senha",
+  "@forgotPassword": {
+    "description": "Texto do botão de esqueci senha"
+  },
+  
+  "login": "Entrar",
+  "@login": {
+    "description": "Texto do botão de login"
+  },
+  
+  "dontHaveAccount": "Não tem uma conta? ",
+  "@dontHaveAccount": {
+    "description": "Texto perguntando se não tem conta"
+  },
+  
+  "signUp": "Cadastre-se",
+  "@signUp": {
+    "description": "Texto do botão de cadastro"
+  },
+  
+  "featureInDevelopment": "Funcionalidade em desenvolvimento",
+  "@featureInDevelopment": {
+    "description": "Mensagem de funcionalidade em desenvolvimento"
+  },
+  
+  "emailRequired": "Por favor, insira seu email",
+  "@emailRequired": {
+    "description": "Mensagem de validação de email obrigatório"
+  },
+  
+  "emailInvalid": "Por favor, insira um email válido",
+  "@emailInvalid": {
+    "description": "Mensagem de validação de email inválido"
+  },
+  
+  "passwordRequired": "Por favor, insira sua senha",
+  "@passwordRequired": {
+    "description": "Mensagem de validação de senha obrigatória"
+  },
+  
+  "passwordMinLength": "A senha deve ter pelo menos 6 caracteres",
+  "@passwordMinLength": {
+    "description": "Mensagem de validação de tamanho mínimo de senha"
+  },
+  
+  "lightMode": "Modo Claro",
+  "@lightMode": {
+    "description": "Tooltip do botão de modo claro"
+  },
+  
+  "darkMode": "Modo Escuro",
+  "@darkMode": {
+    "description": "Tooltip do botão de modo escuro"
+  },
+  
+  "searchClinic": "Procure sua clínica",
+  "@searchClinic": {
+    "description": "Título da tela de busca de clínicas"
+  },
+  
+  "searchClinicHint": "Digite o nome da clínica",
+  "@searchClinicHint": {
+    "description": "Hint do campo de busca de clínicas"
+  },
+  
+  "fakeMap": "Mapa Fictício",
+  "@fakeMap": {
+    "description": "Label indicando mapa fictício"
+  },
+  
+  "centeringLocation": "Centralizando sua localização...",
+  "@centeringLocation": {
+    "description": "Mensagem ao centralizar localização"
+  },
+  
+  "scheduleAppointment": "Agendar Consulta",
+  "@scheduleAppointment": {
+    "description": "Texto do botão de agendar consulta"
+  },
+  
+  "all": "Todos",
+  "@all": {
+    "description": "Filtro todos"
+  },
+  
+  "cardiology": "Cardiologia",
+  "@cardiology": {
+    "description": "Especialidade Cardiologia"
+  },
+  
+  "dermatology": "Dermatologia",
+  "@dermatology": {
+    "description": "Especialidade Dermatologia"
+  },
+  
+  "orthopedics": "Ortopedia",
+  "@orthopedics": {
+    "description": "Especialidade Ortopedia"
+  },
+  
+  "pediatrics": "Pediatria",
+  "@pediatrics": {
+    "description": "Especialidade Pediatria"
+  },
+  
+  "neurology": "Neurologia",
+  "@neurology": {
+    "description": "Especialidade Neurologia"
+  },
+  
+  "ophthalmology": "Oftalmologia",
+  "@ophthalmology": {
+    "description": "Especialidade Oftalmologia"
+  },
+  
+  "gynecology": "Ginecologia",
+  "@gynecology": {
+    "description": "Especialidade Ginecologia"
+  },
+  
+  "psychiatry": "Psiquiatria",
+  "@psychiatry": {
+    "description": "Especialidade Psiquiatria"
+  },
+  
+  "healthBanner": "Cuidando da sua saúde\ncom excelência e carinho",
+  "@healthBanner": {
+    "description": "Texto do banner de saúde"
+  },
+  
+  "learnMore": "Saiba mais",
+  "@learnMore": {
+    "description": "Botão saiba mais"
+  },
+  
+  "searchDoctorByName": "Buscar médico pelo nome",
+  "@searchDoctorByName": {
+    "description": "Hint de busca de médico"
+  },
+  
+  "allDoctors": "Todos os Médicos",
+  "@allDoctors": {
+    "description": "Título de todos os médicos"
+  },
+  
+  "available": "disponíveis",
+  "@available": {
+    "description": "Texto de disponíveis"
+  },
+  
+  "view": "Ver",
+  "@view": {
+    "description": "Botão ver"
+  },
+  
+  "generalPractitioner": "Clínico Geral",
+  "@generalPractitioner": {
+    "description": "Clínico Geral"
+  },
+  
+  "reviews": "avaliações",
+  "@reviews": {
+    "description": "Avaliações"
+  },
+  
+  "patients": "Pacientes",
+  "@patients": {
+    "description": "Pacientes"
+  },
+  
+  "yearsExp": "Anos exp.",
+  "@yearsExp": {
+    "description": "Anos de experiência"
+  },
+  
+  "brazil": "Brasil",
+  "@brazil": {
+    "description": "Brasil"
+  },
+  
+  "location": "Localização",
+  "@location": {
+    "description": "Localização"
+  },
+  
+  "ratingsLabel": "Avaliações",
+  "@ratingsLabel": {
+    "description": "Label de avaliações"
+  },
+  
+  "seeAll": "Ver todas",
+  "@seeAll": {
+    "description": "Ver todas"
+  },
+  
+  "seeAllReviews": "Ver todas as avaliações",
+  "@seeAllReviews": {
+    "description": "Ver todas as avaliações"
+  },
+  
+  "consultationPrice": "Valor da consulta",
+  "@consultationPrice": {
+    "description": "Valor da consulta"
+  },
+  
+  "shareProfile": "Compartilhar perfil",
+  "@shareProfile": {
+    "description": "Compartilhar perfil"
+  },
+  
+  "addedToFavorites": "Adicionado aos favoritos",
+  "@addedToFavorites": {
+    "description": "Adicionado aos favoritos"
+  },
+  
+  "removedFromFavorites": "Removido dos favoritos",
+  "@removedFromFavorites": {
+    "description": "Removido dos favoritos"
+  },
+  
+  "consultationType": "Tipo de consulta",
+  "@consultationType": {
+    "description": "Tipo de consulta"
+  },
+  
+  "online": "Online",
+  "@online": {
+    "description": "Online"
+  },
+  
+  "inPerson": "Presencial",
+  "@inPerson": {
+    "description": "Presencial"
+  },
+  
+  "selectDay": "Selecione o dia",
+  "@selectDay": {
+    "description": "Selecione o dia"
+  },
+  
+  "selectTime": "Selecione a hora",
+  "@selectTime": {
+    "description": "Selecione a hora"
+  },
+  
+  "monday": "Segunda",
+  "@monday": {
+    "description": "Segunda-feira"
+  },
+  
+  "tuesday": "Terça",
+  "@tuesday": {
+    "description": "Terça-feira"
+  },
+  
+  "wednesday": "Quarta",
+  "@wednesday": {
+    "description": "Quarta-feira"
+  },
+  
+  "thursday": "Quinta",
+  "@thursday": {
+    "description": "Quinta-feira"
+  },
+  
+  "friday": "Sexta",
+  "@friday": {
+    "description": "Sexta-feira"
+  },
+  
+  "saturday": "Sábado",
+  "@saturday": {
+    "description": "Sábado"
+  },
+  
+  "sunday": "Domingo",
+  "@sunday": {
+    "description": "Domingo"
+  },
+  
+  "mondayShort": "Seg",
+  "@mondayShort": {
+    "description": "Segunda-feira abreviado"
+  },
+  
+  "tuesdayShort": "Ter",
+  "@tuesdayShort": {
+    "description": "Terça-feira abreviado"
+  },
+  
+  "wednesdayShort": "Qua",
+  "@wednesdayShort": {
+    "description": "Quarta-feira abreviado"
+  },
+  
+  "thursdayShort": "Qui",
+  "@thursdayShort": {
+    "description": "Quinta-feira abreviado"
+  },
+  
+  "fridayShort": "Sex",
+  "@fridayShort": {
+    "description": "Sexta-feira abreviado"
+  },
+  
+  "saturdayShort": "Sáb",
+  "@saturdayShort": {
+    "description": "Sábado abreviado"
+  },
+  
+  "sundayShort": "Dom",
+  "@sundayShort": {
+    "description": "Domingo abreviado"
+  },
+  
+  "continueButton": "Continuar",
+  "@continueButton": {
+    "description": "Botão continuar"
+  },
+  
+  "confirmAppointment": "Confirmar Agendamento",
+  "@confirmAppointment": {
+    "description": "Confirmar agendamento"
+  },
+  
+  "yourAppointmentWillBe": "Seu agendamento será:",
+  "@yourAppointmentWillBe": {
+    "description": "Seu agendamento será"
+  },
+  
+  "type": "Tipo",
+  "@type": {
+    "description": "Tipo"
+  },
+  
+  "date": "Data",
+  "@date": {
+    "description": "Data"
+  },
+  
+  "time": "Horário",
+  "@time": {
+    "description": "Horário"
+  },
+  
+  "priority": "Prioridade",
+  "@priority": {
+    "description": "Prioridade"
+  },
+  
+  "paymentMethod": "Método de pagamento",
+  "@paymentMethod": {
+    "description": "Método de pagamento"
+  },
+  
+  "normal": "Normal",
+  "@normal": {
+    "description": "Normal"
+  },
+  
+  "urgent": "Urgência",
+  "@urgent": {
+    "description": "Urgência"
+  },
+  
+  "cash": "Dinheiro",
+  "@cash": {
+    "description": "Dinheiro"
+  },
+  
+  "creditCard": "Cartão de crédito",
+  "@creditCard": {
+    "description": "Cartão de crédito"
+  },
+  
+  "appointmentConfirmed": "Agendamento Confirmado",
+  "@appointmentConfirmed": {
+    "description": "Agendamento confirmado"
+  },
+  
+  "appointmentConfirmedMessage": "Seu agendamento foi confirmado com {doctorName}",
+  "@appointmentConfirmedMessage": {
+    "description": "Mensagem de confirmação",
+    "placeholders": {
+      "doctorName": {
+        "type": "String",
+        "example": "Dr. Silva"
+      }
+    }
+  },
+  
+  "clinic": "Clínica",
+  "@clinic": {
+    "description": "Clínica"
+  },
+  
+  "doctor": "Médico",
+  "@doctor": {
+    "description": "Médico"
+  },
+  
+  "payment": "Pagamento",
+  "@payment": {
+    "description": "Pagamento"
+  },
+  
+  "reminderMessage": "Você receberá um lembrete 1 dia antes da sua consulta",
+  "@reminderMessage": {
+    "description": "Mensagem de lembrete"
+  },
+  
+  "backToClinics": "Voltar para Clínicas",
+  "@backToClinics": {
+    "description": "Voltar para clínicas"
+  },
+  
+  "day": "dia",
+  "@day": {
+    "description": "dia"
+  },
+  
+  "availableCount": "{count} disponíveis",
+  "@availableCount": {
+    "description": "Contador de disponíveis",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+  
+  "reviewsCount": "{count} reviews",
+  "@reviewsCount": {
+    "description": "Contador de reviews",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "165"
+      }
+    }
+  },
+  
+  "logout": "Sair",
+  "@logout": {
+    "description": "Botão de logout"
+  },
+  
+  "logoutConfirm": "Deseja realmente sair?",
+  "@logoutConfirm": {
+    "description": "Confirmação de logout"
+  },
+  
+  "cancel": "Cancelar",
+  "@cancel": {
+    "description": "Botão cancelar"
+  }
+}
+

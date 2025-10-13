@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchClinicsScreen extends StatefulWidget {
   const SearchClinicsScreen({super.key});
@@ -42,11 +43,40 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
     super.dispose();
   }
 
+  void _showLogoutDialog(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(l10n.logout),
+          content: Text(l10n.logoutConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.go('/');
+              },
+              child: Text(l10n.logout),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Stack(
+          children: [
+            Column(
           children: [
             // Título
             Padding(
@@ -55,7 +85,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Procure sua clínica',
+                    l10n.searchClinic,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -66,7 +96,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Digite o nome da clínica',
+                      hintText: l10n.searchClinicHint,
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: _searchController.text.isNotEmpty
                           ? IconButton(
@@ -120,7 +150,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                             left: MediaQuery.of(context).size.width * clinic['left'],
                             child: GestureDetector(
                               onTap: () {
-                                _showClinicInfo(clinic);
+                                _showClinicInfo(clinic, l10n);
                               },
                               child: Column(
                                 children: [
@@ -164,9 +194,9 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                             foregroundColor: Theme.of(context).colorScheme.primary,
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Centralizando sua localização...'),
-                                  duration: Duration(seconds: 1),
+                                SnackBar(
+                                  content: Text(l10n.centeringLocation),
+                                  duration: const Duration(seconds: 1),
                                 ),
                               );
                             },
@@ -187,9 +217,9 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                               color: Colors.orange,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
-                              'Mapa Fictício',
-                              style: TextStyle(
+                            child: Text(
+                              l10n.fakeMap,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -200,6 +230,36 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                       ],
                     ),
                   ),
+                ),
+              ),
+            ),
+          ],
+        ),
+            
+            // Botão de logout no canto superior direito
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.logout,
+                    color: Theme.of(context).colorScheme.error,
+                    size: 24,
+                  ),
+                  tooltip: l10n.logout,
+                  onPressed: () => _showLogoutDialog(context, l10n),
                 ),
               ),
             ),
@@ -253,7 +313,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
     ];
   }
 
-  void _showClinicInfo(Map<String, dynamic> clinic) {
+  void _showClinicInfo(Map<String, dynamic> clinic, AppLocalizations l10n) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -333,7 +393,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                     context.push('/doctors/${Uri.encodeComponent(clinic['name'])}');
                   },
                   icon: const Icon(Icons.calendar_today),
-                  label: const Text('Agendar Consulta'),
+                  label: Text(l10n.scheduleAppointment),
                 ),
               ),
               const SizedBox(height: 24),

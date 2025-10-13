@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -23,6 +24,30 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
   int _bottomSheetPage = 1; // 1 = primeira parte, 2 = segunda parte
   String _selectedPriority = '';
   String _selectedPaymentMethod = '';
+
+  // Traduzir especialidade de português para o idioma atual
+  String _translateSpecialty(String portugueseName, AppLocalizations l10n) {
+    switch (portugueseName) {
+      case 'Cardiologia':
+        return l10n.cardiology;
+      case 'Dermatologia':
+        return l10n.dermatology;
+      case 'Ortopedia':
+        return l10n.orthopedics;
+      case 'Pediatria':
+        return l10n.pediatrics;
+      case 'Neurologia':
+        return l10n.neurology;
+      case 'Oftalmologia':
+        return l10n.ophthalmology;
+      case 'Ginecologia':
+        return l10n.gynecology;
+      case 'Psiquiatria':
+        return l10n.psychiatry;
+      default:
+        return portugueseName;
+    }
+  }
 
   // Reviews fictícios
   final List<Map<String, dynamic>> _reviews = [
@@ -69,6 +94,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -99,7 +126,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
             ),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Compartilhar perfil')),
+                SnackBar(content: Text(l10n.shareProfile)),
               );
             },
           ),
@@ -116,8 +143,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 SnackBar(
                   content: Text(
                     _isFavorite
-                        ? 'Adicionado aos favoritos'
-                        : 'Removido dos favoritos',
+                        ? l10n.addedToFavorites
+                        : l10n.removedFromFavorites,
                   ),
                   duration: const Duration(seconds: 1),
                 ),
@@ -176,7 +203,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
-                '${widget.doctor['specialty']} • Clínico Geral',
+                '${_translateSpecialty(widget.doctor['specialty'], l10n)} • ${l10n.generalPractitioner}',
                 style: TextStyle(
                   fontSize: 16,
                   color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -200,7 +227,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   ),
                 ),
                 Text(
-                  ' (165 avaliações)',
+                  ' (165 ${l10n.reviews})',
                   style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -243,7 +270,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Pacientes',
+                            l10n.patients,
                             style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -272,7 +299,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Anos exp.',
+                            l10n.yearsExp,
                             style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -297,7 +324,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Brasil',
+                            l10n.brazil,
                             style: TextStyle(
                               fontSize: 14,
                               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -318,9 +345,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Localização',
-                    style: TextStyle(
+                  Text(
+                    l10n.location,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -461,9 +488,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Avaliações',
-                        style: TextStyle(
+                      Text(
+                        l10n.ratingsLabel,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -471,12 +498,12 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       TextButton(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Ver todas as avaliações'),
+                            SnackBar(
+                              content: Text(l10n.seeAllReviews),
                             ),
                           );
                         },
-                        child: const Text('Ver todas'),
+                        child: Text(l10n.seeAll),
                       ),
                     ],
                   ),
@@ -521,7 +548,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '165 reviews',
+                              l10n.reviewsCount(165),
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                 fontSize: 12,
@@ -576,7 +603,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Valor da consulta',
+                  l10n.consultationPrice,
                   style: TextStyle(
                     fontSize: 12,
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
@@ -596,7 +623,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  _showScheduleBottomSheet(context);
+                  _showScheduleBottomSheet(context, l10n);
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -604,9 +631,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Agendar Consulta',
-                  style: TextStyle(
+                child: Text(
+                  l10n.scheduleAppointment,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -741,7 +768,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     );
   }
 
-  void _showScheduleBottomSheet(BuildContext context) {
+  void _showScheduleBottomSheet(BuildContext context, AppLocalizations l10n) {
     setState(() {
       _selectedConsultationType = '';
       _selectedDay = -1;
@@ -804,9 +831,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                   constraints: const BoxConstraints(),
                                 ),
                               if (_bottomSheetPage == 2) const SizedBox(width: 12),
-                              const Text(
-                                'Agendar Consulta',
-                                style: TextStyle(
+                              Text(
+                                l10n.scheduleAppointment,
+                                style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -820,9 +847,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             // PÁGINA 1: Tipo de consulta, dia e hora
                             
                             // Tipo de consulta
-                            const Text(
-                              'Tipo de consulta',
-                              style: TextStyle(
+                            Text(
+                              l10n.consultationType,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -832,15 +859,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               children: [
                                 Expanded(
                                   child: _buildConsultationTypeCard(
-                                    'Online',
+                                    l10n.online,
                                     Icons.videocam_outlined,
-                                    _selectedConsultationType == 'Online',
+                                    _selectedConsultationType == l10n.online,
                                     () {
                                       setModalState(() {
-                                        _selectedConsultationType = 'Online';
+                                        _selectedConsultationType = l10n.online;
                                       });
                                       setState(() {
-                                        _selectedConsultationType = 'Online';
+                                        _selectedConsultationType = l10n.online;
                                       });
                                     },
                                   ),
@@ -848,15 +875,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: _buildConsultationTypeCard(
-                                    'Presencial',
+                                    l10n.inPerson,
                                     Icons.local_hospital_outlined,
-                                    _selectedConsultationType == 'Presencial',
+                                    _selectedConsultationType == l10n.inPerson,
                                     () {
                                       setModalState(() {
-                                        _selectedConsultationType = 'Presencial';
+                                        _selectedConsultationType = l10n.inPerson;
                                       });
                                       setState(() {
-                                        _selectedConsultationType = 'Presencial';
+                                        _selectedConsultationType = l10n.inPerson;
                                       });
                                     },
                                   ),
@@ -866,21 +893,21 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             const SizedBox(height: 24),
 
                             // Selecione o dia
-                            const Text(
-                              'Selecione o dia',
-                              style: TextStyle(
+                            Text(
+                              l10n.selectDay,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 16),
-                            _buildDaySelector(setModalState),
+                            _buildDaySelector(setModalState, l10n),
                             const SizedBox(height: 24),
 
                             // Selecione a hora
-                            const Text(
-                              'Selecione a hora',
-                              style: TextStyle(
+                            Text(
+                              l10n.selectTime,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -913,7 +940,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        'Seu agendamento será:',
+                                        l10n.yourAppointmentWillBe,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context).colorScheme.onSurface,
@@ -922,20 +949,20 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                     ],
                                   ),
                                   const SizedBox(height: 12),
-                                  _buildInfoRow(context, Icons.medical_services, 'Tipo', _selectedConsultationType),
+                                  _buildInfoRow(context, Icons.medical_services, l10n.type, _selectedConsultationType),
                                   const SizedBox(height: 8),
-                                  _buildInfoRow(context, Icons.calendar_today, 'Data', '${_getDayName(_selectedDay)}, dia ${_getDayNumber(_selectedDay)}'),
+                                  _buildInfoRow(context, Icons.calendar_today, l10n.date, '${_getDayName(_selectedDay, l10n)}, ${l10n.day} ${_getDayNumber(_selectedDay)}'),
                                   const SizedBox(height: 8),
-                                  _buildInfoRow(context, Icons.access_time, 'Horário', _selectedTime),
+                                  _buildInfoRow(context, Icons.access_time, l10n.time, _selectedTime),
                                 ],
                               ),
                             ),
                             const SizedBox(height: 24),
 
                             // Prioridade
-                            const Text(
-                              'Prioridade',
-                              style: TextStyle(
+                            Text(
+                              l10n.priority,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -945,15 +972,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               children: [
                                 Expanded(
                                   child: _buildOptionCard(
-                                    'Normal',
+                                    l10n.normal,
                                     Icons.schedule_outlined,
-                                    _selectedPriority == 'Normal',
+                                    _selectedPriority == l10n.normal,
                                     () {
                                       setModalState(() {
-                                        _selectedPriority = 'Normal';
+                                        _selectedPriority = l10n.normal;
                                       });
                                       setState(() {
-                                        _selectedPriority = 'Normal';
+                                        _selectedPriority = l10n.normal;
                                       });
                                     },
                                     setModalState,
@@ -962,15 +989,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: _buildOptionCard(
-                                    'Urgência',
+                                    l10n.urgent,
                                     Icons.warning_amber_outlined,
-                                    _selectedPriority == 'Urgência',
+                                    _selectedPriority == l10n.urgent,
                                     () {
                                       setModalState(() {
-                                        _selectedPriority = 'Urgência';
+                                        _selectedPriority = l10n.urgent;
                                       });
                                       setState(() {
-                                        _selectedPriority = 'Urgência';
+                                        _selectedPriority = l10n.urgent;
                                       });
                                     },
                                     setModalState,
@@ -981,9 +1008,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             const SizedBox(height: 24),
 
                             // Método de pagamento
-                            const Text(
-                              'Método de pagamento',
-                              style: TextStyle(
+                            Text(
+                              l10n.paymentMethod,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -993,15 +1020,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               children: [
                                 Expanded(
                                   child: _buildOptionCard(
-                                    'Dinheiro',
+                                    l10n.cash,
                                     Icons.attach_money,
-                                    _selectedPaymentMethod == 'Dinheiro',
+                                    _selectedPaymentMethod == l10n.cash,
                                     () {
                                       setModalState(() {
-                                        _selectedPaymentMethod = 'Dinheiro';
+                                        _selectedPaymentMethod = l10n.cash;
                                       });
                                       setState(() {
-                                        _selectedPaymentMethod = 'Dinheiro';
+                                        _selectedPaymentMethod = l10n.cash;
                                       });
                                     },
                                     setModalState,
@@ -1010,15 +1037,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: _buildOptionCard(
-                                    'Cartão de crédito',
+                                    l10n.creditCard,
                                     Icons.credit_card,
-                                    _selectedPaymentMethod == 'Cartão de crédito',
+                                    _selectedPaymentMethod == l10n.creditCard,
                                     () {
                                       setModalState(() {
-                                        _selectedPaymentMethod = 'Cartão de crédito';
+                                        _selectedPaymentMethod = l10n.creditCard;
                                       });
                                       setState(() {
-                                        _selectedPaymentMethod = 'Cartão de crédito';
+                                        _selectedPaymentMethod = l10n.creditCard;
                                       });
                                     },
                                     setModalState,
@@ -1069,7 +1096,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                         'doctorName': widget.doctor['name'],
                                         'clinicName': widget.clinicName,
                                         'consultationType': _selectedConsultationType,
-                                        'dayName': _getDayName(_selectedDay),
+                                        'dayName': _getDayName(_selectedDay, l10n),
                                         'dayNumber': _getDayNumber(_selectedDay),
                                         'time': _selectedTime,
                                         'priority': _selectedPriority,
@@ -1084,7 +1111,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             disabledBackgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
                           ),
                           child: Text(
-                            _bottomSheetPage == 1 ? 'Continuar' : 'Confirmar Agendamento',
+                            _bottomSheetPage == 1 ? l10n.continueButton : l10n.confirmAppointment,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -1152,15 +1179,15 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     );
   }
 
-  Widget _buildDaySelector(StateSetter setModalState) {
+  Widget _buildDaySelector(StateSetter setModalState, AppLocalizations l10n) {
     final List<Map<String, dynamic>> days = [
-      {'name': 'Seg', 'day': 14, 'enabled': true},
-      {'name': 'Ter', 'day': 15, 'enabled': true},
-      {'name': 'Qua', 'day': 16, 'enabled': false}, // Desabilitado
-      {'name': 'Qui', 'day': 17, 'enabled': true},
-      {'name': 'Sex', 'day': 18, 'enabled': true},
-      {'name': 'Sáb', 'day': 19, 'enabled': false}, // Desabilitado
-      {'name': 'Dom', 'day': 20, 'enabled': false}, // Desabilitado
+      {'name': l10n.mondayShort, 'day': 14, 'enabled': true},
+      {'name': l10n.tuesdayShort, 'day': 15, 'enabled': true},
+      {'name': l10n.wednesdayShort, 'day': 16, 'enabled': false}, // Desabilitado
+      {'name': l10n.thursdayShort, 'day': 17, 'enabled': true},
+      {'name': l10n.fridayShort, 'day': 18, 'enabled': true},
+      {'name': l10n.saturdayShort, 'day': 19, 'enabled': false}, // Desabilitado
+      {'name': l10n.sundayShort, 'day': 20, 'enabled': false}, // Desabilitado
     ];
 
     return SizedBox(
@@ -1299,8 +1326,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     );
   }
 
-  String _getDayName(int index) {
-    final days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+  String _getDayName(int index, AppLocalizations l10n) {
+    final days = [l10n.monday, l10n.tuesday, l10n.wednesday, l10n.thursday, l10n.friday, l10n.saturday, l10n.sunday];
     return days[index];
   }
 
