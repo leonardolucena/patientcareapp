@@ -4,6 +4,7 @@ import 'package:patientcareapp/screens/search_clinics_screen.dart';
 import 'package:patientcareapp/screens/doctors_list_screen.dart';
 import 'package:patientcareapp/screens/doctor_profile_screen.dart';
 import 'package:patientcareapp/screens/appointment_confirmation_screen.dart';
+import 'package:patientcareapp/screens/users_list_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -54,6 +55,11 @@ class AppRouter {
             paymentMethod: data['paymentMethod'],
           );
         },
+      ),
+      GoRoute(
+        path: '/users',
+        name: 'users',
+        builder: (context, state) => const UsersListScreen(),
       ),
     ],
   );

@@ -318,10 +318,14 @@ O app utiliza dados fictícios para fins de demonstração:
 - [x] ~~Widgets reutilizáveis~~ ✅
 - [x] ~~Providers para estado~~ ✅
 
+### Testes ✅
+- [x] ~~Testes unitários (Use Cases, Repositories)~~ ✅ **29 testes passando**
+- [x] ~~Testes de Widget~~ ✅
+- [x] ~~Refatorar todas as Screens para usar nova arquitetura~~ ✅
+- [ ] Testes de Integração
+- [ ] Aumentar cobertura de testes (> 80%)
+
 ### Próximas Features 🚧
-- [ ] Refatorar todas as Screens para usar nova arquitetura
-- [ ] Testes unitários (Use Cases, Repositories)
-- [ ] Testes de Widget
 - [ ] Integração com API real
 - [ ] Autenticação com Firebase
 - [ ] Cache local (Hive/SQLite)
@@ -339,6 +343,7 @@ O app utiliza dados fictícios para fins de demonstração:
 ## 📚 Documentação Adicional
 
 - **[Arquitetura SOLID](docs/ARCHITECTURE.md)** - Documentação completa da arquitetura
+- **[Testes](docs/TESTING.md)** - Documentação completa de testes (29 testes ✅)
 - **[Sistema de Temas](lib/theme/README.md)** - Documentação do sistema de cores e temas
 - **[Internacionalização](lib/l10n/README.md)** - Documentação do sistema de i18n
 
