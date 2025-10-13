@@ -2,29 +2,64 @@
 
 Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacientes. O app permite buscar clínicas, visualizar perfis de médicos, agendar consultas e muito mais!
 
-## 📱 Screenshots (Dark Mode)
+## 📱 Screenshots
 
 <div align="center">
 
-### 🔐 Login & Busca
+### 🔐 Login
 <p>
-  <img src="assets/screenshots/login_dark.png" width="250" alt="Tela de Login"/>
+  <img src="assets/screenshots/login/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.27.04.png" width="250" alt="Login Light"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="assets/screenshots/clinics_dark.png" width="250" alt="Buscar Clínicas"/>
+  <img src="assets/screenshots/login/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.27.07.png" width="250" alt="Login Dark"/>
 </p>
 
-### 👨‍⚕️ Médicos
+### 🔍 Busca de Clínicas
 <p>
-  <img src="assets/screenshots/doctors_dark.png" width="250" alt="Lista de Médicos"/>
+  <img src="assets/screenshots/busca/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.27.32.png" width="250" alt="Busca Light"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="assets/screenshots/profile_dark.png" width="250" alt="Perfil do Médico"/>
+  <img src="assets/screenshots/busca/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.27.41.png" width="250" alt="Busca Dark"/>
 </p>
 
-### 📅 Agendamento
+### 📍 Modal Clínica
 <p>
-  <img src="assets/screenshots/schedule_dark.png" width="250" alt="Agendar Consulta"/>
+  <img src="assets/screenshots/modal_confirmar_clinica/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.28.16.png" width="250" alt="Modal Clínica Light"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="assets/screenshots/confirmation_dark.png" width="250" alt="Confirmação"/>
+  <img src="assets/screenshots/modal_confirmar_clinica/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.28.26.png" width="250" alt="Modal Clínica Dark"/>
+</p>
+
+### 👨‍⚕️ Lista de Médicos
+<p>
+  <img src="assets/screenshots/clinica/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.29.18.png" width="250" alt="Lista Médicos Light"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/clinica/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.29.33.png" width="250" alt="Lista Médicos Dark"/>
+</p>
+
+### 📋 Perfil do Médico
+<p>
+  <img src="assets/screenshots/medico/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.30.17.png" width="250" alt="Perfil Médico Light"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/medico/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.30.34.png" width="250" alt="Perfil Médico Dark"/>
+</p>
+
+### 📅 Modal Agendar Consulta - Parte 1
+<p>
+  <img src="assets/screenshots/modal_agendar_consulta/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.31.57.png" width="250" alt="Agendar Parte 1 Light"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/modal_agendar_consulta/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.32.02.png" width="250" alt="Agendar Parte 1 Dark"/>
+</p>
+
+### 📅 Modal Agendar Consulta - Parte 2
+<p>
+  <img src="assets/screenshots/modal_agendar_consulta/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.32.26.png" width="250" alt="Agendar Parte 2 Light"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/modal_agendar_consulta/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.32.30.png" width="250" alt="Agendar Parte 2 Dark"/>
+</p>
+
+### ✅ Confirmação de Agendamento
+<p>
+  <img src="assets/screenshots/confirmacao_agendamento/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.33.32.png" width="250" alt="Confirmação Light"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/confirmacao_agendamento/Simulator Screenshot - iPhone 16 Plus - 2025-10-13 at 08.33.58.png" width="250" alt="Confirmação Dark"/>
 </p>
 
 </div>
@@ -36,6 +71,8 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 ### 🔐 Autenticação
 - **Tela de Login**: Interface moderna com validação de formulário
 - **Alternância de Tema**: Botão para alternar entre light e dark mode
+- **Seletor de Idioma**: Menu para escolher entre Português 🇧🇷 e English 🇺🇸
+- **Logout**: Botão de logout com confirmação em todas as telas principais
 
 ### 🏥 Busca de Clínicas
 - **Mapa Fictício**: Visualização interativa com marcadores de clínicas
@@ -76,9 +113,17 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 ### 🎨 Design System
 - **Paleta de Cores Personalizada**: 6 cores principais com variações para light/dark mode
 - **Tema Adaptativo**: Suporte completo a light e dark mode
+- **Status Bar Inteligente**: Ícones mudam de cor automaticamente conforme o tema
 - **Material Design 3**: Componentes modernos e consistentes
 - **Animações**: Transições suaves entre temas
 - **Responsividade**: Adaptado para diferentes tamanhos de tela
+
+### 🌐 Internacionalização (i18n)
+- **Suporte a Múltiplos Idiomas**: Português (BR) e English (US)
+- **Alternância em Tempo Real**: Mudança de idioma sem reiniciar o app
+- **Todas as Telas Traduzidas**: 100% do conteúdo disponível em ambos os idiomas
+- **Especialidades Traduzidas**: Nomes de especialidades médicas localizados
+- **Provider Pattern**: Gerenciamento de estado para idioma selecionado
 
 ## 🚀 Estrutura do Projeto
 
@@ -93,11 +138,17 @@ lib/
 │   ├── doctors_list_screen.dart       # Lista de médicos com filtros
 │   ├── doctor_profile_screen.dart     # Perfil detalhado do médico
 │   └── appointment_confirmation_screen.dart # Confirmação do agendamento
-└── theme/
-    ├── app_colors.dart                # Paleta de cores personalizada
-    ├── app_theme.dart                 # Configuração dos temas light/dark
-    ├── theme_provider.dart            # Gerenciamento de estado do tema
-    └── README.md                      # Documentação do sistema de temas
+├── providers/
+│   └── locale_provider.dart           # Gerenciamento de estado do idioma
+├── theme/
+│   ├── app_colors.dart                # Paleta de cores personalizada
+│   ├── app_theme.dart                 # Configuração dos temas light/dark
+│   ├── theme_provider.dart            # Gerenciamento de estado do tema
+│   └── README.md                      # Documentação do sistema de temas
+└── l10n/
+    ├── app_pt.arb                     # Traduções em Português
+    ├── app_en.arb                     # Traduções em Inglês
+    └── README.md                      # Documentação do sistema de i18n
 ```
 
 ## 📦 Dependências Principais
@@ -106,9 +157,12 @@ lib/
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:      # Suporte a localização
+    sdk: flutter
+  intl: any                   # Internacionalização
   cupertino_icons: ^1.0.8
   go_router: ^14.6.2          # Gerenciamento de rotas
-  provider: ^6.1.2            # Gerenciamento de estado (tema)
+  provider: ^6.1.2            # Gerenciamento de estado (tema e idioma)
 ```
 
 ## 🎨 Paleta de Cores
@@ -169,31 +223,36 @@ flutter build ios --release
 - **Dart**: Linguagem de programação
 - **Material Design 3**: Sistema de design
 - **GoRouter**: Navegação declarativa com rotas nomeadas
-- **Provider**: Gerenciamento de estado para alternância de tema
+- **Provider**: Gerenciamento de estado para tema e idioma
+- **Internacionalização (i18n)**: Sistema de localização com ARB files
+- **flutter_localizations**: Suporte oficial a múltiplos idiomas
 - **Custom Themes**: Sistema de cores e temas personalizados
+- **System UI Overlay**: Controle da status bar adaptável ao tema
 - **Responsive Design**: Layout adaptável
 - **Bottom Sheets**: Modais deslizantes com `DraggableScrollableSheet`
 - **Formulários**: Validação e controle de inputs
 - **ListView.builder**: Listas otimizadas com scroll
 - **Gradient**: Degradês personalizados
 - **BoxShadow**: Sombras e elevação de componentes
+- **AlertDialog**: Diálogos de confirmação (logout)
 
 ## 📂 Estrutura de Assets
 
-O projeto inclui screenshots da aplicação em dark mode, localizados em:
+O projeto inclui screenshots da aplicação em light e dark mode, organizados por tela:
 
 ```
 assets/
 └── screenshots/
-    ├── login_dark.png
-    ├── clinics_dark.png
-    ├── doctors_dark.png
-    ├── profile_dark.png
-    ├── schedule_dark.png
-    └── confirmation_dark.png
+    ├── login/                        # Tela de login (light e dark)
+    ├── busca/                        # Busca de clínicas (light e dark)
+    ├── modal_confirmar_clinica/      # Modal de clínica (light e dark)
+    ├── clinica/                      # Lista de médicos (light e dark)
+    ├── medico/                       # Perfil do médico (light e dark)
+    ├── modal_agendar_consulta/       # Modal agendar (4 imagens: 2 partes x 2 temas)
+    └── confirmacao_agendamento/      # Confirmação (light e dark)
 ```
 
-Para adicionar mais screenshots ou atualizar os existentes, salve as imagens na pasta `assets/screenshots/` com os nomes apropriados.
+Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta` que contém 4 imagens devido às duas partes do modal.
 
 ## 📝 Dados Fictícios
 
@@ -207,16 +266,20 @@ O app utiliza dados fictícios para fins de demonstração:
 
 ## 🎯 Próximos Passos
 
+- [x] ~~Internacionalização (Português e Inglês)~~ ✅
+- [x] ~~Sistema de logout~~ ✅
+- [x] ~~Status bar adaptativa~~ ✅
 - [ ] Integração com API real
 - [ ] Autenticação com Firebase
 - [ ] Integração com Google Maps real
 - [ ] Sistema de notificações
 - [ ] Histórico de consultas
 - [ ] Perfil do usuário
-- [ ] Sistema de favoritos
+- [ ] Sistema de favoritos persistente
 - [ ] Chat com médicos
 - [ ] Pagamento online
 - [ ] Prescrições digitais
+- [ ] Mais idiomas (Espanhol, Francês, etc.)
 
 ## 📄 Licença
 
