@@ -13,6 +13,7 @@ import 'package:patientcareapp/presentation/providers/reviews_provider.dart';
 import 'package:patientcareapp/presentation/providers/users_provider.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
 import 'package:patientcareapp/data/models/local_user_model.dart';
+import 'package:patientcareapp/data/models/appointment_saved_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
@@ -21,6 +22,7 @@ void main() async {
   // Inicializa o Hive
   await Hive.initFlutter();
   Hive.registerAdapter(LocalUserModelAdapter());
+  Hive.registerAdapter(AppointmentSavedModelAdapter());
   
   // Inicializa o Dependency Injection (inclui AuthService)
   await initializeDependencies();

@@ -552,6 +552,61 @@
   "loginError": "Erro ao fazer login",
   "@loginError": {
     "description": "Mensagem de erro genérico de login"
+  },
+
+  "profile": "Perfil",
+  "@profile": {
+    "description": "Label do perfil do usuário"
+  },
+
+  "years": "anos",
+  "@years": {
+    "description": "Unidade de idade em anos"
+  },
+
+  "statistics": "Estatísticas",
+  "@statistics": {
+    "description": "Título da seção de estatísticas"
+  },
+
+  "totalAppointments": "Total de Consultas",
+  "@totalAppointments": {
+    "description": "Total de consultas realizadas"
+  },
+
+  "completed": "Concluídas",
+  "@completed": {
+    "description": "Consultas concluídas"
+  },
+
+  "upcoming": "Próximas",
+  "@upcoming": {
+    "description": "Consultas próximas"
+  },
+
+  "myAppointments": "Minhas Consultas",
+  "@myAppointments": {
+    "description": "Título das minhas consultas"
+  },
+
+  "open": "Abertos",
+  "@open": {
+    "description": "Agendamentos abertos"
+  },
+
+  "closed": "Fechados",
+  "@closed": {
+    "description": "Agendamentos fechados"
+  },
+
+  "noOpenAppointments": "Nenhum agendamento aberto",
+  "@noOpenAppointments": {
+    "description": "Mensagem quando não há agendamentos abertos"
+  },
+
+  "noClosedAppointments": "Nenhum agendamento fechado",
+  "@noClosedAppointments": {
+    "description": "Mensagem quando não há agendamentos fechados"
   }
 }
 

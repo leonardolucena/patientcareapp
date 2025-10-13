@@ -159,6 +159,61 @@
   "loginError": "Login error",
   "@loginError": {
     "description": "Generic login error message"
+  },
+
+  "profile": "Profile",
+  "@profile": {
+    "description": "User profile label"
+  },
+
+  "years": "years",
+  "@years": {
+    "description": "Age unit in years"
+  },
+
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Statistics section title"
+  },
+
+  "totalAppointments": "Total Appointments",
+  "@totalAppointments": {
+    "description": "Total appointments made"
+  },
+
+  "completed": "Completed",
+  "@completed": {
+    "description": "Completed appointments"
+  },
+
+  "upcoming": "Upcoming",
+  "@upcoming": {
+    "description": "Upcoming appointments"
+  },
+
+  "myAppointments": "My Appointments",
+  "@myAppointments": {
+    "description": "My appointments title"
+  },
+
+  "open": "Open",
+  "@open": {
+    "description": "Open appointments"
+  },
+
+  "closed": "Closed",
+  "@closed": {
+    "description": "Closed appointments"
+  },
+
+  "noOpenAppointments": "No open appointments",
+  "@noOpenAppointments": {
+    "description": "Message when there are no open appointments"
+  },
+
+  "noClosedAppointments": "No closed appointments",
+  "@noClosedAppointments": {
+    "description": "Message when there are no closed appointments"
   }
 }
 

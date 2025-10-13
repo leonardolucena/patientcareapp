@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:patientcareapp/screens/login_screen.dart';
 import 'package:patientcareapp/screens/register_screen.dart';
 import 'package:patientcareapp/screens/search_clinics_screen.dart';
+import 'package:patientcareapp/screens/profile_screen.dart';
 import 'package:patientcareapp/screens/doctors_list_screen.dart';
 import 'package:patientcareapp/screens/doctor_profile_screen.dart';
 import 'package:patientcareapp/screens/appointment_confirmation_screen.dart';
@@ -25,6 +26,11 @@ class AppRouter {
         path: '/search-clinics',
         name: 'search-clinics',
         builder: (context, state) => const SearchClinicsScreen(),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        builder: (context, state) => const ProfileScreen(),
       ),
       GoRoute(
         path: '/doctors/:clinicName',

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:patientcareapp/core/services/appointment_service.dart';
+import 'package:patientcareapp/core/di/injection_container.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppointmentConfirmationScreen extends StatelessWidget {
@@ -24,9 +26,34 @@ class AppointmentConfirmationScreen extends StatelessWidget {
     required this.paymentMethod,
   });
 
+  Future<void> _saveAppointment() async {
+    try {
+      final appointmentService = getIt<AppointmentService>();
+      
+      final now = DateTime.now();
+      final month = now.month.toString().padLeft(2, '0');
+      final date = '$dayNumber/$month/2024';
+      
+      await appointmentService.saveAppointment(
+        doctorName: doctorName,
+        specialty: 'Especialidade',
+        clinicName: clinicName,
+        consultationType: consultationType,
+        date: date,
+        time: time,
+        priority: priority,
+        paymentMethod: paymentMethod,
+      );
+    } catch (e) {
+      print('Erro ao salvar agendamento: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    
+    _saveAppointment();
     
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

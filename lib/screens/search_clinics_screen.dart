@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:patientcareapp/theme/theme_provider.dart';
 import 'package:patientcareapp/presentation/providers/clinics_provider.dart';
+import 'package:patientcareapp/presentation/widgets/floating_nav_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Tela de busca de clínicas refatorada para usar arquitetura SOLID
@@ -310,6 +311,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
             ],
           ),
         ),
+        bottomNavigationBar: const FloatingNavBar(currentIndex: 0),
       ),
     );
   }
