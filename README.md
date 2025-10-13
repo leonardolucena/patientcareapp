@@ -125,6 +125,15 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Especialidades Traduzidas**: Nomes de especialidades médicas localizados
 - **Provider Pattern**: Gerenciamento de estado para idioma selecionado
 
+### 🌐 Integração com API Real
+- **JSONPlaceholder API**: Integração com API externa de teste
+- **API Gateway**: Cliente HTTP centralizado com tratamento de erros
+- **Tela de Usuários**: Lista usuários reais da API com busca e pull-to-refresh
+- **Models Tipados**: UserModel, AddressModel, CompanyModel com serialização JSON
+- **Loading States**: Indicadores de carregamento, erro e estado vazio
+- **Cards Expansíveis**: Detalhes completos de cada usuário (email, telefone, empresa, endereço)
+- **Arquitetura SOLID**: Remote Datasource, Repository, Use Cases e Provider
+
 ## 🏗️ Arquitetura SOLID
 
 O projeto segue os princípios **SOLID** e **Clean Architecture** com separação clara em camadas:
@@ -134,6 +143,7 @@ lib/
 ├── main.dart                           # Ponto de entrada
 ├── core/                               # Funcionalidades compartilhadas
 │   ├── constants/                      # Constantes da aplicação
+│   ├── network/                        # API Gateway e cliente HTTP
 │   ├── services/                       # Serviços utilitários
 │   ├── utils/                          # Helpers e formatadores
 │   └── di/                             # Dependency Injection (GetIt)
@@ -186,6 +196,7 @@ dependencies:
   go_router: ^14.6.2          # Gerenciamento de rotas
   provider: ^6.1.2            # Gerenciamento de estado
   get_it: ^7.6.4              # Dependency Injection (Service Locator)
+  http: ^1.2.0                # Cliente HTTP para chamadas de API
 ```
 
 ## 🎨 Paleta de Cores
@@ -292,15 +303,20 @@ assets/
 
 Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta` que contém 4 imagens devido às duas partes do modal.
 
-## 📝 Dados Fictícios
+## 📝 Dados do Aplicativo
 
-O app utiliza dados fictícios para fins de demonstração:
-
+### Dados Locais (Mockados)
 - **3 Clínicas**: Com endereços e distâncias simuladas
 - **80 Médicos**: 10 médicos para cada uma das 8 especialidades
 - **Avaliações**: Reviews fictícios com notas de 1 a 5 estrelas
 - **Horários**: Disponibilidade de 8h às 12h
 - **Dias**: Semana completa com alguns dias indisponíveis
+
+### Dados da API Real
+- **10 Usuários**: Da API [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
+- **Endpoints Ativos**: GET `/users`, `/users/{id}`, POST/PUT/DELETE (simulados)
+- **Dados Completos**: Nome, email, telefone, endereço, empresa, website
+- **Tela Funcional**: `/users` - Acesse navegando para esta rota
 
 ## 🎯 Próximos Passos
 
@@ -325,8 +341,15 @@ O app utiliza dados fictícios para fins de demonstração:
 - [ ] Testes de Integração
 - [ ] Aumentar cobertura de testes (> 80%)
 
+### Integração com API ✅
+- [x] ~~Integração com API JSONPlaceholder~~ ✅
+- [x] ~~API Gateway HTTP centralizado~~ ✅
+- [x] ~~Tela de usuários com busca~~ ✅
+- [x] ~~Models tipados (User, Address, Company)~~ ✅
+- [x] ~~Remote Datasource com tratamento de erros~~ ✅
+
 ### Próximas Features 🚧
-- [ ] Integração com API real
+- [ ] Integração com API de saúde real
 - [ ] Autenticação com Firebase
 - [ ] Cache local (Hive/SQLite)
 - [ ] Integração com Google Maps real
@@ -343,6 +366,7 @@ O app utiliza dados fictícios para fins de demonstração:
 ## 📚 Documentação Adicional
 
 - **[Arquitetura SOLID](docs/ARCHITECTURE.md)** - Documentação completa da arquitetura
+- **[Integração com API](docs/API_INTEGRATION.md)** - Documentação da integração com JSONPlaceholder
 - **[Testes](docs/TESTING.md)** - Documentação completa de testes (29 testes ✅)
 - **[Sistema de Temas](lib/theme/README.md)** - Documentação do sistema de cores e temas
 - **[Internacionalização](lib/l10n/README.md)** - Documentação do sistema de i18n
