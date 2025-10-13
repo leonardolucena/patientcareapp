@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,22 +23,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _handleLogin() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-      
-      // TODO: Implementar lógica de autenticação
-      await Future.delayed(const Duration(seconds: 2));
-      
-      setState(() => _isLoading = false);
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login em desenvolvimento'),
-            backgroundColor: Colors.blue,
-          ),
-        );
-      }
+    setState(() => _isLoading = true);
+    
+    // Simula um pequeno delay de autenticação
+    await Future.delayed(const Duration(milliseconds: 500));
+    
+    setState(() => _isLoading = false);
+    
+    if (mounted) {
+      // Navega para a tela de busca de clínicas
+      context.go('/search-clinics');
     }
   }
 
