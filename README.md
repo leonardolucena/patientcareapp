@@ -2,87 +2,34 @@
 
 Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacientes. O app permite buscar clínicas, visualizar perfis de médicos, agendar consultas e muito mais!
 
-## 📱 Screenshots
+## 📱 Screenshots (Dark Mode)
 
-### 🌞 Light Mode
+<div align="center">
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="assets/screenshots/login_light.png" width="200" alt="Login - Light Mode"/>
-      <br />
-      <b>Login</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/clinics_light.png" width="200" alt="Clínicas - Light Mode"/>
-      <br />
-      <b>Buscar Clínicas</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/doctors_light.png" width="200" alt="Médicos - Light Mode"/>
-      <br />
-      <b>Lista de Médicos</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/profile_light.png" width="200" alt="Perfil - Light Mode"/>
-      <br />
-      <b>Perfil do Médico</b>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="assets/screenshots/schedule_light.png" width="200" alt="Agendamento - Light Mode"/>
-      <br />
-      <b>Agendar Consulta</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/confirmation_light.png" width="200" alt="Confirmação - Light Mode"/>
-      <br />
-      <b>Confirmação</b>
-    </td>
-  </tr>
-</table>
+### 🔐 Login & Busca
+<p>
+  <img src="assets/screenshots/login_dark.png" width="250" alt="Tela de Login"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/clinics_dark.png" width="250" alt="Buscar Clínicas"/>
+</p>
 
-### 🌙 Dark Mode
+### 👨‍⚕️ Médicos
+<p>
+  <img src="assets/screenshots/doctors_dark.png" width="250" alt="Lista de Médicos"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/profile_dark.png" width="250" alt="Perfil do Médico"/>
+</p>
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="assets/screenshots/login_dark.png" width="200" alt="Login - Dark Mode"/>
-      <br />
-      <b>Login</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/clinics_dark.png" width="200" alt="Clínicas - Dark Mode"/>
-      <br />
-      <b>Buscar Clínicas</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/doctors_dark.png" width="200" alt="Médicos - Dark Mode"/>
-      <br />
-      <b>Lista de Médicos</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/profile_dark.png" width="200" alt="Perfil - Dark Mode"/>
-      <br />
-      <b>Perfil do Médico</b>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="assets/screenshots/schedule_dark.png" width="200" alt="Agendamento - Dark Mode"/>
-      <br />
-      <b>Agendar Consulta</b>
-    </td>
-    <td align="center">
-      <img src="assets/screenshots/confirmation_dark.png" width="200" alt="Confirmação - Dark Mode"/>
-      <br />
-      <b>Confirmação</b>
-    </td>
-  </tr>
-</table>
+### 📅 Agendamento
+<p>
+  <img src="assets/screenshots/schedule_dark.png" width="250" alt="Agendar Consulta"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/confirmation_dark.png" width="250" alt="Confirmação"/>
+</p>
 
-> **Nota:** Para adicionar os screenshots, coloque as imagens na pasta `assets/screenshots/` com os nomes especificados acima.
+</div>
+
+---
 
 ## ✨ Funcionalidades
 
@@ -231,30 +178,22 @@ flutter build ios --release
 - **Gradient**: Degradês personalizados
 - **BoxShadow**: Sombras e elevação de componentes
 
-## 📂 Como Adicionar Screenshots
+## 📂 Estrutura de Assets
 
-1. Execute o app no simulador ou dispositivo
-2. Tire screenshots de cada tela em **light mode**
-3. Alterne para **dark mode** usando o botão no login
-4. Tire screenshots de cada tela em **dark mode**
-5. Salve as imagens na pasta `assets/screenshots/` (já criada)
-6. Use os seguintes nomes para as imagens:
+O projeto inclui screenshots da aplicação em dark mode, localizados em:
 
-**Light Mode:**
-- `login_light.png`
-- `clinics_light.png`
-- `doctors_light.png`
-- `profile_light.png`
-- `schedule_light.png`
-- `confirmation_light.png`
+```
+assets/
+└── screenshots/
+    ├── login_dark.png
+    ├── clinics_dark.png
+    ├── doctors_dark.png
+    ├── profile_dark.png
+    ├── schedule_dark.png
+    └── confirmation_dark.png
+```
 
-**Dark Mode:**
-- `login_dark.png`
-- `clinics_dark.png`
-- `doctors_dark.png`
-- `profile_dark.png`
-- `schedule_dark.png`
-- `confirmation_dark.png`
+Para adicionar mais screenshots ou atualizar os existentes, salve as imagens na pasta `assets/screenshots/` com os nomes apropriados.
 
 ## 📝 Dados Fictícios
 
