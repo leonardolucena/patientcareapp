@@ -587,7 +587,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ],
@@ -894,10 +894,10 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Colors.blue[50],
+                                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Colors.blue[200]!,
+                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                                   width: 1,
                                 ),
                               ),
@@ -906,13 +906,17 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+                                      Icon(
+                                        Icons.info_outline, 
+                                        color: Theme.of(context).colorScheme.primary, 
+                                        size: 20,
+                                      ),
                                       const SizedBox(width: 8),
                                       Text(
                                         'Seu agendamento será:',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.blue[900],
+                                          color: Theme.of(context).colorScheme.onSurface,
                                         ),
                                       ),
                                     ],
@@ -1324,9 +1328,10 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),

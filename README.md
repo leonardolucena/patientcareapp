@@ -1,73 +1,292 @@
-# PatientCare App
+# PatientCare App 🏥
 
-Aplicativo de gerenciamento de cuidados com pacientes.
+Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacientes. O app permite buscar clínicas, visualizar perfis de médicos, agendar consultas e muito mais!
+
+## 📱 Screenshots
+
+### 🌞 Light Mode
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/login_light.png" width="200" alt="Login - Light Mode"/>
+      <br />
+      <b>Login</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/clinics_light.png" width="200" alt="Clínicas - Light Mode"/>
+      <br />
+      <b>Buscar Clínicas</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/doctors_light.png" width="200" alt="Médicos - Light Mode"/>
+      <br />
+      <b>Lista de Médicos</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/profile_light.png" width="200" alt="Perfil - Light Mode"/>
+      <br />
+      <b>Perfil do Médico</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/schedule_light.png" width="200" alt="Agendamento - Light Mode"/>
+      <br />
+      <b>Agendar Consulta</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/confirmation_light.png" width="200" alt="Confirmação - Light Mode"/>
+      <br />
+      <b>Confirmação</b>
+    </td>
+  </tr>
+</table>
+
+### 🌙 Dark Mode
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/login_dark.png" width="200" alt="Login - Dark Mode"/>
+      <br />
+      <b>Login</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/clinics_dark.png" width="200" alt="Clínicas - Dark Mode"/>
+      <br />
+      <b>Buscar Clínicas</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/doctors_dark.png" width="200" alt="Médicos - Dark Mode"/>
+      <br />
+      <b>Lista de Médicos</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/profile_dark.png" width="200" alt="Perfil - Dark Mode"/>
+      <br />
+      <b>Perfil do Médico</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/schedule_dark.png" width="200" alt="Agendamento - Dark Mode"/>
+      <br />
+      <b>Agendar Consulta</b>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/confirmation_dark.png" width="200" alt="Confirmação - Dark Mode"/>
+      <br />
+      <b>Confirmação</b>
+    </td>
+  </tr>
+</table>
+
+> **Nota:** Para adicionar os screenshots, coloque as imagens na pasta `assets/screenshots/` com os nomes especificados acima.
+
+## ✨ Funcionalidades
+
+### 🔐 Autenticação
+- **Tela de Login**: Interface moderna com validação de formulário
+- **Alternância de Tema**: Botão para alternar entre light e dark mode
+
+### 🏥 Busca de Clínicas
+- **Mapa Fictício**: Visualização interativa com marcadores de clínicas
+- **Lista de Clínicas**: Cards com informações de distância e localização
+- **Detalhes da Clínica**: Bottom sheet com endereço e botão de agendamento
+
+### 👨‍⚕️ Médicos
+- **Banner Informativo**: Destaque visual com chamada para ação
+- **Filtro por Especialidade**: 8+ especialidades médicas (Cardiologia, Dermatologia, Pediatria, etc.)
+- **Busca por Nome**: Campo de busca dinâmico
+- **Lista de Médicos**: Cards com foto, nome, especialidade, experiência, avaliação e preço
+- **Scroll Otimizado**: Lista rolável independente mantendo filtros fixos
+
+### 📋 Perfil do Médico
+- **Informações Completas**: Nome, especialidades, avaliação e foto
+- **Estatísticas**: Número de pacientes, anos de experiência e país
+- **Localização**: Mapa fictício com endereço
+- **Avaliações**: Sistema de reviews com barras de progresso e comentários
+- **Valor da Consulta**: Exibido no rodapé fixo
+
+### 📅 Agendamento de Consulta
+- **Bottom Sheet em 2 Páginas**: Navegação fluida entre etapas
+- **Página 1**:
+  - Tipo de consulta (Online/Presencial)
+  - Seletor de dia (scroll horizontal com dias desabilitados)
+  - Seletor de horário (8h às 12h)
+- **Página 2**:
+  - Resumo do agendamento
+  - Prioridade (Normal/Urgência)
+  - Método de pagamento (Dinheiro/Cartão de crédito)
+- **Validação**: Desabilita botão "Continuar" se campos não preenchidos
+
+### ✅ Confirmação
+- **Tela de Sucesso**: Feedback visual com ícone de confirmação
+- **Detalhes do Agendamento**: Todas as informações selecionadas
+- **Navegação**: Botão para retornar à busca de clínicas
+
+### 🎨 Design System
+- **Paleta de Cores Personalizada**: 6 cores principais com variações para light/dark mode
+- **Tema Adaptativo**: Suporte completo a light e dark mode
+- **Material Design 3**: Componentes modernos e consistentes
+- **Animações**: Transições suaves entre temas
+- **Responsividade**: Adaptado para diferentes tamanhos de tela
 
 ## 🚀 Estrutura do Projeto
 
 ```
 lib/
-├── main.dart                      # Ponto de entrada da aplicação
+├── main.dart                           # Ponto de entrada da aplicação
 ├── routes/
-│   └── app_router.dart           # Configuração de rotas com GoRouter
-└── screens/
-    ├── login_screen.dart         # Tela de login
-    └── search_clinics_screen.dart # Tela de busca de clínicas com mapa
+│   └── app_router.dart                # Configuração de rotas com GoRouter
+├── screens/
+│   ├── login_screen.dart              # Tela de login
+│   ├── search_clinics_screen.dart     # Busca de clínicas com mapa
+│   ├── doctors_list_screen.dart       # Lista de médicos com filtros
+│   ├── doctor_profile_screen.dart     # Perfil detalhado do médico
+│   └── appointment_confirmation_screen.dart # Confirmação do agendamento
+└── theme/
+    ├── app_colors.dart                # Paleta de cores personalizada
+    ├── app_theme.dart                 # Configuração dos temas light/dark
+    ├── theme_provider.dart            # Gerenciamento de estado do tema
+    └── README.md                      # Documentação do sistema de temas
 ```
 
 ## 📦 Dependências Principais
 
-- **Flutter SDK**: ^3.6.1
-- **go_router**: ^14.6.2 - Gerenciamento de rotas
-- **google_maps_flutter**: ^2.9.0 - Integração com Google Maps
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  go_router: ^14.6.2          # Gerenciamento de rotas
+  provider: ^6.1.2            # Gerenciamento de estado (tema)
+```
+
+## 🎨 Paleta de Cores
+
+O app utiliza uma paleta customizada com as seguintes cores principais:
+
+| Cor | Hex | Uso |
+|-----|-----|-----|
+| Primary Dark | `#05151A` | Backgrounds escuros |
+| Primary Teal | `#3F7884` | **Cor principal do app** |
+| Primary Teal Dark | `#0C7076` | Acentos e destaques |
+| Primary Blue | `#0706FC` | Ações secundárias |
+| Primary Cyan | `#6DA6C0` | Complementar |
+| Primary Navy | `#294D61` | Textos e elementos |
+
+Cada cor possui variações para light e dark mode, garantindo contraste e legibilidade em ambos os temas.
 
 ## 🏃 Como Executar
 
 ### Pré-requisitos
 
-1. **Configurar API Key do Google Maps** (obrigatório)
-   - Siga as instruções detalhadas no arquivo: [GOOGLE_MAPS_SETUP.md](GOOGLE_MAPS_SETUP.md)
-   - Configure a API Key no Android (`android/app/src/main/AndroidManifest.xml`)
-   - Configure a API Key no iOS (`ios/Runner/AppDelegate.swift`)
+- Flutter SDK 3.6.1 ou superior
+- Dart 3.0.0 ou superior
+- Android Studio / Xcode (para desenvolvimento mobile)
 
-### Executar o projeto
+### Instalação
 
 ```bash
+# Clone o repositório
+git clone [url-do-repositorio]
+
+# Entre na pasta do projeto
+cd patientcareapp
+
 # Instalar dependências
 flutter pub get
 
 # Executar no emulador/dispositivo
 flutter run
-
-# Build para Android
-flutter build apk
-
-# Build para iOS
-flutter build ios
 ```
 
-## 🎨 Funcionalidades Implementadas
+### Build para produção
 
-- ✅ Tela de login (navega direto ao clicar em entrar)
-- ✅ Tela de busca de clínicas com Google Maps
-- ✅ Gerenciamento de rotas com GoRouter
-- ✅ Design moderno e responsivo
-- ✅ Tema Material 3
-- ✅ Integração com Google Maps
-- ✅ Permissões de localização configuradas (Android/iOS)
+```bash
+# Android (APK)
+flutter build apk --release
 
-## 📝 Próximas Funcionalidades
+# Android (App Bundle)
+flutter build appbundle --release
 
-- [ ] Implementar busca real de clínicas
-- [ ] Adicionar marcadores dinâmicos no mapa
-- [ ] Implementar autenticação real
-- [ ] Adicionar tela de cadastro
-- [ ] Implementar recuperação de senha
-- [ ] Adicionar detalhes da clínica
-- [ ] Implementar agendamento de consultas
-- [ ] Implementar gerenciamento de estado
+# iOS
+flutter build ios --release
+```
 
-## 🔧 Configurações
+## 🛠️ Tecnologias e Conceitos Utilizados
 
-O projeto está configurado para as plataformas:
-- Android
-- iOS
+- **Flutter**: Framework multiplataforma
+- **Dart**: Linguagem de programação
+- **Material Design 3**: Sistema de design
+- **GoRouter**: Navegação declarativa com rotas nomeadas
+- **Provider**: Gerenciamento de estado para alternância de tema
+- **Custom Themes**: Sistema de cores e temas personalizados
+- **Responsive Design**: Layout adaptável
+- **Bottom Sheets**: Modais deslizantes com `DraggableScrollableSheet`
+- **Formulários**: Validação e controle de inputs
+- **ListView.builder**: Listas otimizadas com scroll
+- **Gradient**: Degradês personalizados
+- **BoxShadow**: Sombras e elevação de componentes
+
+## 📂 Como Adicionar Screenshots
+
+1. Execute o app no simulador ou dispositivo
+2. Tire screenshots de cada tela em **light mode**
+3. Alterne para **dark mode** usando o botão no login
+4. Tire screenshots de cada tela em **dark mode**
+5. Salve as imagens na pasta `assets/screenshots/` (já criada)
+6. Use os seguintes nomes para as imagens:
+
+**Light Mode:**
+- `login_light.png`
+- `clinics_light.png`
+- `doctors_light.png`
+- `profile_light.png`
+- `schedule_light.png`
+- `confirmation_light.png`
+
+**Dark Mode:**
+- `login_dark.png`
+- `clinics_dark.png`
+- `doctors_dark.png`
+- `profile_dark.png`
+- `schedule_dark.png`
+- `confirmation_dark.png`
+
+## 📝 Dados Fictícios
+
+O app utiliza dados fictícios para fins de demonstração:
+
+- **3 Clínicas**: Com endereços e distâncias simuladas
+- **80 Médicos**: 10 médicos para cada uma das 8 especialidades
+- **Avaliações**: Reviews fictícios com notas de 1 a 5 estrelas
+- **Horários**: Disponibilidade de 8h às 12h
+- **Dias**: Semana completa com alguns dias indisponíveis
+
+## 🎯 Próximos Passos
+
+- [ ] Integração com API real
+- [ ] Autenticação com Firebase
+- [ ] Integração com Google Maps real
+- [ ] Sistema de notificações
+- [ ] Histórico de consultas
+- [ ] Perfil do usuário
+- [ ] Sistema de favoritos
+- [ ] Chat com médicos
+- [ ] Pagamento online
+- [ ] Prescrições digitais
+
+## 📄 Licença
+
+Este projeto é um estudo de caso para fins educacionais.
+
+## 👨‍💻 Desenvolvido com
+
+Desenvolvido com ❤️ usando Flutter
+
+---
+
+**PatientCare** - Cuidando da sua saúde com excelência e carinho 🏥✨

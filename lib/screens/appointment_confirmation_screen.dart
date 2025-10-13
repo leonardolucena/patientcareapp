@@ -62,7 +62,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: Colors.green[50],
+                      color: const Color.fromARGB(255, 204, 205, 204),
                       shape: BoxShape.circle,
                     ),
                     child: Stack(

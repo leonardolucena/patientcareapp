@@ -754,8 +754,8 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(0.7),
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.primary.withOpacity(0.7),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(12),
@@ -812,7 +812,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
