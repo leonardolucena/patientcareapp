@@ -43,9 +43,9 @@ Future<void> initializeDependencies() async {
 
   // ==================== DATA SOURCES ====================
   
-  // Datasources Locais (Singleton - uma única instância)
+  // Datasources Locais (Singleton - dependem do Remote para buscar nomes da API)
   getIt.registerLazySingleton<LocalDoctorsDatasource>(
-    () => LocalDoctorsDatasource(),
+    () => LocalDoctorsDatasource(getIt<RemoteUsersDatasource>()),
   );
   
   getIt.registerLazySingleton<LocalClinicsDatasource>(

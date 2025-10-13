@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:patientcareapp/data/models/doctor_model.dart';
 import 'package:patientcareapp/presentation/providers/doctors_provider.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
 
@@ -34,7 +33,7 @@ void main() {
       // Assert
       expect(provider.isLoading, isFalse);
       expect(provider.doctors, isNotEmpty);
-      expect(provider.doctors.length, 80); // 80 médicos
+      expect(provider.doctors.length, 40); // 5 por especialidade x 8 = 40 médicos
       expect(provider.error, isNull);
     });
 
@@ -47,7 +46,7 @@ void main() {
 
       // Assert
       expect(provider.selectedSpecialty, 'Cardiologia');
-      expect(provider.doctors.length, 10); // 10 cardiologistas
+      expect(provider.doctors.length, 5); // 5 cardiologistas
       expect(
         provider.doctors.every((doc) => doc.specialty == 'Cardiologia'),
         isTrue,
@@ -58,13 +57,13 @@ void main() {
       // Arrange
       await provider.loadAllDoctors();
 
-      // Act
-      await provider.searchDoctors('Carlos');
+      // Act - Busca por "Leanne" que vem da API
+      await provider.searchDoctors('Leanne');
 
       // Assert
       expect(provider.doctors, isNotEmpty);
       expect(
-        provider.doctors.every((doc) => doc.name.contains('Carlos')),
+        provider.doctors.every((doc) => doc.name.contains('Leanne')),
         isTrue,
       );
     });
@@ -72,13 +71,13 @@ void main() {
     test('deve retornar todos médicos quando busca está vazia', () async {
       // Arrange
       await provider.loadAllDoctors();
-      await provider.searchDoctors('Carlos'); // Primeiro filtra
+      await provider.searchDoctors('Leanne'); // Primeiro filtra
 
       // Act
       await provider.searchDoctors(''); // Depois limpa
 
       // Assert
-      expect(provider.doctors.length, 80); // Volta para todos
+      expect(provider.doctors.length, 40); // Volta para todos
     });
 
     test('deve combinar filtro de especialidade com busca por nome', () async {
@@ -86,14 +85,14 @@ void main() {
       await provider.loadAllDoctors();
       await provider.filterBySpecialty('Cardiologia');
 
-      // Act
-      await provider.searchDoctors('Carlos');
+      // Act - Busca por "Leanne" dentro da especialidade
+      await provider.searchDoctors('Leanne');
 
       // Assert
       expect(provider.doctors, isNotEmpty);
       expect(
         provider.doctors.every(
-          (doc) => doc.specialty == 'Cardiologia' && doc.name.contains('Carlos'),
+          (doc) => doc.specialty == 'Cardiologia' && doc.name.contains('Leanne'),
         ),
         isTrue,
       );
@@ -103,7 +102,7 @@ void main() {
       // Arrange
       await provider.loadAllDoctors();
       await provider.filterBySpecialty('Cardiologia');
-      await provider.searchDoctors('Carlos');
+      await provider.searchDoctors('Leanne');
 
       // Act
       provider.clearFilters();
@@ -111,8 +110,7 @@ void main() {
       // Assert
       expect(provider.selectedSpecialty, 'Todos');
       expect(provider.searchQuery, isEmpty);
-      expect(provider.doctors.length, 80);
+      expect(provider.doctors.length, 40);
     });
   });
 }
-
