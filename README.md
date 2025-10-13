@@ -125,31 +125,53 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Especialidades Traduzidas**: Nomes de especialidades médicas localizados
 - **Provider Pattern**: Gerenciamento de estado para idioma selecionado
 
-## 🚀 Estrutura do Projeto
+## 🏗️ Arquitetura SOLID
+
+O projeto segue os princípios **SOLID** e **Clean Architecture** com separação clara em camadas:
 
 ```
 lib/
-├── main.dart                           # Ponto de entrada da aplicação
+├── main.dart                           # Ponto de entrada
+├── core/                               # Funcionalidades compartilhadas
+│   ├── constants/                      # Constantes da aplicação
+│   ├── services/                       # Serviços utilitários
+│   ├── utils/                          # Helpers e formatadores
+│   └── di/                             # Dependency Injection (GetIt)
+├── data/                               # Camada de Dados
+│   ├── models/                         # Models (DTOs)
+│   ├── datasources/                    # Fontes de dados (local/API)
+│   └── repositories/                   # Implementações de repositórios
+├── domain/                             # Camada de Domínio (Regras de Negócio)
+│   ├── repositories/                   # Contratos (interfaces abstratas)
+│   └── usecases/                       # Casos de uso
+├── presentation/                       # Camada de Apresentação (UI)
+│   ├── providers/                      # State management (ChangeNotifier)
+│   ├── screens/                        # Telas da aplicação
+│   └── widgets/                        # Widgets reutilizáveis
+├── providers/                          # Providers globais
+│   └── locale_provider.dart
 ├── routes/
-│   └── app_router.dart                # Configuração de rotas com GoRouter
-├── screens/
-│   ├── login_screen.dart              # Tela de login
-│   ├── search_clinics_screen.dart     # Busca de clínicas com mapa
-│   ├── doctors_list_screen.dart       # Lista de médicos com filtros
-│   ├── doctor_profile_screen.dart     # Perfil detalhado do médico
-│   └── appointment_confirmation_screen.dart # Confirmação do agendamento
-├── providers/
-│   └── locale_provider.dart           # Gerenciamento de estado do idioma
+│   └── app_router.dart
 ├── theme/
-│   ├── app_colors.dart                # Paleta de cores personalizada
-│   ├── app_theme.dart                 # Configuração dos temas light/dark
-│   ├── theme_provider.dart            # Gerenciamento de estado do tema
-│   └── README.md                      # Documentação do sistema de temas
+│   ├── app_colors.dart
+│   ├── app_theme.dart
+│   ├── theme_provider.dart
+│   └── README.md
 └── l10n/
-    ├── app_pt.arb                     # Traduções em Português
-    ├── app_en.arb                     # Traduções em Inglês
-    └── README.md                      # Documentação do sistema de i18n
+    ├── app_pt.arb
+    ├── app_en.arb
+    └── README.md
 ```
+
+### 📐 Princípios SOLID Aplicados:
+
+- ✅ **S**ingle Responsibility: Cada classe tem uma única responsabilidade
+- ✅ **O**pen/Closed: Aberto para extensão, fechado para modificação
+- ✅ **L**iskov Substitution: Use Cases funcionam com qualquer implementação de Repository
+- ✅ **I**nterface Segregation: Interfaces específicas e focadas
+- ✅ **D**ependency Inversion: Dependências injetadas via GetIt
+
+📚 **[Documentação Completa da Arquitetura](docs/ARCHITECTURE.md)**
 
 ## 📦 Dependências Principais
 
@@ -162,7 +184,8 @@ dependencies:
   intl: any                   # Internacionalização
   cupertino_icons: ^1.0.8
   go_router: ^14.6.2          # Gerenciamento de rotas
-  provider: ^6.1.2            # Gerenciamento de estado (tema e idioma)
+  provider: ^6.1.2            # Gerenciamento de estado
+  get_it: ^7.6.4              # Dependency Injection (Service Locator)
 ```
 
 ## 🎨 Paleta de Cores
@@ -219,22 +242,37 @@ flutter build ios --release
 
 ## 🛠️ Tecnologias e Conceitos Utilizados
 
+### Arquitetura e Padrões
+- **Clean Architecture**: Separação em camadas (data, domain, presentation, core)
+- **SOLID Principles**: Código manutenível e escalável
+- **Dependency Injection**: GetIt como Service Locator
+- **Repository Pattern**: Abstração de fontes de dados
+- **Use Cases**: Encapsulamento de lógica de negócio
+- **Provider Pattern**: Gerenciamento de estado reativo
+
+### Framework e UI
 - **Flutter**: Framework multiplataforma
 - **Dart**: Linguagem de programação
 - **Material Design 3**: Sistema de design
-- **GoRouter**: Navegação declarativa com rotas nomeadas
-- **Provider**: Gerenciamento de estado para tema e idioma
-- **Internacionalização (i18n)**: Sistema de localização com ARB files
-- **flutter_localizations**: Suporte oficial a múltiplos idiomas
 - **Custom Themes**: Sistema de cores e temas personalizados
 - **System UI Overlay**: Controle da status bar adaptável ao tema
 - **Responsive Design**: Layout adaptável
+
+### Navegação e Estado
+- **GoRouter**: Navegação declarativa com rotas nomeadas
+- **Provider**: Gerenciamento de estado para tema, idioma e features
+
+### Internacionalização
+- **flutter_localizations**: Suporte oficial a múltiplos idiomas
+- **intl**: Internacionalização com ARB files
+- **l10n**: Localização dinâmica (Português e Inglês)
+
+### Widgets e Componentes
+- **Widgets Reutilizáveis**: DoctorCard, ClinicCard, SpecialtyChip
 - **Bottom Sheets**: Modais deslizantes com `DraggableScrollableSheet`
 - **Formulários**: Validação e controle de inputs
 - **ListView.builder**: Listas otimizadas com scroll
-- **Gradient**: Degradês personalizados
-- **BoxShadow**: Sombras e elevação de componentes
-- **AlertDialog**: Diálogos de confirmação (logout)
+- **AlertDialog**: Diálogos de confirmação
 
 ## 📂 Estrutura de Assets
 
@@ -266,11 +304,27 @@ O app utiliza dados fictícios para fins de demonstração:
 
 ## 🎯 Próximos Passos
 
+### Arquitetura ✅
+- [x] ~~Arquitetura SOLID~~ ✅
+- [x] ~~Clean Architecture com camadas~~ ✅
+- [x] ~~Dependency Injection~~ ✅
+- [x] ~~Repository Pattern~~ ✅
+- [x] ~~Use Cases~~ ✅
+
+### Features Implementadas ✅
 - [x] ~~Internacionalização (Português e Inglês)~~ ✅
 - [x] ~~Sistema de logout~~ ✅
 - [x] ~~Status bar adaptativa~~ ✅
+- [x] ~~Widgets reutilizáveis~~ ✅
+- [x] ~~Providers para estado~~ ✅
+
+### Próximas Features 🚧
+- [ ] Refatorar todas as Screens para usar nova arquitetura
+- [ ] Testes unitários (Use Cases, Repositories)
+- [ ] Testes de Widget
 - [ ] Integração com API real
 - [ ] Autenticação com Firebase
+- [ ] Cache local (Hive/SQLite)
 - [ ] Integração com Google Maps real
 - [ ] Sistema de notificações
 - [ ] Histórico de consultas
@@ -279,6 +333,16 @@ O app utiliza dados fictícios para fins de demonstração:
 - [ ] Chat com médicos
 - [ ] Pagamento online
 - [ ] Prescrições digitais
+
+---
+
+## 📚 Documentação Adicional
+
+- **[Arquitetura SOLID](docs/ARCHITECTURE.md)** - Documentação completa da arquitetura
+- **[Sistema de Temas](lib/theme/README.md)** - Documentação do sistema de cores e temas
+- **[Internacionalização](lib/l10n/README.md)** - Documentação do sistema de i18n
+
+---
 
 ## 📄 Licença
 
