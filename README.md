@@ -79,6 +79,27 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Seletor de Idioma**: Menu para escolher entre Português 🇧🇷 e English 🇺🇸
 - **Logout**: Botão de logout com confirmação em todas as telas principais
 
+### 📊 Perfil do Usuário
+- **Header Personalizado**: Foto, nome e idade do usuário com gradiente azul
+- **Dashboard de Estatísticas**: 4 cards com informações:
+  - Total de consultas realizadas
+  - Consultas concluídas
+  - Número de médicos únicos
+  - Próximas consultas
+- **Agendamentos com Abas**:
+  - Tab "Abertos": Agendamentos futuros com badge (Online/Presencial)
+  - Tab "Fechados": Histórico de consultas concluídas
+  - Design moderno com indicador animado e sombra
+- **Dados Reais**: Todas as informações vêm do Hive (agendamentos salvos)
+- **Empty States**: Mensagens personalizadas quando não há agendamentos
+
+### 🧭 Navegação
+- **Bottom Navigation Bar Flutuante**: 
+  - Design elevado com bordas arredondadas
+  - Ícones animados com background ao selecionar
+  - 2 botões: Busca de Clínicas e Perfil
+  - Presente nas telas principais
+
 ### 🏥 Busca de Clínicas
 - **Mapa Fictício**: Visualização interativa com marcadores de clínicas
 - **Lista de Clínicas**: Cards com informações de distância e localização
@@ -109,6 +130,8 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
   - Prioridade (Normal/Urgência)
   - Método de pagamento (Dinheiro/Cartão de crédito)
 - **Validação**: Desabilita botão "Continuar" se campos não preenchidos
+- **Persistência Automática**: Agendamento salvo no Hive ao confirmar
+- **Sincronização com Perfil**: Dados aparecem automaticamente na tela de perfil
 
 ### ✅ Confirmação
 - **Tela de Sucesso**: Feedback visual com ícone de confirmação
@@ -147,9 +170,17 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
   - Hash de senhas (SHA256)
   - Gerenciamento de sessão
   - Verificação de email duplicado
-- **LocalUserModel**: Model persistido com Hive TypeAdapter
-- **Dependency Injection**: AuthService registrado no GetIt
-- **Fluxo Completo**: Login → Cadastro → Validação → Persistência
+- **AppointmentService**: Gerenciamento de agendamentos
+  - Salvar novos agendamentos
+  - Buscar agendamentos abertos/fechados
+  - Marcar como concluído
+  - Calcular estatísticas em tempo real
+  - Deletar agendamentos
+- **Models Persistidos com Hive TypeAdapter**:
+  - `LocalUserModel` (TypeId: 0): Usuários cadastrados
+  - `AppointmentSavedModel` (TypeId: 1): Agendamentos salvos
+- **Dependency Injection**: Services registrados no GetIt
+- **Fluxo Completo**: Login → Busca → Agendamento → Persistência → Perfil
 
 ## 🏗️ Arquitetura SOLID
 
@@ -163,12 +194,14 @@ lib/
 │   ├── network/                        # API Gateway e cliente HTTP
 │   ├── services/                       # Serviços utilitários
 │   │   ├── auth_service.dart           # 🆕 Autenticação local
+│   │   ├── appointment_service.dart    # 🆕 Gerenciamento de agendamentos
 │   │   └── specialty_translation_service.dart
 │   ├── utils/                          # Helpers e formatadores
 │   └── di/                             # Dependency Injection (GetIt)
 ├── data/                               # Camada de Dados
 │   ├── models/                         # Models (DTOs)
 │   │   ├── local_user_model.dart       # 🆕 Model para usuário local (Hive)
+│   │   ├── appointment_saved_model.dart # 🆕 Model para agendamentos (Hive)
 │   │   ├── user_model.dart             # Model da API
 │   │   ├── doctor_model.dart
 │   │   └── ...
@@ -184,9 +217,12 @@ lib/
 │   ├── providers/                      # State management (ChangeNotifier)
 │   ├── screens/                        # Telas da aplicação
 │   └── widgets/                        # Widgets reutilizáveis
+│       ├── floating_nav_bar.dart       # 🆕 Bottom nav bar flutuante
+│       └── ...
 ├── screens/                            # Telas principais
 │   ├── login_screen.dart
 │   ├── register_screen.dart            # 🆕 Tela de cadastro
+│   ├── profile_screen.dart             # 🆕 Tela de perfil do usuário
 │   └── ...
 ├── providers/                          # Providers globais
 │   └── locale_provider.dart
@@ -322,11 +358,14 @@ flutter build ios --release
 - **l10n**: Localização dinâmica (Português e Inglês)
 
 ### Widgets e Componentes
-- **Widgets Reutilizáveis**: DoctorCard, ClinicCard, SpecialtyChip
+- **Widgets Reutilizáveis**: DoctorCard, ClinicCard, SpecialtyChip, FloatingNavBar
+- **Bottom Navigation Bar**: Navegação flutuante com animações
 - **Bottom Sheets**: Modais deslizantes com `DraggableScrollableSheet`
+- **TabBar Personalizada**: Abas com indicador animado e sombra
 - **Formulários**: Validação e controle de inputs
 - **ListView.builder**: Listas otimizadas com scroll
 - **AlertDialog**: Diálogos de confirmação
+- **Empty States**: Estados vazios personalizados
 
 ## 📂 Estrutura de Assets
 
@@ -356,10 +395,18 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - **Dias**: Semana completa com alguns dias indisponíveis
 
 ### Dados Persistidos (Hive)
-- **Usuários Locais**: Cadastro com email e senha (hash SHA256)
-- **Sessão**: Controle de usuário logado
-- **Box Hive**: `users` para usuários, `preferences` para configurações
-- **Validação**: Email único, senha mínima de 6 caracteres
+- **Usuários Locais** (Box: `users`):
+  - Cadastro com email e senha (hash SHA256)
+  - Sessão de usuário logado
+  - Validação: Email único, senha mínima de 6 caracteres
+- **Agendamentos** (Box: `appointments`):
+  - Dados completos do agendamento
+  - Status (aberto/fechado)
+  - Data de criação e conclusão
+  - Estatísticas em tempo real
+- **Preferências** (Box: `preferences`):
+  - Email do usuário atual
+  - Configurações do app
 
 ### Dados da API Real
 - **10 Usuários**: Da API [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
@@ -405,7 +452,6 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Cache local (Hive)~~ ✅ **Sistema de autenticação local implementado**
 - [ ] Integração com Google Maps real
 - [ ] Sistema de notificações push
-- [ ] Histórico de consultas persistido
 - [ ] Perfil do usuário editável
 - [ ] Sistema de favoritos persistente
 - [ ] Sincronização com backend
