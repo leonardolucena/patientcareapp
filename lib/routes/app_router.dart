@@ -12,6 +12,10 @@ import 'package:patientcareapp/screens/users_list_screen.dart';
 import 'package:patientcareapp/screens/favorites_screen.dart';
 import 'package:patientcareapp/screens/medical_history_screen.dart';
 import 'package:patientcareapp/screens/add_medical_record_screen.dart';
+import 'package:patientcareapp/screens/reminders_screen.dart';
+import 'package:patientcareapp/screens/add_reminder_screen.dart';
+import 'package:patientcareapp/screens/my_appointments_screen.dart';
+import 'package:patientcareapp/data/models/reminder_model.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -102,6 +106,24 @@ class AppRouter {
         path: '/medical-history/add',
         name: 'add-medical-record',
         builder: (context, state) => const AddMedicalRecordScreen(),
+      ),
+      GoRoute(
+        path: '/reminders',
+        name: 'reminders',
+        builder: (context, state) => const RemindersScreen(),
+      ),
+      GoRoute(
+        path: '/reminders/add',
+        name: 'add-reminder',
+        builder: (context, state) {
+          final reminder = state.extra as ReminderModel?;
+          return AddReminderScreen(reminder: reminder);
+        },
+      ),
+      GoRoute(
+        path: '/appointments',
+        name: 'appointments',
+        builder: (context, state) => const MyAppointmentsScreen(),
       ),
     ],
   );

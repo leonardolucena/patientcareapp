@@ -4,6 +4,7 @@ import 'package:patientcareapp/core/services/auth_service.dart';
 import 'package:patientcareapp/core/services/appointment_service.dart';
 import 'package:patientcareapp/core/services/favorites_service.dart';
 import 'package:patientcareapp/core/services/medical_history_service.dart';
+import 'package:patientcareapp/core/services/reminder_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:patientcareapp/data/datasources/local_clinics_datasource.dart';
 import 'package:patientcareapp/data/datasources/local_doctors_datasource.dart';
@@ -18,9 +19,11 @@ import 'package:patientcareapp/data/repositories/specialty_repository_impl.dart'
 import 'package:patientcareapp/data/repositories/user_repository_impl.dart';
 import 'package:patientcareapp/data/repositories/favorites_repository_impl.dart';
 import 'package:patientcareapp/data/repositories/medical_history_repository_impl.dart';
+import 'package:patientcareapp/data/repositories/reminder_repository_impl.dart';
 import 'package:patientcareapp/domain/repositories/appointment_repository.dart';
 import 'package:patientcareapp/domain/repositories/favorites_repository.dart';
 import 'package:patientcareapp/domain/repositories/medical_history_repository.dart';
+import 'package:patientcareapp/domain/repositories/reminder_repository.dart';
 import 'package:patientcareapp/domain/repositories/clinic_repository.dart';
 import 'package:patientcareapp/domain/repositories/doctor_repository.dart';
 import 'package:patientcareapp/domain/repositories/review_repository.dart';
@@ -68,6 +71,11 @@ Future<void> initializeDependencies() async {
   final medicalHistoryService = MedicalHistoryService();
   await medicalHistoryService.initialize();
   getIt.registerSingleton<MedicalHistoryService>(medicalHistoryService);
+
+  // ReminderService (Singleton)
+  final reminderService = ReminderService();
+  await reminderService.initialize();
+  getIt.registerSingleton<ReminderService>(reminderService);
 
   // ==================== NETWORK ====================
   
@@ -133,6 +141,10 @@ Future<void> initializeDependencies() async {
 
   getIt.registerLazySingleton<MedicalHistoryRepository>(
     () => MedicalHistoryRepositoryImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton<ReminderRepository>(
+    () => ReminderRepositoryImpl(getIt()),
   );
 
   // ==================== USE CASES ====================

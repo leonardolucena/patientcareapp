@@ -7,7 +7,6 @@ import 'package:patientcareapp/presentation/widgets/floating_nav_bar.dart';
 import 'package:patientcareapp/core/services/appointment_service.dart';
 import 'package:patientcareapp/core/services/auth_service.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
-import 'package:patientcareapp/data/models/appointment_saved_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -17,8 +16,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _ProfileScreenState extends State<ProfileScreen> {
   late AppointmentService _appointmentService;
   late AuthService _authService;
 
@@ -26,18 +24,15 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
   int _userAge = 32;
   final String _userAvatar = '👤';
   
-  List<AppointmentSavedModel> _openAppointments = [];
-  List<AppointmentSavedModel> _closedAppointments = [];
   Map<String, int> _statistics = {};
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     _appointmentService = getIt<AppointmentService>();
     _authService = getIt<AuthService>();
     _loadUserData();
-    _loadAppointments();
+    _loadStatistics();
   }
 
   Future<void> _loadUserData() async {
@@ -50,62 +45,15 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     }
   }
 
-  Future<void> _loadAppointments() async {
-    // Primeiro: reabre consultas futuras que foram marcadas incorretamente
+  Future<void> _loadStatistics() async {
     await _appointmentService.reopenFutureCompletedAppointments();
-    
-    // Segundo: marca consultas passadas como concluídas
     await _appointmentService.updateExpiredAppointments();
     
-    setState(() {
-      _openAppointments = _appointmentService.getOpenAppointments();
-      _closedAppointments = _appointmentService.getClosedAppointments();
-      _statistics = _appointmentService.getStatistics();
-    });
-  }
-
-  Future<void> _showCancelDialog(AppointmentSavedModel appointment, AppLocalizations l10n) async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.cancelAppointment),
-        content: Text(l10n.cancelAppointmentConfirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.cancel),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-            ),
-            child: Text(l10n.confirmCancellation),
-          ),
-        ],
-      ),
-    );
-
-    if (result == true) {
-      await _appointmentService.cancelAppointment(appointment.id);
-      _loadAppointments();
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l10n.appointmentCancelled),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
+    if (mounted) {
+      setState(() {
+        _statistics = _appointmentService.getStatistics();
+      });
     }
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -123,30 +71,20 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                _buildHeader(context, l10n),
-                const SizedBox(height: 16),
-                _buildDashboard(context, l10n),
-                const SizedBox(height: 20),
-                _buildProfileActions(context, l10n),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: _buildAppointmentsSection(context, l10n),
-                ),
-                const SizedBox(height: 80), // Espaço para a nav bar flutuante
-              ],
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: const FloatingNavBar(currentIndex: 1),
-            ),
-          ],
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              _buildHeader(context, l10n),
+              const SizedBox(height: 16),
+              _buildDashboard(context, l10n),
+              const SizedBox(height: 20),
+              _buildProfileActions(context, l10n),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
+        bottomNavigationBar: const FloatingNavBar(currentIndex: 1),
       ),
     );
   }
@@ -244,6 +182,15 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             child: Column(
               children: [
                 ListTile(
+                  leading: Icon(Icons.calendar_month_rounded, color: Theme.of(context).colorScheme.primary),
+                  title: const Text('Minhas Consultas'),
+                  subtitle: Text('${_statistics['open'] ?? 0} agendadas'),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  onTap: () => context.push('/appointments'),
+                ),
+                Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+                ListTile(
                   leading: Icon(Icons.favorite_rounded, color: Theme.of(context).colorScheme.primary),
                   title: const Text('Meus Favoritos'),
                   subtitle: const Text('Médicos e clínicas favoritos'),
@@ -259,6 +206,15 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   trailing: const Icon(Icons.chevron_right_rounded),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   onTap: () => context.push('/medical-history'),
+                ),
+                Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+                ListTile(
+                  leading: Icon(Icons.notifications_active_rounded, color: Theme.of(context).colorScheme.primary),
+                  title: const Text('Lembretes'),
+                  subtitle: const Text('Lembretes de consultas'),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  onTap: () => context.push('/reminders'),
                 ),
               ],
             ),
@@ -348,182 +304,4 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     );
   }
 
-  Widget _buildAppointmentsSection(BuildContext context, AppLocalizations l10n) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(l10n.myAppointments, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: TabBar(
-            controller: _tabController,
-            dividerColor: Colors.transparent,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicator: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 4))],
-            ),
-            labelColor: Colors.white,
-            unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
-            tabs: [
-              Tab(
-                height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Center(child: Text(l10n.open)),
-                ),
-              ),
-              Tab(
-                height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Center(child: Text(l10n.closed)),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildAppointmentsList(_openAppointments, isOpen: true, l10n: l10n),
-              _buildAppointmentsList(_closedAppointments, isOpen: false, l10n: l10n),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAppointmentsList(List<AppointmentSavedModel> appointments, {required bool isOpen, required AppLocalizations l10n}) {
-    if (appointments.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(isOpen ? Icons.calendar_today_rounded : Icons.check_circle_outline_rounded, size: 64, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
-            const SizedBox(height: 16),
-            Text(isOpen ? l10n.noOpenAppointments : l10n.noClosedAppointments, style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
-          ],
-        ),
-      );
-    }
-
-    return ListView.builder(
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-      itemCount: appointments.length,
-      itemBuilder: (context, index) => _buildAppointmentCard(appointments[index], isOpen: isOpen, l10n: l10n),
-    );
-  }
-
-  Widget _buildAppointmentCard(AppointmentSavedModel appointment, {required bool isOpen, required AppLocalizations l10n}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
-                child: Icon(Icons.local_hospital_rounded, color: Theme.of(context).colorScheme.primary, size: 20),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(appointment.doctorName, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                    Text(appointment.specialty, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: (isOpen 
-                    ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) 
-                    : (appointment.isCancelled ? Colors.red : Colors.green)).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  isOpen 
-                    ? appointment.consultationType 
-                    : (appointment.isCancelled ? l10n.cancelled : 'Concluído'),
-                  style: TextStyle(
-                    color: isOpen 
-                      ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) 
-                      : (appointment.isCancelled ? Colors.red : Colors.green),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Icon(Icons.calendar_today_rounded, size: 16, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
-              const SizedBox(width: 8),
-              Text('${appointment.date} - ${appointment.time}', style: Theme.of(context).textTheme.bodyMedium),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Icon(Icons.location_on_rounded, size: 16, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
-              const SizedBox(width: 8),
-              Expanded(child: Text(appointment.clinicName, style: Theme.of(context).textTheme.bodyMedium)),
-            ],
-          ),
-          // Botão de cancelar apenas para consultas abertas
-          if (isOpen && !appointment.isCancelled) ...[
-            const SizedBox(height: 12),
-            Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () => _showCancelDialog(appointment, l10n),
-                icon: const Icon(Icons.cancel_outlined, size: 18),
-                label: Text(l10n.cancelAppointment),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red,
-                  side: const BorderSide(color: Colors.red),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
 }
