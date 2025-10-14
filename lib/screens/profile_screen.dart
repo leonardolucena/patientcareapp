@@ -241,13 +241,26 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
               boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
             ),
-            child: ListTile(
-              leading: Icon(Icons.favorite_rounded, color: Theme.of(context).colorScheme.primary),
-              title: const Text('Meus Favoritos'),
-              subtitle: const Text('Médicos e clínicas favoritos'),
-              trailing: const Icon(Icons.chevron_right_rounded),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              onTap: () => context.push('/favorites'),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.favorite_rounded, color: Theme.of(context).colorScheme.primary),
+                  title: const Text('Meus Favoritos'),
+                  subtitle: const Text('Médicos e clínicas favoritos'),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  onTap: () => context.push('/favorites'),
+                ),
+                Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+                ListTile(
+                  leading: Icon(Icons.medical_information_rounded, color: Theme.of(context).colorScheme.primary),
+                  title: const Text('Histórico Médico'),
+                  subtitle: const Text('Consultas, exames e medicações'),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  onTap: () => context.push('/medical-history'),
+                ),
+              ],
             ),
           ),
         ],

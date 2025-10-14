@@ -10,6 +10,8 @@ import 'package:patientcareapp/screens/doctor_profile_screen.dart';
 import 'package:patientcareapp/screens/appointment_confirmation_screen.dart';
 import 'package:patientcareapp/screens/users_list_screen.dart';
 import 'package:patientcareapp/screens/favorites_screen.dart';
+import 'package:patientcareapp/screens/medical_history_screen.dart';
+import 'package:patientcareapp/screens/add_medical_record_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -90,6 +92,16 @@ class AppRouter {
         path: '/favorites',
         name: 'favorites',
         builder: (context, state) => const FavoritesScreen(),
+      ),
+      GoRoute(
+        path: '/medical-history',
+        name: 'medical-history',
+        builder: (context, state) => const MedicalHistoryScreen(),
+      ),
+      GoRoute(
+        path: '/medical-history/add',
+        name: 'add-medical-record',
+        builder: (context, state) => const AddMedicalRecordScreen(),
       ),
     ],
   );
