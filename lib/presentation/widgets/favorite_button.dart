@@ -8,10 +8,10 @@ class FavoriteButton extends StatefulWidget {
   final String itemType;
 
   const FavoriteButton({
-    Key? key,
+    super.key,
     required this.itemId,
     required this.itemType,
-  }) : super(key: key);
+  });
 
   @override
   State<FavoriteButton> createState() => _FavoriteButtonState();
@@ -63,9 +63,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           itemType: widget.itemType,
           createdAt: DateTime.now(),
         );
-        debugPrint('Adicionando favorito: ${newFavorite.itemId} (${newFavorite.itemType})');
         await favoritesProvider.addFavorite(newFavorite);
-        debugPrint('Favorito adicionado com sucesso!');
       }
 
       if (mounted) {
@@ -74,7 +72,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         });
       }
     } catch (e) {
-      debugPrint('ERRO ao adicionar favorito: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

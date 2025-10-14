@@ -23,12 +23,7 @@ class FavoritesProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      debugPrint('FavoritesProvider: Carregando favoritos do armazenamento...');
       _favorites = await _repository.getFavorites();
-      debugPrint('FavoritesProvider: ${_favorites.length} favoritos carregados');
-      for (var fav in _favorites) {
-        debugPrint('  - ${fav.itemId} (${fav.itemType})');
-      }
     } catch (e) {
       debugPrint('Erro ao carregar favoritos: $e');
     } finally {
@@ -39,10 +34,8 @@ class FavoritesProvider with ChangeNotifier {
 
   Future<void> addFavorite(FavoriteModel favorite) async {
     try {
-      debugPrint('FavoritesProvider: Adicionando favorito ${favorite.itemId}');
       await _repository.addFavorite(favorite);
       _favorites.add(favorite);
-      debugPrint('FavoritesProvider: Total de favoritos agora: ${_favorites.length}');
       notifyListeners();
     } catch (e) {
       debugPrint('Erro ao adicionar favorito: $e');

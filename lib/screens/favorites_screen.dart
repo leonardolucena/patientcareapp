@@ -11,7 +11,7 @@ import '../domain/repositories/clinic_repository.dart';
 import '../core/di/injection_container.dart';
 
 class FavoritesScreen extends StatefulWidget {
-  const FavoritesScreen({Key? key}) : super(key: key);
+  const FavoritesScreen({super.key});
 
   @override
   State<FavoritesScreen> createState() => _FavoritesScreenState();
@@ -39,13 +39,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
     try {
       final favorites = context.read<FavoritesProvider>().favorites;
-      debugPrint('FavoritesScreen: Carregando ${favorites.length} favoritos');
-      
       final doctorRepository = getIt<DoctorRepository>();
       final clinicRepository = getIt<ClinicRepository>();
 
       for (var favorite in favorites) {
-        debugPrint('FavoritesScreen: Processando favorito ${favorite.itemId} (${favorite.itemType})');
         if (!_itemsCache.containsKey(favorite.itemId)) {
           if (favorite.itemType == 'doctor') {
             final doctor = await doctorRepository.getDoctorById(favorite.itemId);
@@ -57,8 +54,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         }
       }
     } catch (e) {
-      // Log do erro para debug
-      debugPrint('Erro ao carregar favoritos: $e');
       if (mounted) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -86,7 +81,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             favorite.itemType == 'doctor' ? Icons.person : Icons.local_hospital,
           ),
         ),
-        title: Text('${favorite.itemType == 'doctor' ? 'Médico' : 'Clínica'}'),
+        title: Text(favorite.itemType == 'doctor' ? 'Médico' : 'Clínica'),
         subtitle: Text('ID: ${favorite.itemId}'),
         trailing: IconButton(
           icon: const Icon(Icons.favorite, color: Colors.red),
