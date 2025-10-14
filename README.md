@@ -132,6 +132,17 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Localização**: Mapa fictício com endereço
 - **Avaliações**: Sistema de reviews com barras de progresso e comentários
 - **Valor da Consulta**: Exibido no rodapé fixo
+- **Botão de Favoritar**: Adicione médicos aos favoritos com um toque
+
+### ⭐ Sistema de Favoritos
+- **Armazenamento Local**: Favoritos persistem usando SharedPreferences
+- **Botão de Favoritar**: Ícone de coração nas telas de médicos
+- **Tela de Favoritos**: Acesse "Meus Favoritos" na tela de perfil
+- **Lista Organizada**: Visualize todos os médicos e clínicas favoritos
+- **Navegação Rápida**: Toque no favorito para ir direto ao perfil
+- **Remover Favoritos**: Botão de coração vermelho para desfavoritar
+- **Feedback Visual**: Animação e SnackBar ao adicionar/remover
+- **Estado Sincronizado**: Provider gerencia estado globalmente
 
 ### 📅 Agendamento de Consulta
 - **Bottom Sheet em 2 Páginas**: Navegação fluida entre etapas
@@ -213,6 +224,7 @@ lib/
 │   ├── services/                       # Serviços utilitários
 │   │   ├── auth_service.dart           # 🆕 Autenticação local
 │   │   ├── appointment_service.dart    # 🆕 Gerenciamento de agendamentos
+│   │   ├── favorites_service.dart      # ⭐ Gerenciamento de favoritos
 │   │   └── specialty_translation_service.dart
 │   ├── utils/                          # Helpers e formatadores
 │   └── di/                             # Dependency Injection (GetIt)
@@ -220,6 +232,7 @@ lib/
 │   ├── models/                         # Models (DTOs)
 │   │   ├── local_user_model.dart       # 🆕 Model para usuário local (Hive)
 │   │   ├── appointment_saved_model.dart # 🆕 Model para agendamentos (Hive)
+│   │   ├── favorite_model.dart         # ⭐ Model para favoritos (JSON)
 │   │   ├── user_model.dart             # Model da API
 │   │   ├── doctor_model.dart
 │   │   └── ...
@@ -233,9 +246,12 @@ lib/
 │   └── usecases/                       # Casos de uso
 ├── presentation/                       # Camada de Apresentação (UI)
 │   ├── providers/                      # State management (ChangeNotifier)
+│   │   └── favorites_provider.dart     # ⭐ Provider de favoritos
 │   ├── screens/                        # Telas da aplicação
+│   │   └── favorites_screen.dart       # ⭐ Tela de favoritos
 │   └── widgets/                        # Widgets reutilizáveis
 │       ├── floating_nav_bar.dart       # 🆕 Bottom nav bar flutuante
+│       └── favorite_button.dart        # ⭐ Botão de favoritar
 │       └── ...
 ├── screens/                            # Telas principais
 │   ├── login_screen.dart
@@ -286,10 +302,13 @@ dependencies:
   hive: ^2.2.3                # Cache local NoSQL
   hive_flutter: ^1.1.0        # Hive para Flutter
   crypto: ^3.0.3              # Hash de senhas (SHA256)
+  shared_preferences: ^2.2.2  # ⭐ Armazenamento local (favoritos)
+  json_annotation: ^4.8.1     # ⭐ Anotações JSON
 
 dev_dependencies:
   hive_generator: ^2.0.1      # Gerador de adapters Hive
   build_runner: ^2.4.9        # Code generation
+  json_serializable: ^6.7.1   # ⭐ Serialização JSON
 ```
 
 ## 🎨 Paleta de Cores
@@ -456,7 +475,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Providers para estado~~ ✅
 
 ### Testes ✅
-- [x] ~~Testes unitários (Use Cases, Repositories)~~ ✅ **29 testes passando**
+- [x] ~~Testes unitários (Use Cases, Repositories, Providers)~~ ✅ **39 testes passando** (incluindo favoritos)
 - [x] ~~Testes de Widget~~ ✅
 - [x] ~~Refatorar todas as Screens para usar nova arquitetura~~ ✅
 - [x] ~~Integração com API real (JSONPlaceholder)~~ ✅
@@ -486,7 +505,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [ ] Autenticação com Firebase (OAuth, Google Sign-In)
 - [ ] Integração com Google Maps real
 - [ ] Sistema de notificações push
-- [ ] Sistema de favoritos persistente
+- [x] ~~Sistema de favoritos persistente~~ ✅
 - [ ] Sincronização com backend
 - [ ] Chat com médicos em tempo real
 - [ ] Pagamento online integrado
@@ -500,7 +519,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 
 - **[Arquitetura SOLID](docs/ARCHITECTURE.md)** - Documentação completa da arquitetura
 - **[Integração com API](docs/API_INTEGRATION.md)** - Documentação da integração com JSONPlaceholder
-- **[Testes](docs/TESTING.md)** - Documentação completa de testes (29 testes ✅)
+- **[Testes](docs/TESTING.md)** - Documentação completa de testes (39 testes ✅)
 - **[Sistema de Temas](lib/theme/README.md)** - Documentação do sistema de cores e temas
 - **[Internacionalização](lib/l10n/README.md)** - Documentação do sistema de i18n
 
