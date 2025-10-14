@@ -43,6 +43,12 @@ class AppointmentSavedModel {
   @HiveField(11)
   final DateTime? completedAt;
 
+  @HiveField(12)
+  final bool isCancelled; // true = cancelado
+
+  @HiveField(13)
+  final DateTime? cancelledAt;
+
   const AppointmentSavedModel({
     required this.id,
     required this.doctorName,
@@ -56,6 +62,8 @@ class AppointmentSavedModel {
     required this.createdAt,
     this.isCompleted = false,
     this.completedAt,
+    this.isCancelled = false,
+    this.cancelledAt,
   });
 
   /// Cria uma cópia do modelo com campos atualizados
@@ -72,6 +80,8 @@ class AppointmentSavedModel {
     DateTime? createdAt,
     bool? isCompleted,
     DateTime? completedAt,
+    bool? isCancelled,
+    DateTime? cancelledAt,
   }) {
     return AppointmentSavedModel(
       id: id ?? this.id,
@@ -86,6 +96,8 @@ class AppointmentSavedModel {
       createdAt: createdAt ?? this.createdAt,
       isCompleted: isCompleted ?? this.isCompleted,
       completedAt: completedAt ?? this.completedAt,
+      isCancelled: isCancelled ?? this.isCancelled,
+      cancelledAt: cancelledAt ?? this.cancelledAt,
     );
   }
 

@@ -78,7 +78,6 @@ class FloatingNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 10),
             Icon(
               icon,
               color: isSelected

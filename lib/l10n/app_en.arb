@@ -269,6 +269,31 @@
   "confirmNewPassword": "Confirm New Password",
   "saveChanges": "Save Changes",
   "profileUpdatedSuccess": "Profile updated successfully!",
-  "profileUpdateError": "Error updating profile"
+  "profileUpdateError": "Error updating profile",
+
+  "cancelAppointment": "Cancel Appointment",
+  "@cancelAppointment": {
+    "description": "Title for canceling appointment"
+  },
+  "cancelAppointmentConfirm": "Are you sure you want to cancel this appointment?",
+  "@cancelAppointmentConfirm": {
+    "description": "Confirmation message for canceling appointment"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "confirmCancellation": "Yes, cancel",
+  "@confirmCancellation": {
+    "description": "Confirm cancellation button"
+  },
+  "appointmentCancelled": "Appointment cancelled successfully!",
+  "@appointmentCancelled": {
+    "description": "Success message when appointment is cancelled"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Cancelled appointment status"
+  }
 }
 

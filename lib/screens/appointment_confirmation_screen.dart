@@ -34,7 +34,8 @@ class AppointmentConfirmationScreen extends StatelessWidget {
       
       final now = DateTime.now();
       final month = now.month.toString().padLeft(2, '0');
-      final date = '$dayNumber/$month/2024';
+      final year = now.year; // Usa o ano atual (2025)
+      final date = '$dayNumber/$month/$year';
       
       await appointmentService.saveAppointment(
         doctorName: doctorName,

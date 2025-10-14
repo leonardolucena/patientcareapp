@@ -717,6 +717,31 @@
   "profileUpdateError": "Erro ao atualizar perfil",
   "@profileUpdateError": {
     "description": "Mensagem de erro ao atualizar perfil"
+  },
+
+  "cancelAppointment": "Cancelar Consulta",
+  "@cancelAppointment": {
+    "description": "Título para cancelar consulta"
+  },
+  "cancelAppointmentConfirm": "Tem certeza que deseja cancelar esta consulta?",
+  "@cancelAppointmentConfirm": {
+    "description": "Mensagem de confirmação para cancelar consulta"
+  },
+  "cancel": "Cancelar",
+  "@cancel": {
+    "description": "Botão cancelar"
+  },
+  "confirmCancellation": "Sim, cancelar",
+  "@confirmCancellation": {
+    "description": "Botão confirmar cancelamento"
+  },
+  "appointmentCancelled": "Consulta cancelada com sucesso!",
+  "@appointmentCancelled": {
+    "description": "Mensagem de sucesso ao cancelar consulta"
+  },
+  "cancelled": "Cancelada",
+  "@cancelled": {
+    "description": "Status de consulta cancelada"
   }
 }
 

@@ -50,12 +50,56 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     }
   }
 
-  void _loadAppointments() {
+  Future<void> _loadAppointments() async {
+    // Primeiro: reabre consultas futuras que foram marcadas incorretamente
+    await _appointmentService.reopenFutureCompletedAppointments();
+    
+    // Segundo: marca consultas passadas como concluídas
+    await _appointmentService.updateExpiredAppointments();
+    
     setState(() {
       _openAppointments = _appointmentService.getOpenAppointments();
       _closedAppointments = _appointmentService.getClosedAppointments();
       _statistics = _appointmentService.getStatistics();
     });
+  }
+
+  Future<void> _showCancelDialog(AppointmentSavedModel appointment, AppLocalizations l10n) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.cancelAppointment),
+        content: Text(l10n.cancelAppointmentConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: Text(l10n.confirmCancellation),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true) {
+      await _appointmentService.cancelAppointment(appointment.id);
+      _loadAppointments();
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l10n.appointmentCancelled),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -370,10 +414,23 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: (isOpen ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) : Colors.green).withValues(alpha: 0.1),
+                  color: (isOpen 
+                    ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) 
+                    : (appointment.isCancelled ? Colors.red : Colors.green)).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(isOpen ? appointment.consultationType : 'Concluído', style: TextStyle(color: isOpen ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) : Colors.green, fontSize: 12, fontWeight: FontWeight.bold)),
+                child: Text(
+                  isOpen 
+                    ? appointment.consultationType 
+                    : (appointment.isCancelled ? l10n.cancelled : 'Concluído'),
+                  style: TextStyle(
+                    color: isOpen 
+                      ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) 
+                      : (appointment.isCancelled ? Colors.red : Colors.green),
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
@@ -395,6 +452,27 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               Expanded(child: Text(appointment.clinicName, style: Theme.of(context).textTheme.bodyMedium)),
             ],
           ),
+          // Botão de cancelar apenas para consultas abertas
+          if (isOpen && !appointment.isCancelled) ...[
+            const SizedBox(height: 12),
+            Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => _showCancelDialog(appointment, l10n),
+                icon: const Icon(Icons.cancel_outlined, size: 18),
+                label: Text(l10n.cancelAppointment),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.red,
+                  side: const BorderSide(color: Colors.red),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

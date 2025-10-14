@@ -27,15 +27,17 @@ class AppointmentSavedModelAdapter extends TypeAdapter<AppointmentSavedModel> {
       priority: fields[7] as String,
       paymentMethod: fields[8] as String,
       createdAt: fields[9] as DateTime,
-      isCompleted: fields[10] as bool,
+      isCompleted: fields[10] as bool? ?? false,
       completedAt: fields[11] as DateTime?,
+      isCancelled: fields[12] as bool? ?? false,
+      cancelledAt: fields[13] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppointmentSavedModel obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -59,7 +61,11 @@ class AppointmentSavedModelAdapter extends TypeAdapter<AppointmentSavedModel> {
       ..writeByte(10)
       ..write(obj.isCompleted)
       ..writeByte(11)
-      ..write(obj.completedAt);
+      ..write(obj.completedAt)
+      ..writeByte(12)
+      ..write(obj.isCancelled)
+      ..writeByte(13)
+      ..write(obj.cancelledAt);
   }
 
   @override
