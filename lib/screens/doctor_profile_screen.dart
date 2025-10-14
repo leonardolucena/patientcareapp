@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../presentation/widgets/favorite_button.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -17,7 +18,6 @@ class DoctorProfileScreen extends StatefulWidget {
 }
 
 class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
-  bool _isFavorite = false;
   String _selectedConsultationType = '';
   int _selectedDay = -1;
   String _selectedTime = '';
@@ -130,26 +130,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: _isFavorite ? Colors.red : Theme.of(context).colorScheme.onSurface,
-            ),
-            onPressed: () {
-              setState(() {
-                _isFavorite = !_isFavorite;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    _isFavorite
-                        ? l10n.addedToFavorites
-                        : l10n.removedFromFavorites,
-                  ),
-                  duration: const Duration(seconds: 1),
-                ),
-              );
-            },
+          FavoriteButton(
+            itemId: widget.doctor['id'] ?? widget.doctor['name'],
+            itemType: 'doctor',
           ),
         ],
       ),

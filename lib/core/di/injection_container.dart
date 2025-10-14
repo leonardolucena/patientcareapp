@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:patientcareapp/core/network/api_gateway.dart';
 import 'package:patientcareapp/core/services/auth_service.dart';
 import 'package:patientcareapp/core/services/appointment_service.dart';
+import 'package:patientcareapp/core/services/favorites_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:patientcareapp/data/datasources/local_clinics_datasource.dart';
 import 'package:patientcareapp/data/datasources/local_doctors_datasource.dart';
 import 'package:patientcareapp/data/datasources/local_reviews_datasource.dart';
@@ -13,7 +15,9 @@ import 'package:patientcareapp/data/repositories/doctor_repository_impl.dart';
 import 'package:patientcareapp/data/repositories/review_repository_impl.dart';
 import 'package:patientcareapp/data/repositories/specialty_repository_impl.dart';
 import 'package:patientcareapp/data/repositories/user_repository_impl.dart';
+import 'package:patientcareapp/data/repositories/favorites_repository_impl.dart';
 import 'package:patientcareapp/domain/repositories/appointment_repository.dart';
+import 'package:patientcareapp/domain/repositories/favorites_repository.dart';
 import 'package:patientcareapp/domain/repositories/clinic_repository.dart';
 import 'package:patientcareapp/domain/repositories/doctor_repository.dart';
 import 'package:patientcareapp/domain/repositories/review_repository.dart';
@@ -47,6 +51,15 @@ Future<void> initializeDependencies() async {
   final appointmentService = AppointmentService();
   await appointmentService.initialize();
   getIt.registerSingleton<AppointmentService>(appointmentService);
+
+  // SharedPreferences (Singleton)
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerSingleton<SharedPreferences>(sharedPreferences);
+
+  // FavoritesService (Singleton)
+  getIt.registerLazySingleton<FavoritesService>(
+    () => FavoritesService(getIt()),
+  );
 
   // ==================== NETWORK ====================
   
@@ -104,6 +117,10 @@ Future<void> initializeDependencies() async {
   
   getIt.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepositoryImpl(getIt()),
   );
 
   // ==================== USE CASES ====================

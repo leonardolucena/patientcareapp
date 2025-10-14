@@ -11,6 +11,7 @@ import 'package:patientcareapp/presentation/providers/doctors_provider.dart';
 import 'package:patientcareapp/presentation/providers/clinics_provider.dart';
 import 'package:patientcareapp/presentation/providers/reviews_provider.dart';
 import 'package:patientcareapp/presentation/providers/users_provider.dart';
+import 'package:patientcareapp/presentation/providers/favorites_provider.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
 import 'package:patientcareapp/data/models/local_user_model.dart';
 import 'package:patientcareapp/data/models/appointment_saved_model.dart';
@@ -39,6 +40,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ClinicsProvider()),
         ChangeNotifierProvider(create: (_) => ReviewsProvider()),
         ChangeNotifierProvider(create: (_) => UsersProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider(getIt())),
       ],
       child: const MyApp(),
     ),

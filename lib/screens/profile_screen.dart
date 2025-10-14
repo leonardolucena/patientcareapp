@@ -131,6 +131,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 const SizedBox(height: 16),
                 _buildDashboard(context, l10n),
                 const SizedBox(height: 20),
+                _buildProfileActions(context, l10n),
+                const SizedBox(height: 20),
                 Expanded(
                   child: _buildAppointmentsSection(context, l10n),
                 ),
@@ -215,6 +217,40 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildProfileActions(BuildContext context, AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Ações',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
+            ),
+            child: ListTile(
+              leading: Icon(Icons.favorite_rounded, color: Theme.of(context).colorScheme.primary),
+              title: const Text('Meus Favoritos'),
+              subtitle: const Text('Médicos e clínicas favoritos'),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              onTap: () => context.push('/favorites'),
+            ),
+          ),
+        ],
       ),
     );
   }
