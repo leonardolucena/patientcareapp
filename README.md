@@ -70,7 +70,9 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 
 ### 🔐 Autenticação
 - **Tela de Login**: Interface moderna com validação de formulário
-- **Tela de Cadastro**: Registro de novos usuários com validação de email e senha
+- **Tela de Cadastro**: Registro de novos usuários com nome, idade, email e senha
+- **Recuperação de Senha**: Tela dedicada para resetar senha com validação de email
+- **Edição de Perfil**: Permite atualizar nome, idade, email e senha do usuário
 - **Cache Local**: Persistência de dados usando Hive (NoSQL)
 - **Hash de Senhas**: Criptografia SHA256 para segurança
 - **Gerenciamento de Sessão**: Controle de usuário logado
@@ -81,24 +83,36 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 
 ### 📊 Perfil do Usuário
 - **Header Personalizado**: Foto, nome e idade do usuário com gradiente azul
-- **Dashboard de Estatísticas**: 4 cards com informações:
+- **Botão Editar Perfil**: Acesso rápido para editar informações pessoais
+- **Dashboard de Estatísticas**: Lista horizontal com scroll e 4 cards informativos:
   - Total de consultas realizadas
   - Consultas concluídas
   - Número de médicos únicos
   - Próximas consultas
 - **Agendamentos com Abas**:
   - Tab "Abertos": Agendamentos futuros com badge (Online/Presencial)
-  - Tab "Fechados": Histórico de consultas concluídas
+  - Tab "Fechados": Histórico de consultas concluídas ou canceladas
+  - **Cancelamento de Consultas**: Botão para cancelar consultas abertas com confirmação
+  - **Status Dinâmico**: Consultas automaticamente movem para "Fechados" quando a data passa
   - Design moderno com indicador animado e sombra
+  - Scroll independente por aba
+- **Badges de Status**:
+  - 🟢 Online/Presencial (para consultas abertas)
+  - 🟢 Concluído (para consultas finalizadas)
+  - 🔴 Cancelada (para consultas canceladas)
+- **Atualização Automática**: Status de consultas atualizado ao abrir a tela
 - **Dados Reais**: Todas as informações vêm do Hive (agendamentos salvos)
 - **Empty States**: Mensagens personalizadas quando não há agendamentos
 
 ### 🧭 Navegação
 - **Bottom Navigation Bar Flutuante**: 
-  - Design elevado com bordas arredondadas
-  - Ícones animados com background ao selecionar
+  - Design verdadeiramente flutuante sobre o conteúdo
+  - Bordas arredondadas e sombra elegante
+  - Ícones com feedback visual ao selecionar
   - 2 botões: Busca de Clínicas e Perfil
   - Presente nas telas principais
+  - Sem espaço branco embaixo (SafeArea otimizado)
+  - Layout responsivo sem overflow
 
 ### 🏥 Busca de Clínicas
 - **Mapa Fictício**: Visualização interativa com marcadores de clínicas
@@ -171,14 +185,18 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
   - Gerenciamento de sessão
   - Verificação de email duplicado
 - **AppointmentService**: Gerenciamento de agendamentos
-  - Salvar novos agendamentos
+  - Salvar novos agendamentos com ano dinâmico (2025)
   - Buscar agendamentos abertos/fechados
-  - Marcar como concluído
+  - Marcar como concluído automaticamente (1 hora após o horário)
+  - **Cancelar consultas** com timestamp
+  - **Atualização automática de status**: Consultas passadas vão para "Fechados"
+  - **Reabertura inteligente**: Consultas futuras marcadas incorretamente são reabertas
   - Calcular estatísticas em tempo real
+  - Filtros inteligentes: Abertos (não concluídos e não cancelados), Fechados (concluídos ou cancelados)
   - Deletar agendamentos
 - **Models Persistidos com Hive TypeAdapter**:
-  - `LocalUserModel` (TypeId: 0): Usuários cadastrados
-  - `AppointmentSavedModel` (TypeId: 1): Agendamentos salvos
+  - `LocalUserModel` (TypeId: 0): Usuários cadastrados com nome e idade
+  - `AppointmentSavedModel` (TypeId: 1): Agendamentos com status de cancelamento e timestamps
 - **Dependency Injection**: Services registrados no GetIt
 - **Fluxo Completo**: Login → Busca → Agendamento → Persistência → Perfil
 
@@ -221,8 +239,10 @@ lib/
 │       └── ...
 ├── screens/                            # Telas principais
 │   ├── login_screen.dart
-│   ├── register_screen.dart            # 🆕 Tela de cadastro
-│   ├── profile_screen.dart             # 🆕 Tela de perfil do usuário
+│   ├── register_screen.dart            # 🆕 Tela de cadastro com nome e idade
+│   ├── forgot_password_screen.dart     # 🆕 Tela de recuperação de senha
+│   ├── edit_profile_screen.dart        # 🆕 Tela de edição de perfil
+│   ├── profile_screen.dart             # 🆕 Tela de perfil com cancelamento de consultas
 │   └── ...
 ├── providers/                          # Providers globais
 │   └── locale_provider.dart
@@ -396,13 +416,17 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 
 ### Dados Persistidos (Hive)
 - **Usuários Locais** (Box: `users`):
-  - Cadastro com email e senha (hash SHA256)
+  - Cadastro com nome, idade, email e senha (hash SHA256)
+  - Edição de perfil (atualizar dados e senha)
+  - Recuperação de senha
   - Sessão de usuário logado
-  - Validação: Email único, senha mínima de 6 caracteres
+  - Validação: Email único, senha mínima de 6 caracteres, idade entre 1-150
 - **Agendamentos** (Box: `appointments`):
-  - Dados completos do agendamento
-  - Status (aberto/fechado)
-  - Data de criação e conclusão
+  - Dados completos do agendamento com ano dinâmico
+  - Status (aberto/fechado/cancelado)
+  - Data de criação, conclusão e cancelamento
+  - **Gestão automática de status**: Consultas movem para "Fechados" 1h após o horário
+  - **Reabertura automática**: Corrige consultas futuras marcadas incorretamente
   - Estatísticas em tempo real
 - **Preferências** (Box: `preferences`):
   - Email do usuário atual
@@ -447,17 +471,28 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Models tipados (User, Address, Company)~~ ✅
 - [x] ~~Remote Datasource com tratamento de erros~~ ✅
 
+### Features Implementadas Recentemente ✅
+- [x] ~~Recuperação de senha (Forgot Password)~~ ✅
+- [x] ~~Edição de perfil completa (nome, idade, email, senha)~~ ✅
+- [x] ~~Cadastro com dados pessoais (nome e idade)~~ ✅
+- [x] ~~Cancelamento de consultas com confirmação~~ ✅
+- [x] ~~Atualização automática de status de consultas~~ ✅
+- [x] ~~Bottom Nav Bar flutuante otimizada~~ ✅
+- [x] ~~Dashboard de estatísticas com scroll horizontal~~ ✅
+- [x] ~~Badges de status diferenciados (Concluído/Cancelado)~~ ✅
+- [x] ~~Correção de bugs de overflow e compatibilidade Hive~~ ✅
+
 ### Próximas Features 🚧
 - [ ] Autenticação com Firebase (OAuth, Google Sign-In)
-- [x] ~~Cache local (Hive)~~ ✅ **Sistema de autenticação local implementado**
 - [ ] Integração com Google Maps real
 - [ ] Sistema de notificações push
-- [ ] Perfil do usuário editável
 - [ ] Sistema de favoritos persistente
 - [ ] Sincronização com backend
-- [ ] Chat com médicos
-- [ ] Pagamento online
+- [ ] Chat com médicos em tempo real
+- [ ] Pagamento online integrado
 - [ ] Prescrições digitais
+- [ ] Histórico médico do paciente
+- [ ] Lembretes de consultas
 
 ---
 
