@@ -89,20 +89,31 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
   - Consultas concluídas
   - Número de médicos únicos
   - Próximas consultas
-- **Agendamentos com Abas**:
-  - Tab "Abertos": Agendamentos futuros com badge (Online/Presencial)
-  - Tab "Fechados": Histórico de consultas concluídas ou canceladas
-  - **Cancelamento de Consultas**: Botão para cancelar consultas abertas com confirmação
-  - **Status Dinâmico**: Consultas automaticamente movem para "Fechados" quando a data passa
-  - Design moderno com indicador animado e sombra
-  - Scroll independente por aba
-- **Badges de Status**:
-  - 🟢 Online/Presencial (para consultas abertas)
-  - 🟢 Concluído (para consultas finalizadas)
-  - 🔴 Cancelada (para consultas canceladas)
-- **Atualização Automática**: Status de consultas atualizado ao abrir a tela
-- **Dados Reais**: Todas as informações vêm do Hive (agendamentos salvos)
-- **Empty States**: Mensagens personalizadas quando não há agendamentos
+- **Ações Rápidas** (Cards clicáveis):
+  - 📅 **Minhas Consultas**: Acesso à tela dedicada de consultas (mostra quantidade agendada)
+  - ⭐ **Meus Favoritos**: Médicos e clínicas favoritos
+  - 📋 **Histórico Médico**: Consultas, exames e medicações
+  - 🔔 **Lembretes**: Lembretes de consultas
+- **Layout Limpo**: Perfil scrollável sem seções expandidas
+- **Navegação Otimizada**: Bottom nav bar posicionada corretamente
+
+### 📅 Minhas Consultas (Tela Dedicada)
+- **Tela Completa**: Acesso via botão no perfil
+- **Tabs com Contadores**: 
+  - Tab "Abertas": Consultas agendadas (com contador)
+  - Tab "Concluídas": Histórico completo (com contador)
+- **Cards Informativos**: 
+  - Médico, clínica, data, horário
+  - Status colorido (Agendada/Concluída/Cancelada)
+  - Tipo de consulta (Online/Presencial)
+- **Ações**:
+  - Cancelar consultas abertas com confirmação
+  - Ver detalhes completos ao tocar no card
+  - Pull-to-refresh para atualizar
+  - Botão de atualizar no AppBar
+- **Modal de Detalhes**: Todas as informações do agendamento
+- **Status Dinâmico**: Atualização automática baseada na data
+- **Empty States**: Mensagens personalizadas quando não há consultas
 
 ### 🧭 Navegação
 - **Bottom Navigation Bar Flutuante**: 
@@ -143,6 +154,41 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Remover Favoritos**: Botão de coração vermelho para desfavoritar
 - **Feedback Visual**: Animação e SnackBar ao adicionar/remover
 - **Estado Sincronizado**: Provider gerencia estado globalmente
+
+### 📋 Histórico Médico do Paciente
+- **Armazenamento Local**: Dados persistem usando Hive (TypeId: 2)
+- **Categorias Organizadas**: Consultas, Exames, Medicações, Cirurgias, Alergias, Vacinas
+- **Busca por Título**: Campo de pesquisa dinâmico
+- **Filtros**: Por categoria e ordenação (mais recente/mais antigo)
+- **Adicionar Registros**: Formulário completo com:
+  - Título e descrição
+  - Data do registro
+  - Categoria
+  - Médico responsável (opcional)
+  - Local (opcional)
+  - Anexos (opcional)
+- **Cards Informativos**: Data, categoria, médico e local
+- **Editar/Excluir**: Toque no registro para editar ou excluir
+- **Empty States**: Mensagens personalizadas por filtro
+
+### 🔔 Lembretes de Consultas
+- **Armazenamento Local**: Lembretes persistem usando Hive (TypeId: 3)
+- **Filtros Inteligentes**: Todos, Hoje, Próximos, Vencidos (com contadores)
+- **Painel de Estatísticas**: Resumo visual dos lembretes
+- **Cards com Status**: 
+  - 🔵 Hoje
+  - 🟢 Próximos (mostra dias restantes)
+  - 🟠 Vencidos
+- **Adicionar/Editar Lembretes**:
+  - Título e descrição
+  - Data e hora da consulta
+  - Data e hora do lembrete
+  - Sugestões rápidas (1 dia, 2 dias, 1 semana antes)
+  - Médico e local (opcional)
+  - Observações (opcional)
+- **Propriedades Úteis**: `isOverdue`, `isToday`, `isTomorrow`, `daysUntilAppointment`
+- **Excluir com Confirmação**: Diálogo antes de remover
+- **Navegação**: Toque para editar os detalhes
 
 ### 📅 Agendamento de Consulta
 - **Bottom Sheet em 2 Páginas**: Navegação fluida entre etapas
@@ -208,6 +254,8 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Models Persistidos com Hive TypeAdapter**:
   - `LocalUserModel` (TypeId: 0): Usuários cadastrados com nome e idade
   - `AppointmentSavedModel` (TypeId: 1): Agendamentos com status de cancelamento e timestamps
+  - `MedicalRecordModel` (TypeId: 2): Registros de histórico médico completo
+  - `ReminderModel` (TypeId: 3): Lembretes de consultas com datas e status
 - **Dependency Injection**: Services registrados no GetIt
 - **Fluxo Completo**: Login → Busca → Agendamento → Persistência → Perfil
 
@@ -225,6 +273,8 @@ lib/
 │   │   ├── auth_service.dart           # 🆕 Autenticação local
 │   │   ├── appointment_service.dart    # 🆕 Gerenciamento de agendamentos
 │   │   ├── favorites_service.dart      # ⭐ Gerenciamento de favoritos
+│   │   ├── medical_history_service.dart # 📋 Gerenciamento de histórico médico
+│   │   ├── reminder_service.dart       # 🔔 Gerenciamento de lembretes
 │   │   └── specialty_translation_service.dart
 │   ├── utils/                          # Helpers e formatadores
 │   └── di/                             # Dependency Injection (GetIt)
@@ -233,6 +283,8 @@ lib/
 │   │   ├── local_user_model.dart       # 🆕 Model para usuário local (Hive)
 │   │   ├── appointment_saved_model.dart # 🆕 Model para agendamentos (Hive)
 │   │   ├── favorite_model.dart         # ⭐ Model para favoritos (JSON)
+│   │   ├── medical_record_model.dart   # 📋 Model para histórico médico (Hive)
+│   │   ├── reminder_model.dart         # 🔔 Model para lembretes (Hive)
 │   │   ├── user_model.dart             # Model da API
 │   │   ├── doctor_model.dart
 │   │   └── ...
@@ -241,24 +293,39 @@ lib/
 │   │   ├── remote_users_datasource.dart
 │   │   └── ...
 │   └── repositories/                   # Implementações de repositórios
+│       ├── favorites_repository_impl.dart      # ⭐ Impl de favoritos
+│       ├── medical_history_repository_impl.dart # 📋 Impl de histórico
+│       ├── reminder_repository_impl.dart       # 🔔 Impl de lembretes
+│       └── ...
 ├── domain/                             # Camada de Domínio (Regras de Negócio)
 │   ├── repositories/                   # Contratos (interfaces abstratas)
+│   │   ├── favorites_repository.dart         # ⭐ Interface de favoritos
+│   │   ├── medical_history_repository.dart   # 📋 Interface de histórico
+│   │   ├── reminder_repository.dart          # 🔔 Interface de lembretes
+│   │   └── ...
 │   └── usecases/                       # Casos de uso
 ├── presentation/                       # Camada de Apresentação (UI)
 │   ├── providers/                      # State management (ChangeNotifier)
-│   │   └── favorites_provider.dart     # ⭐ Provider de favoritos
-│   ├── screens/                        # Telas da aplicação
-│   │   └── favorites_screen.dart       # ⭐ Tela de favoritos
+│   │   ├── favorites_provider.dart          # ⭐ Provider de favoritos
+│   │   ├── medical_history_provider.dart    # 📋 Provider de histórico
+│   │   ├── reminder_provider.dart           # 🔔 Provider de lembretes
+│   │   └── ...
 │   └── widgets/                        # Widgets reutilizáveis
 │       ├── floating_nav_bar.dart       # 🆕 Bottom nav bar flutuante
-│       └── favorite_button.dart        # ⭐ Botão de favoritar
+│       ├── favorite_button.dart        # ⭐ Botão de favoritar
 │       └── ...
 ├── screens/                            # Telas principais
 │   ├── login_screen.dart
 │   ├── register_screen.dart            # 🆕 Tela de cadastro com nome e idade
 │   ├── forgot_password_screen.dart     # 🆕 Tela de recuperação de senha
 │   ├── edit_profile_screen.dart        # 🆕 Tela de edição de perfil
-│   ├── profile_screen.dart             # 🆕 Tela de perfil com cancelamento de consultas
+│   ├── profile_screen.dart             # 🆕 Tela de perfil otimizada
+│   ├── my_appointments_screen.dart     # 📅 Tela dedicada de consultas
+│   ├── favorites_screen.dart           # ⭐ Tela de favoritos
+│   ├── medical_history_screen.dart     # 📋 Tela de histórico médico
+│   ├── add_medical_record_screen.dart  # 📋 Formulário de registro médico
+│   ├── reminders_screen.dart           # 🔔 Tela de lembretes
+│   ├── add_reminder_screen.dart        # 🔔 Formulário de lembrete
 │   └── ...
 ├── providers/                          # Providers globais
 │   └── locale_provider.dart
@@ -475,7 +542,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Providers para estado~~ ✅
 
 ### Testes ✅
-- [x] ~~Testes unitários (Use Cases, Repositories, Providers)~~ ✅ **39 testes passando** (incluindo favoritos)
+- [x] ~~Testes unitários (Use Cases, Repositories, Providers)~~ ✅ **32+ testes passando**
 - [x] ~~Testes de Widget~~ ✅
 - [x] ~~Refatorar todas as Screens para usar nova arquitetura~~ ✅
 - [x] ~~Integração com API real (JSONPlaceholder)~~ ✅
@@ -499,19 +566,22 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Bottom Nav Bar flutuante otimizada~~ ✅
 - [x] ~~Dashboard de estatísticas com scroll horizontal~~ ✅
 - [x] ~~Badges de status diferenciados (Concluído/Cancelado)~~ ✅
-- [x] ~~Correção de bugs de overflow e compatibilidade Hive~~ ✅
+- [x] ~~Sistema de favoritos persistente~~ ✅
+- [x] ~~Histórico médico do paciente~~ ✅
+- [x] ~~Lembretes de consultas~~ ✅
+- [x] ~~Tela dedicada para consultas~~ ✅
+- [x] ~~Perfil otimizado com navegação por cards~~ ✅
 
 ### Próximas Features 🚧
 - [ ] Autenticação com Firebase (OAuth, Google Sign-In)
 - [ ] Integração com Google Maps real
-- [ ] Sistema de notificações push
-- [x] ~~Sistema de favoritos persistente~~ ✅
+- [ ] Sistema de notificações push (integrado com lembretes)
 - [ ] Sincronização com backend
 - [ ] Chat com médicos em tempo real
 - [ ] Pagamento online integrado
 - [ ] Prescrições digitais
-- [ ] Histórico médico do paciente
-- [ ] Lembretes de consultas
+- [ ] Upload de anexos no histórico médico
+- [ ] Estatísticas de saúde (gráficos e análises)
 
 ---
 
@@ -519,7 +589,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 
 - **[Arquitetura SOLID](docs/ARCHITECTURE.md)** - Documentação completa da arquitetura
 - **[Integração com API](docs/API_INTEGRATION.md)** - Documentação da integração com JSONPlaceholder
-- **[Testes](docs/TESTING.md)** - Documentação completa de testes (39 testes ✅)
+- **[Testes](docs/TESTING.md)** - Documentação completa de testes (32+ testes ✅)
 - **[Sistema de Temas](lib/theme/README.md)** - Documentação do sistema de cores e temas
 - **[Internacionalização](lib/l10n/README.md)** - Documentação do sistema de i18n
 
