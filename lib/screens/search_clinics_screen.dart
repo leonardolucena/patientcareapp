@@ -76,13 +76,18 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
         systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Consumer<ClinicsProvider>(
-                builder: (context, provider, child) {
-                  return Column(
-                    children: [
+        body: Stack(
+          children: [
+            SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Consumer<ClinicsProvider>(
+                          builder: (context, provider, child) {
+                            return Column(
+                              children: [
                       // Título
                       Padding(
                         padding: const EdgeInsets.all(24.0),
@@ -276,6 +281,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 80), // Espaço para a nav bar flutuante
                     ],
                   );
                 },
@@ -311,7 +317,17 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: const FloatingNavBar(currentIndex: 0),
+      ],
+    ),
+    ),
+    Positioned(
+      left: 0,
+      right: 0,
+      bottom: 0,
+      child: const FloatingNavBar(currentIndex: 0),
+    ),
+  ],
+        ),
       ),
     );
   }

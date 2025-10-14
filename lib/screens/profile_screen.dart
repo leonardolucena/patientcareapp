@@ -79,18 +79,28 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
-        body: Column(
+        body: Stack(
           children: [
-            _buildHeader(context, l10n),
-            const SizedBox(height: 16),
-            _buildDashboard(context, l10n),
-            const SizedBox(height: 20),
-            Expanded(
-              child: _buildAppointmentsSection(context, l10n),
+            Column(
+              children: [
+                _buildHeader(context, l10n),
+                const SizedBox(height: 16),
+                _buildDashboard(context, l10n),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: _buildAppointmentsSection(context, l10n),
+                ),
+                const SizedBox(height: 80), // Espaço para a nav bar flutuante
+              ],
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: const FloatingNavBar(currentIndex: 1),
             ),
           ],
         ),
-        bottomNavigationBar: const FloatingNavBar(currentIndex: 1),
       ),
     );
   }
