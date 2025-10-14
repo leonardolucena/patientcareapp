@@ -662,6 +662,61 @@
   "emailNotFound": "Email não encontrado",
   "@emailNotFound": {
     "description": "Mensagem de erro quando email não existe"
+  },
+
+  "editProfile": "Editar Perfil",
+  "@editProfile": {
+    "description": "Título da tela de editar perfil"
+  },
+
+  "editProfileSubtitle": "Atualize suas informações pessoais",
+  "@editProfileSubtitle": {
+    "description": "Subtítulo da tela de editar perfil"
+  },
+
+  "age": "Idade",
+  "@age": {
+    "description": "Label do campo idade"
+  },
+
+  "ageHint": "Sua idade",
+  "@ageHint": {
+    "description": "Hint do campo idade"
+  },
+
+  "ageRequired": "Por favor, insira sua idade",
+  "@ageRequired": {
+    "description": "Mensagem de validação de idade obrigatória"
+  },
+
+  "ageInvalid": "Por favor, insira uma idade válida",
+  "@ageInvalid": {
+    "description": "Mensagem de validação de idade inválida"
+  },
+
+  "newPasswordOptional": "Nova Senha (opcional)",
+  "@newPasswordOptional": {
+    "description": "Label do campo nova senha opcional"
+  },
+
+  "confirmNewPassword": "Confirmar Nova Senha",
+  "@confirmNewPassword": {
+    "description": "Label do campo confirmar nova senha"
+  },
+
+  "saveChanges": "Salvar Alterações",
+  "@saveChanges": {
+    "description": "Texto do botão salvar alterações"
+  },
+
+  "profileUpdatedSuccess": "Perfil atualizado com sucesso!",
+  "@profileUpdatedSuccess": {
+    "description": "Mensagem de sucesso ao atualizar perfil"
+  },
+
+  "profileUpdateError": "Erro ao atualizar perfil",
+  "@profileUpdateError": {
+    "description": "Mensagem de erro ao atualizar perfil"
   }
 }
 

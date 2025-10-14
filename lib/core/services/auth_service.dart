@@ -156,6 +156,50 @@ class AuthService {
     return true;
   }
 
+  /// Atualiza os dados do usuário
+  Future<LocalUserModel?> updateUser({
+    required String currentEmail,
+    String? newName,
+    int? newAge,
+    String? newEmail,
+    String? newPassword,
+  }) async {
+    final normalizedCurrentEmail = currentEmail.toLowerCase().trim();
+    final user = _usersBox.get(normalizedCurrentEmail);
+
+    if (user == null) {
+      return null; // Usuário não encontrado
+    }
+
+    // Se o email está sendo alterado, verifica se o novo email já existe
+    if (newEmail != null && newEmail.toLowerCase().trim() != normalizedCurrentEmail) {
+      final normalizedNewEmail = newEmail.toLowerCase().trim();
+      if (await emailExists(normalizedNewEmail)) {
+        throw Exception('Email já cadastrado');
+      }
+    }
+
+    // Cria o usuário atualizado
+    final updatedUser = user.copyWith(
+      name: newName,
+      age: newAge,
+      email: newEmail?.toLowerCase().trim(),
+      passwordHash: newPassword != null ? _hashPassword(newPassword) : null,
+    );
+
+    // Se o email mudou, remove o antigo e salva no novo
+    if (newEmail != null && newEmail.toLowerCase().trim() != normalizedCurrentEmail) {
+      await _usersBox.delete(normalizedCurrentEmail);
+      final normalizedNewEmail = newEmail.toLowerCase().trim();
+      await _usersBox.put(normalizedNewEmail, updatedUser);
+      await _saveCurrentUserEmail(normalizedNewEmail);
+    } else {
+      await _usersBox.put(normalizedCurrentEmail, updatedUser);
+    }
+
+    return updatedUser;
+  }
+
   /// Limpa todos os dados (útil para testes)
   Future<void> clearAll() async {
     await _usersBox.clear();

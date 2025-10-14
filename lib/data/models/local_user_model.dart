@@ -25,6 +25,9 @@ class LocalUserModel {
   @HiveField(5)
   final String? name;
 
+  @HiveField(6)
+  final int? age;
+
   const LocalUserModel({
     required this.id,
     required this.email,
@@ -32,6 +35,7 @@ class LocalUserModel {
     required this.createdAt,
     this.lastLoginAt,
     this.name,
+    this.age,
   });
 
   /// Cria uma cópia do modelo com campos atualizados
@@ -42,6 +46,7 @@ class LocalUserModel {
     DateTime? createdAt,
     DateTime? lastLoginAt,
     String? name,
+    int? age,
   }) {
     return LocalUserModel(
       id: id ?? this.id,
@@ -50,6 +55,7 @@ class LocalUserModel {
       createdAt: createdAt ?? this.createdAt,
       lastLoginAt: lastLoginAt ?? this.lastLoginAt,
       name: name ?? this.name,
+      age: age ?? this.age,
     );
   }
 

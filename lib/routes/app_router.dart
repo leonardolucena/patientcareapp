@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:patientcareapp/screens/login_screen.dart';
 import 'package:patientcareapp/screens/register_screen.dart';
 import 'package:patientcareapp/screens/forgot_password_screen.dart';
+import 'package:patientcareapp/screens/edit_profile_screen.dart';
 import 'package:patientcareapp/screens/search_clinics_screen.dart';
 import 'package:patientcareapp/screens/profile_screen.dart';
 import 'package:patientcareapp/screens/doctors_list_screen.dart';
@@ -27,6 +28,11 @@ class AppRouter {
         path: '/forgot-password',
         name: 'forgot-password',
         builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: '/edit-profile',
+        name: 'edit-profile',
+        builder: (context, state) => const EditProfileScreen(),
       ),
       GoRoute(
         path: '/search-clinics',

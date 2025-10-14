@@ -23,13 +23,14 @@ class LocalUserModelAdapter extends TypeAdapter<LocalUserModel> {
       createdAt: fields[3] as DateTime,
       lastLoginAt: fields[4] as DateTime?,
       name: fields[5] as String?,
+      age: fields[6] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, LocalUserModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class LocalUserModelAdapter extends TypeAdapter<LocalUserModel> {
       ..writeByte(4)
       ..write(obj.lastLoginAt)
       ..writeByte(5)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(6)
+      ..write(obj.age);
   }
 
   @override

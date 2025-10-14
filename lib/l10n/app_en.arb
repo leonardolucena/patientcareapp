@@ -257,6 +257,18 @@
   "emailNotFound": "Email not found",
   "@emailNotFound": {
     "description": "Error message when email doesn't exist"
-  }
+  },
+
+  "editProfile": "Edit Profile",
+  "editProfileSubtitle": "Update your personal information",
+  "age": "Age",
+  "ageHint": "Your age",
+  "ageRequired": "Please enter your age",
+  "ageInvalid": "Please enter a valid age",
+  "newPasswordOptional": "New Password (optional)",
+  "confirmNewPassword": "Confirm New Password",
+  "saveChanges": "Save Changes",
+  "profileUpdatedSuccess": "Profile updated successfully!",
+  "profileUpdateError": "Error updating profile"
 }
 
