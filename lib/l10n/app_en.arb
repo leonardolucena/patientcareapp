@@ -3,6 +3,9 @@
   
   "appTitle": "PatientCare",
   "welcomeBack": "Welcome back",
+  "name": "Name",
+  "nameHint": "Your full name",
+  "nameRequired": "Please enter your name",
   "email": "Email",
   "emailHint": "your.email@example.com",
   "password": "Password",
@@ -214,6 +217,46 @@
   "noClosedAppointments": "No closed appointments",
   "@noClosedAppointments": {
     "description": "Message when there are no closed appointments"
+  },
+
+  "resetPassword": "Reset Password",
+  "@resetPassword": {
+    "description": "Reset password screen title"
+  },
+
+  "resetPasswordSubtitle": "Enter your email and set a new password",
+  "@resetPasswordSubtitle": {
+    "description": "Reset password screen subtitle"
+  },
+
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "New password field label"
+  },
+
+  "resetPasswordButton": "Reset Password",
+  "@resetPasswordButton": {
+    "description": "Reset password button text"
+  },
+
+  "backToLogin": "Back to Login",
+  "@backToLogin": {
+    "description": "Back to login link text"
+  },
+
+  "passwordResetSuccess": "Password reset successfully!",
+  "@passwordResetSuccess": {
+    "description": "Success message after password reset"
+  },
+
+  "passwordResetError": "Error resetting password",
+  "@passwordResetError": {
+    "description": "Error message during password reset"
+  },
+
+  "emailNotFound": "Email not found",
+  "@emailNotFound": {
+    "description": "Error message when email doesn't exist"
   }
 }
 

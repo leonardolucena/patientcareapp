@@ -97,11 +97,11 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     final l10n = AppLocalizations.of(context)!;
     
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 2,
-        shadowColor: Theme.of(context).shadowColor.withOpacity(0.1),
+        shadowColor: Theme.of(context).shadowColor.withValues(alpha: 0.1),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -165,11 +165,11 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).shadowColor.withOpacity(0.1),
+                      color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                       blurRadius: 20,
                       offset: const Offset(0, 5),
                     ),
@@ -206,7 +206,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 '${_translateSpecialty(widget.doctor['specialty'], l10n)} • ${l10n.generalPractitioner}',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -230,7 +230,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   ' (165 ${l10n.reviews})',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               ],
@@ -247,7 +247,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).shadowColor.withOpacity(0.05),
+                      color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -273,7 +273,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             l10n.patients,
                             style: TextStyle(
                               fontSize: 14,
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
                           ),
                         ],
@@ -283,7 +283,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     Container(
                       width: 1,
                       height: 50,
-                      color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                     ),
                     // Experiência
                     Expanded(
@@ -302,7 +302,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             l10n.yearsExp,
                             style: TextStyle(
                               fontSize: 14,
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
                           ),
                         ],
@@ -312,7 +312,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     Container(
                       width: 1,
                       height: 50,
-                      color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                     ),
                     // País
                     Expanded(
@@ -327,7 +327,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             l10n.brazil,
                             style: TextStyle(
                               fontSize: 14,
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
                           ),
                         ],
@@ -359,8 +359,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       borderRadius: BorderRadius.circular(16),
                       gradient: LinearGradient(
                         colors: [
-                          Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                          Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                          Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+                          Theme.of(context).colorScheme.secondary.withValues(alpha: 0.2),
                         ],
                       ),
                     ),
@@ -373,7 +373,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           right: 0,
                           child: Container(
                             height: 2,
-                            color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                           ),
                         ),
                         Positioned(
@@ -382,7 +382,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           right: 0,
                           child: Container(
                             height: 2,
-                            color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                           ),
                         ),
                         Positioned(
@@ -391,7 +391,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           left: 100,
                           child: Container(
                             width: 2,
-                            color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                           ),
                         ),
                         Positioned(
@@ -400,7 +400,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           right: 100,
                           child: Container(
                             width: 2,
-                            color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                           ),
                         ),
                         // Marcador
@@ -415,7 +415,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Theme.of(context).shadowColor.withOpacity(0.3),
+                                      color: Theme.of(context).shadowColor.withValues(alpha: 0.3),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -447,7 +447,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Theme.of(context).shadowColor.withOpacity(0.1),
+                                  color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                                   blurRadius: 5,
                                 ),
                               ],
@@ -517,7 +517,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Theme.of(context).shadowColor.withOpacity(0.05),
+                          color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
                           blurRadius: 10,
                           offset: const Offset(0, 2),
                         ),
@@ -550,7 +550,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             Text(
                               l10n.reviewsCount(165),
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                                 fontSize: 12,
                               ),
                             ),
@@ -590,7 +590,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
           color: Theme.of(context).colorScheme.surface,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor.withOpacity(0.05),
+              color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, -2),
             ),
@@ -606,7 +606,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   l10n.consultationPrice,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 Text(
@@ -663,7 +663,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: count / 165,
-                backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                backgroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.amber[600]!),
                 minHeight: 6,
               ),
@@ -674,7 +674,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
             '$count',
             style: TextStyle(
               fontSize: 12, 
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             ),
           ),
         ],
@@ -691,7 +691,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.05),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -707,7 +707,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: Center(
@@ -734,7 +734,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       review['date'],
                       style: TextStyle(
                         fontSize: 12,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                   ],
@@ -803,7 +803,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       width: 40,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -921,10 +921,10 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                                   width: 1,
                                 ),
                               ),
@@ -1065,7 +1065,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         color: Theme.of(context).colorScheme.surface,
                         boxShadow: [
                           BoxShadow(
-                            color: Theme.of(context).shadowColor.withOpacity(0.05),
+                            color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
                             blurRadius: 10,
                             offset: const Offset(0, -2),
                           ),
@@ -1108,7 +1108,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            disabledBackgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.12),
+                            disabledBackgroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.12),
                           ),
                           child: Text(
                             _bottomSheetPage == 1 ? l10n.continueButton : l10n.confirmAppointment,
@@ -1142,13 +1142,13 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
           color: isSelected 
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1) 
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) 
               : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected 
                 ? Theme.of(context).colorScheme.primary 
-                : Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                : Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 2,
           ),
         ),
@@ -1160,7 +1160,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               size: 24,
               color: isSelected 
                   ? Theme.of(context).colorScheme.primary 
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             ),
             const SizedBox(width: 8),
             Text(
@@ -1217,17 +1217,17 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 width: 50,
                 decoration: BoxDecoration(
                   color: !isEnabled
-                      ? Theme.of(context).colorScheme.onSurface.withOpacity(0.05)
+                      ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.05)
                       : isSelected
                           ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: !isEnabled
-                        ? Theme.of(context).colorScheme.outline.withOpacity(0.2)
+                        ? Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)
                         : isSelected
                             ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                            : Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                     width: 2,
                   ),
                 ),
@@ -1240,7 +1240,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: !isEnabled
-                            ? Theme.of(context).colorScheme.onSurface.withOpacity(0.3)
+                            ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)
                             : isSelected
                                 ? Theme.of(context).colorScheme.onPrimary
                                 : Theme.of(context).colorScheme.onSurface,
@@ -1253,7 +1253,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: !isEnabled
-                            ? Theme.of(context).colorScheme.onSurface.withOpacity(0.3)
+                            ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)
                             : isSelected
                                 ? Theme.of(context).colorScheme.onPrimary
                                 : Theme.of(context).colorScheme.onSurface,
@@ -1306,7 +1306,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               border: Border.all(
                 color: isSelected
                     ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                    : Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                 width: 2,
               ),
             ),
@@ -1349,7 +1349,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
           '$label: ',
           style: TextStyle(
             fontSize: 14,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         Expanded(
@@ -1379,13 +1379,13 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
           color: isSelected 
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1) 
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) 
               : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected 
                 ? Theme.of(context).colorScheme.primary 
-                : Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                : Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
             width: 2,
           ),
         ),
@@ -1397,7 +1397,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               size: 24,
               color: isSelected 
                   ? Theme.of(context).colorScheme.primary 
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             ),
             const SizedBox(width: 8),
             Flexible(

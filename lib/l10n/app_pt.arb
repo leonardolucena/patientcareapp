@@ -11,6 +11,21 @@
     "description": "Mensagem de boas-vindas na tela de login"
   },
   
+  "name": "Nome",
+  "@name": {
+    "description": "Label do campo de nome"
+  },
+
+  "nameHint": "Seu nome completo",
+  "@nameHint": {
+    "description": "Hint do campo de nome"
+  },
+
+  "nameRequired": "Por favor, insira seu nome",
+  "@nameRequired": {
+    "description": "Mensagem de validação de nome obrigatório"
+  },
+
   "email": "Email",
   "@email": {
     "description": "Label do campo de email"
@@ -607,6 +622,46 @@
   "noClosedAppointments": "Nenhum agendamento fechado",
   "@noClosedAppointments": {
     "description": "Mensagem quando não há agendamentos fechados"
+  },
+
+  "resetPassword": "Recuperar Senha",
+  "@resetPassword": {
+    "description": "Título da tela de recuperação de senha"
+  },
+
+  "resetPasswordSubtitle": "Informe seu email e defina uma nova senha",
+  "@resetPasswordSubtitle": {
+    "description": "Subtítulo da tela de recuperação de senha"
+  },
+
+  "newPassword": "Nova Senha",
+  "@newPassword": {
+    "description": "Label do campo nova senha"
+  },
+
+  "resetPasswordButton": "Redefinir Senha",
+  "@resetPasswordButton": {
+    "description": "Texto do botão de redefinir senha"
+  },
+
+  "backToLogin": "Voltar para o Login",
+  "@backToLogin": {
+    "description": "Texto do link voltar para login"
+  },
+
+  "passwordResetSuccess": "Senha redefinida com sucesso!",
+  "@passwordResetSuccess": {
+    "description": "Mensagem de sucesso ao redefinir senha"
+  },
+
+  "passwordResetError": "Erro ao redefinir senha",
+  "@passwordResetError": {
+    "description": "Mensagem de erro ao redefinir senha"
+  },
+
+  "emailNotFound": "Email não encontrado",
+  "@emailNotFound": {
+    "description": "Mensagem de erro quando email não existe"
   }
 }
 

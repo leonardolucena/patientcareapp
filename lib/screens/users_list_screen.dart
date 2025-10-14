@@ -145,7 +145,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
                             color: Theme.of(context)
                                 .colorScheme
                                 .onSurface
-                                .withOpacity(0.3),
+                                .withValues(alpha: 0.3),
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -154,7 +154,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface
-                                  .withOpacity(0.6),
+                                  .withValues(alpha: 0.6),
                             ),
                           ),
                         ],
@@ -218,7 +218,7 @@ class _UserCard extends StatelessWidget {
         subtitle: Text(
           user.email,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         children: [
@@ -274,7 +274,7 @@ class _UserCard extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .onSurface
-                          .withOpacity(0.5),
+                          .withValues(alpha: 0.5),
                       fontSize: 12,
                       fontStyle: FontStyle.italic,
                     ),
@@ -321,7 +321,7 @@ class _InfoRow extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
               const SizedBox(height: 4),

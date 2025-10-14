@@ -1,5 +1,5 @@
 import 'package:patientcareapp/data/models/doctor_model.dart';
-import 'package:patientcareapp/data/datasources/remote_users_datasource.dart';
+import 'dart:developer';
 
 /// Datasource local que combina dados da API JSONPlaceholder com dados locais
 /// Usa os nomes reais dos usuários da API para criar médicos
@@ -66,7 +66,7 @@ class LocalDoctorsDatasource {
     } catch (e) {
       // Em caso de erro na API, retorna lista vazia
       // Em produção, você poderia ter um fallback com dados mockados
-      print('Erro ao buscar médicos: $e');
+      log('Erro ao buscar médicos: $e');
       return [];
     }
   }

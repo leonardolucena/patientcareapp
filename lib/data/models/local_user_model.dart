@@ -22,12 +22,16 @@ class LocalUserModel {
   @HiveField(4)
   final DateTime? lastLoginAt;
 
+  @HiveField(5)
+  final String? name;
+
   const LocalUserModel({
     required this.id,
     required this.email,
     required this.passwordHash,
     required this.createdAt,
     this.lastLoginAt,
+    this.name,
   });
 
   /// Cria uma cópia do modelo com campos atualizados
@@ -37,6 +41,7 @@ class LocalUserModel {
     String? passwordHash,
     DateTime? createdAt,
     DateTime? lastLoginAt,
+    String? name,
   }) {
     return LocalUserModel(
       id: id ?? this.id,
@@ -44,12 +49,13 @@ class LocalUserModel {
       passwordHash: passwordHash ?? this.passwordHash,
       createdAt: createdAt ?? this.createdAt,
       lastLoginAt: lastLoginAt ?? this.lastLoginAt,
+      name: name ?? this.name,
     );
   }
 
   @override
   String toString() {
-    return 'LocalUserModel(id: $id, email: $email, createdAt: $createdAt)';
+    return 'LocalUserModel(id: $id, email: $email, name: $name, createdAt: $createdAt)';
   }
 
   @override

@@ -136,9 +136,9 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                                    Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                                    Theme.of(context).colorScheme.tertiary.withOpacity(0.15),
+                                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                                    Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
+                                    Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.15),
                                   ],
                                 ),
                               ),
@@ -178,7 +178,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                                                     BoxShadow(
                                                       color: Theme.of(context)
                                                           .shadowColor
-                                                          .withOpacity(0.3),
+                                                          .withValues(alpha: 0.3),
                                                       blurRadius: 6,
                                                       offset: const Offset(0, 3),
                                                     ),
@@ -291,7 +291,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -317,7 +317,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
   }
 
   List<Widget> _buildStreetLines() {
-    final lineColor = Theme.of(context).colorScheme.outline.withOpacity(0.3);
+    final lineColor = Theme.of(context).colorScheme.outline.withValues(alpha: 0.3);
     return [
       // Linhas horizontais
       Positioned(
@@ -397,7 +397,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                   Icon(
                     Icons.location_on,
                     size: 20,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -417,7 +417,7 @@ class _SearchClinicsScreenState extends State<SearchClinicsScreen> {
                   Icon(
                     Icons.directions_walk,
                     size: 20,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                   const SizedBox(width: 8),
                   Text(

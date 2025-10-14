@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:patientcareapp/core/services/appointment_service.dart';
@@ -45,7 +47,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
         paymentMethod: paymentMethod,
       );
     } catch (e) {
-      print('Erro ao salvar agendamento: $e');
+      log('Erro ao salvar agendamento: $e');
     }
   }
 
@@ -56,11 +58,11 @@ class AppointmentConfirmationScreen extends StatelessWidget {
     _saveAppointment();
     
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 2,
-        shadowColor: Theme.of(context).shadowColor.withOpacity(0.1),
+        shadowColor: Theme.of(context).shadowColor.withValues(alpha: 0.1),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -141,7 +143,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                     l10n.appointmentConfirmedMessage(doctorName),
                     style: TextStyle(
                       fontSize: 16,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                       height: 1.5,
                     ),
                     textAlign: TextAlign.center,
@@ -155,7 +157,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Theme.of(context).shadowColor.withOpacity(0.05),
+                          color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
                           blurRadius: 10,
                           offset: const Offset(0, 2),
                         ),
@@ -222,10 +224,10 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                         width: 1,
                       ),
                     ),
@@ -261,7 +263,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.surface,
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).shadowColor.withOpacity(0.05),
+                  color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -2),
                 ),
@@ -315,7 +317,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -334,7 +336,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 14,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -363,7 +365,7 @@ class AppointmentConfirmationScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Divider(
         height: 1,
-        color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
       ),
     );
   }

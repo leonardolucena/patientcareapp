@@ -22,13 +22,14 @@ class LocalUserModelAdapter extends TypeAdapter<LocalUserModel> {
       passwordHash: fields[2] as String,
       createdAt: fields[3] as DateTime,
       lastLoginAt: fields[4] as DateTime?,
+      name: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, LocalUserModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class LocalUserModelAdapter extends TypeAdapter<LocalUserModel> {
       ..writeByte(3)
       ..write(obj.createdAt)
       ..writeByte(4)
-      ..write(obj.lastLoginAt);
+      ..write(obj.lastLoginAt)
+      ..writeByte(5)
+      ..write(obj.name);
   }
 
   @override

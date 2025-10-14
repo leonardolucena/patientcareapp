@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:patientcareapp/theme/theme_provider.dart';
 import 'package:patientcareapp/presentation/widgets/floating_nav_bar.dart';
 import 'package:patientcareapp/core/services/appointment_service.dart';
+import 'package:patientcareapp/core/services/auth_service.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
 import 'package:patientcareapp/data/models/appointment_saved_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,8 +19,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late AppointmentService _appointmentService;
+  late AuthService _authService;
 
-  final String _userName = 'João Silva';
+  String _userName = 'Usuário';
   final int _userAge = 32;
   final String _userAvatar = '👤';
   
@@ -32,7 +34,18 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _appointmentService = getIt<AppointmentService>();
+    _authService = getIt<AuthService>();
+    _loadUserData();
     _loadAppointments();
+  }
+
+  Future<void> _loadUserData() async {
+    final user = await _authService.getCurrentUser();
+    if (user != null && mounted) {
+      setState(() {
+        _userName = user.name ?? user.email.split('@')[0];
+      });
+    }
   }
 
   void _loadAppointments() {
@@ -94,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           end: Alignment.bottomRight,
           colors: [
             Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withOpacity(0.8),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
           ],
         ),
       ),
@@ -108,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
@@ -132,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     Text(
                       '$_userAge ${l10n.years}',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         fontSize: 16,
                       ),
                     ),
@@ -188,21 +201,21 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).colorScheme.outline.withOpacity(0.2)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))],
+        border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
             child: Icon(icon, color: color, size: 28),
           ),
           const SizedBox(height: 12),
           Text(value, style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
+          Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
         ],
       ),
     );
@@ -221,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(16),
             ),
             child: TabBar(
@@ -231,10 +244,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               indicator: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4))],
+                boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 4))],
               ),
               labelColor: Colors.white,
-              unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
               labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
               tabs: [
@@ -277,9 +290,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(isOpen ? Icons.calendar_today_rounded : Icons.check_circle_outline_rounded, size: 64, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3)),
+            Icon(isOpen ? Icons.calendar_today_rounded : Icons.check_circle_outline_rounded, size: 64, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
             const SizedBox(height: 16),
-            Text(isOpen ? l10n.noOpenAppointments : l10n.noClosedAppointments, style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+            Text(isOpen ? l10n.noOpenAppointments : l10n.noClosedAppointments, style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
           ],
         ),
       );
@@ -299,8 +312,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).colorScheme.outline.withOpacity(0.2)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))],
+        border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -309,7 +322,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
                 child: Icon(Icons.local_hospital_rounded, color: Theme.of(context).colorScheme.primary, size: 20),
               ),
               const SizedBox(width: 12),
@@ -318,14 +331,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(appointment.doctorName, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                    Text(appointment.specialty, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
+                    Text(appointment.specialty, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
                   ],
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: (isOpen ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) : Colors.green).withOpacity(0.1),
+                  color: (isOpen ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) : Colors.green).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(isOpen ? appointment.consultationType : 'Concluído', style: TextStyle(color: isOpen ? (appointment.consultationType == 'Online' ? Colors.green : Colors.blue) : Colors.green, fontSize: 12, fontWeight: FontWeight.bold)),
@@ -333,11 +346,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             ],
           ),
           const SizedBox(height: 12),
-          Divider(color: Theme.of(context).colorScheme.outline.withOpacity(0.2)),
+          Divider(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2)),
           const SizedBox(height: 12),
           Row(
             children: [
-              Icon(Icons.calendar_today_rounded, size: 16, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+              Icon(Icons.calendar_today_rounded, size: 16, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
               const SizedBox(width: 8),
               Text('${appointment.date} - ${appointment.time}', style: Theme.of(context).textTheme.bodyMedium),
             ],
@@ -345,7 +358,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           const SizedBox(height: 8),
           Row(
             children: [
-              Icon(Icons.location_on_rounded, size: 16, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+              Icon(Icons.location_on_rounded, size: 16, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
               const SizedBox(width: 8),
               Expanded(child: Text(appointment.clinicName, style: Theme.of(context).textTheme.bodyMedium)),
             ],

@@ -64,7 +64,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 2,
-        shadowColor: Theme.of(context).shadowColor.withOpacity(0.1),
+        shadowColor: Theme.of(context).shadowColor.withValues(alpha: 0.1),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -97,7 +97,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                     gradient: LinearGradient(
                       colors: [
                         Theme.of(context).colorScheme.primary,
-                        Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(12),
@@ -154,11 +154,11 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 10,
                               offset: const Offset(0, 5),
                             ),

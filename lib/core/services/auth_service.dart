@@ -43,7 +43,7 @@ class AuthService {
   }
 
   /// Cadastra um novo usuário
-  Future<LocalUserModel> register(String email, String password) async {
+  Future<LocalUserModel> register(String email, String password, {String? name}) async {
     final normalizedEmail = email.toLowerCase().trim();
 
     // Verifica se email já existe
@@ -57,6 +57,7 @@ class AuthService {
       email: normalizedEmail,
       passwordHash: _hashPassword(password),
       createdAt: DateTime.now(),
+      name: name?.trim(),
     );
 
     // Salva no Hive
@@ -135,6 +136,24 @@ class AuthService {
   /// Lista todos os usuários cadastrados (útil para debug)
   List<LocalUserModel> getAllUsers() {
     return _usersBox.values.toList();
+  }
+
+  /// Reseta a senha do usuário se o email existir
+  Future<bool> resetPassword(String email, String newPassword) async {
+    final normalizedEmail = email.toLowerCase().trim();
+    final user = _usersBox.get(normalizedEmail);
+
+    if (user == null) {
+      return false; // Usuário não encontrado
+    }
+
+    // Atualiza a senha do usuário
+    final updatedUser = user.copyWith(
+      passwordHash: _hashPassword(newPassword),
+    );
+    await _usersBox.put(normalizedEmail, updatedUser);
+
+    return true;
   }
 
   /// Limpa todos os dados (útil para testes)

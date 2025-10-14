@@ -31,9 +31,6 @@ class AppTheme {
       surface: AppColors.lightSurface,
       onSurface: AppColors.lightTextPrimary,
       
-      background: AppColors.lightBackground,
-      onBackground: AppColors.lightTextPrimary,
-      
       outline: AppColors.lightBorder,
       shadow: AppColors.primaryDark,
     ),
@@ -79,7 +76,7 @@ class AppTheme {
         backgroundColor: AppColors.lightPrimary,
         foregroundColor: Colors.white,
         elevation: 2,
-        shadowColor: AppColors.lightPrimary.withOpacity(0.3),
+        shadowColor: AppColors.lightPrimary.withValues(alpha: 0.3),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -274,9 +271,6 @@ class AppTheme {
       surface: AppColors.darkSurface,
       onSurface: AppColors.darkTextPrimary,
       
-      background: AppColors.darkBackground,
-      onBackground: AppColors.darkTextPrimary,
-      
       outline: AppColors.darkBorder,
       shadow: Colors.black,
     ),
@@ -322,7 +316,7 @@ class AppTheme {
         backgroundColor: AppColors.darkPrimary,
         foregroundColor: AppColors.primaryDark,
         elevation: 2,
-        shadowColor: AppColors.darkPrimary.withOpacity(0.3),
+        shadowColor: AppColors.darkPrimary.withValues(alpha: 0.3),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

@@ -26,7 +26,7 @@ class FloatingNavBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -45,7 +45,7 @@ class FloatingNavBar extends StatelessWidget {
           },
           backgroundColor: theme.colorScheme.surface,
           selectedItemColor: theme.colorScheme.primary,
-          unselectedItemColor: theme.colorScheme.onSurface.withOpacity(0.5),
+          unselectedItemColor: theme.colorScheme.onSurface.withValues(alpha: 0.5),
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           selectedFontSize: 12,
@@ -56,7 +56,7 @@ class FloatingNavBar extends StatelessWidget {
               activeIcon: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withOpacity(0.1),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -71,7 +71,7 @@ class FloatingNavBar extends StatelessWidget {
               activeIcon: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withOpacity(0.1),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(

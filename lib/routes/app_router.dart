@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:patientcareapp/screens/login_screen.dart';
 import 'package:patientcareapp/screens/register_screen.dart';
+import 'package:patientcareapp/screens/forgot_password_screen.dart';
 import 'package:patientcareapp/screens/search_clinics_screen.dart';
 import 'package:patientcareapp/screens/profile_screen.dart';
 import 'package:patientcareapp/screens/doctors_list_screen.dart';
@@ -21,6 +22,11 @@ class AppRouter {
         path: '/register',
         name: 'register',
         builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: '/forgot-password',
+        name: 'forgot-password',
+        builder: (context, state) => const ForgotPasswordScreen(),
       ),
       GoRoute(
         path: '/search-clinics',
