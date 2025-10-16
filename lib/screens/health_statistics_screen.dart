@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../data/models/health_statistics_model.dart';
 import '../../presentation/providers/health_statistics_provider.dart';
@@ -601,11 +602,13 @@ class _AddMetricDialogState extends State<_AddMetricDialog> {
             TextFormField(
               controller: _valueController,
               decoration: InputDecoration(
-                labelText: 'Valor',
+                labelText: _getMetricLabel(_selectedType),
                 suffixText: _selectedType != null ? _getMetricUnit(_selectedType!) : null,
+                helperText: _getMetricHelperText(_selectedType),
                 border: const OutlineInputBorder(),
               ),
-              keyboardType: TextInputType.number,
+              keyboardType: _getKeyboardType(_selectedType),
+              inputFormatters: _getInputFormatters(_selectedType),
             ),
             const SizedBox(height: 16),
             InkWell(
@@ -655,20 +658,129 @@ class _AddMetricDialogState extends State<_AddMetricDialog> {
     );
   }
 
-  void _addMetric() {
+  void _addMetric() async {
     final value = double.tryParse(_valueController.text);
-    if (value == null) return;
+    if (value == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Por favor, insira um valor válido'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
-    context.read<HealthStatisticsProvider>().addMetric(
-      type: _selectedType!,
-      value: value,
-      unit: _getMetricUnit(_selectedType!),
-      date: _selectedDate,
-      notes: _notesController.text.isEmpty ? null : _notesController.text,
+    // Validações específicas por tipo
+    if (!_validateMetricValue(_selectedType!, value)) {
+      return;
+    }
+
+    try {
+      await context.read<HealthStatisticsProvider>().addMetric(
+        type: _selectedType!,
+        value: value,
+        unit: _getMetricUnit(_selectedType!),
+        date: _selectedDate,
+        notes: _notesController.text.isEmpty ? null : _notesController.text,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Métrica de ${_getMetricTitle(_selectedType!)} adicionada com sucesso!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        widget.onMetricAdded();
+        Navigator.of(context).pop();
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro ao adicionar métrica: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  bool _validateMetricValue(HealthMetricType type, double value) {
+    switch (type) {
+      case HealthMetricType.weight:
+        if (value <= 0 || value > 300) {
+          _showValidationError('Peso deve estar entre 1 e 300 kg');
+          return false;
+        }
+        break;
+      case HealthMetricType.height:
+        if (value <= 0 || value > 250) {
+          _showValidationError('Altura deve estar entre 1 e 250 cm');
+          return false;
+        }
+        break;
+      case HealthMetricType.bloodPressure:
+        if (value <= 0 || value > 300) {
+          _showValidationError('Pressão arterial deve estar entre 1 e 300 mmHg');
+          return false;
+        }
+        break;
+      case HealthMetricType.heartRate:
+        if (value <= 0 || value > 250) {
+          _showValidationError('Frequência cardíaca deve estar entre 1 e 250 bpm');
+          return false;
+        }
+        break;
+      case HealthMetricType.temperature:
+        if (value < 30 || value > 50) {
+          _showValidationError('Temperatura deve estar entre 30 e 50°C');
+          return false;
+        }
+        break;
+      case HealthMetricType.mood:
+      case HealthMetricType.painLevel:
+      case HealthMetricType.energyLevel:
+      case HealthMetricType.stressLevel:
+        if (value < 1 || value > 10) {
+          _showValidationError('Valor deve estar entre 1 e 10');
+          return false;
+        }
+        break;
+      case HealthMetricType.steps:
+        if (value < 0 || value > 100000) {
+          _showValidationError('Número de passos deve estar entre 0 e 100.000');
+          return false;
+        }
+        break;
+      case HealthMetricType.sleepHours:
+        if (value < 0 || value > 24) {
+          _showValidationError('Horas de sono devem estar entre 0 e 24');
+          return false;
+        }
+        break;
+      case HealthMetricType.waterIntake:
+        if (value < 0 || value > 20) {
+          _showValidationError('Ingestão de água deve estar entre 0 e 20 litros');
+          return false;
+        }
+        break;
+      default:
+        if (value <= 0) {
+          _showValidationError('Valor deve ser maior que zero');
+          return false;
+        }
+    }
+    return true;
+  }
+
+  void _showValidationError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.orange,
+      ),
     );
-
-    widget.onMetricAdded();
-    Navigator.of(context).pop();
   }
 
   String _getMetricTitle(HealthMetricType type) {
@@ -743,6 +855,117 @@ class _AddMetricDialogState extends State<_AddMetricDialog> {
 
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
+  }
+
+  String _getMetricLabel(HealthMetricType? type) {
+    if (type == null) return 'Valor';
+    
+    switch (type) {
+      case HealthMetricType.weight:
+        return 'Peso (kg)';
+      case HealthMetricType.height:
+        return 'Altura (cm)';
+      case HealthMetricType.bloodPressure:
+        return 'Pressão Sistólica (mmHg)';
+      case HealthMetricType.heartRate:
+        return 'Frequência Cardíaca (bpm)';
+      case HealthMetricType.temperature:
+        return 'Temperatura (°C)';
+      case HealthMetricType.bloodSugar:
+        return 'Glicemia (mg/dL)';
+      case HealthMetricType.cholesterol:
+        return 'Colesterol Total (mg/dL)';
+      case HealthMetricType.bmi:
+        return 'IMC (kg/m²)';
+      case HealthMetricType.steps:
+        return 'Número de Passos';
+      case HealthMetricType.sleepHours:
+        return 'Horas de Sono';
+      case HealthMetricType.waterIntake:
+        return 'Ingestão de Água (L)';
+      case HealthMetricType.mood:
+        return 'Nível de Humor (1-10)';
+      case HealthMetricType.painLevel:
+        return 'Nível de Dor (1-10)';
+      case HealthMetricType.energyLevel:
+        return 'Nível de Energia (1-10)';
+      case HealthMetricType.stressLevel:
+        return 'Nível de Estresse (1-10)';
+    }
+  }
+
+  String? _getMetricHelperText(HealthMetricType? type) {
+    if (type == null) return null;
+    
+    switch (type) {
+      case HealthMetricType.weight:
+        return 'Ex: 70.5';
+      case HealthMetricType.height:
+        return 'Ex: 175';
+      case HealthMetricType.bloodPressure:
+        return 'Ex: 120 (apenas sistólica)';
+      case HealthMetricType.heartRate:
+        return 'Ex: 72';
+      case HealthMetricType.temperature:
+        return 'Ex: 36.5';
+      case HealthMetricType.bloodSugar:
+        return 'Ex: 95';
+      case HealthMetricType.cholesterol:
+        return 'Ex: 180';
+      case HealthMetricType.bmi:
+        return 'Ex: 22.5';
+      case HealthMetricType.steps:
+        return 'Ex: 8500';
+      case HealthMetricType.sleepHours:
+        return 'Ex: 7.5';
+      case HealthMetricType.waterIntake:
+        return 'Ex: 2.5';
+      case HealthMetricType.mood:
+        return '1 = muito triste, 10 = muito feliz';
+      case HealthMetricType.painLevel:
+        return '1 = sem dor, 10 = dor extrema';
+      case HealthMetricType.energyLevel:
+        return '1 = sem energia, 10 = muita energia';
+      case HealthMetricType.stressLevel:
+        return '1 = sem estresse, 10 = muito estressado';
+    }
+  }
+
+  TextInputType _getKeyboardType(HealthMetricType? type) {
+    if (type == null) return TextInputType.number;
+    
+    switch (type) {
+      case HealthMetricType.mood:
+      case HealthMetricType.painLevel:
+      case HealthMetricType.energyLevel:
+      case HealthMetricType.stressLevel:
+        return TextInputType.number;
+      default:
+        return TextInputType.numberWithOptions(decimal: true);
+    }
+  }
+
+  List<TextInputFormatter>? _getInputFormatters(HealthMetricType? type) {
+    if (type == null) return null;
+    
+    switch (type) {
+      case HealthMetricType.mood:
+      case HealthMetricType.painLevel:
+      case HealthMetricType.energyLevel:
+      case HealthMetricType.stressLevel:
+        return [
+          FilteringTextInputFormatter.allow(RegExp(r'^[1-9]$|^10$')),
+        ];
+      case HealthMetricType.height:
+      case HealthMetricType.steps:
+        return [
+          FilteringTextInputFormatter.digitsOnly,
+        ];
+      default:
+        return [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+        ];
+    }
   }
 }
 
