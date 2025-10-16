@@ -190,6 +190,41 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
 - **Excluir com Confirmação**: Diálogo antes de remover
 - **Navegação**: Toque para editar os detalhes
 
+### 📊 Estatísticas de Saúde
+- **Armazenamento Local**: Métricas persistem usando Hive (TypeId: 10, 11)
+- **Tipos de Métricas Suportadas**:
+  - Peso, Altura, IMC
+  - Pressão Arterial, Frequência Cardíaca
+  - Temperatura, Glicemia, Colesterol
+  - Passos, Horas de Sono, Ingestão de Água
+  - Humor, Nível de Dor, Energia, Estresse
+- **Interface com 3 Abas**:
+  - **Visão Geral**: Resumo das métricas mais recentes
+  - **Gráficos**: Visualizações interativas (linha e barras)
+  - **Análises**: Análises inteligentes com recomendações
+- **Funcionalidades Avançadas**:
+  - Gráficos interativos com fl_chart
+  - Análises automáticas com status (excelente/bom/atenção/crítico)
+  - Cálculo de tendências (subindo/descendo/estável)
+  - Filtros por período personalizáveis
+  - CRUD completo para métricas
+- **Widgets Especializados**:
+  - `HealthLineChartWidget`: Gráficos de linha com área preenchida
+  - `HealthBarChartWidget`: Gráficos de barras interativos
+  - `HealthStatisticsCard`: Cards com estatísticas detalhadas
+  - `HealthAnalysisCard`: Cards com análises e recomendações
+  - `HealthMetricCard`: Cards para métricas individuais
+- **Arquitetura Clean**:
+  - Repository Pattern com `HealthStatisticsRepository`
+  - 10 Use Cases específicos para cada operação
+  - Provider para gerenciamento de estado
+  - Models tipados com Hive TypeAdapter
+- **Integração Completa**:
+  - Roteamento configurado (`/health-statistics`)
+  - Dependency Injection atualizada
+  - Tema Dark/Light compatível
+  - Dependências: fl_chart, uuid
+
 ### 📅 Agendamento de Consulta
 - **Bottom Sheet em 2 Páginas**: Navegação fluida entre etapas
 - **Página 1**:
@@ -256,6 +291,8 @@ Aplicativo Flutter para gerenciamento de consultas médicas e cuidados com pacie
   - `AppointmentSavedModel` (TypeId: 1): Agendamentos com status de cancelamento e timestamps
   - `MedicalRecordModel` (TypeId: 2): Registros de histórico médico completo
   - `ReminderModel` (TypeId: 3): Lembretes de consultas com datas e status
+  - `HealthMetricModel` (TypeId: 10): Métricas individuais de saúde
+  - `HealthStatisticsModel` (TypeId: 11): Estatísticas agregadas de saúde
 - **Dependency Injection**: Services registrados no GetIt
 - **Fluxo Completo**: Login → Busca → Agendamento → Persistência → Perfil
 
@@ -275,6 +312,7 @@ lib/
 │   │   ├── favorites_service.dart      # ⭐ Gerenciamento de favoritos
 │   │   ├── medical_history_service.dart # 📋 Gerenciamento de histórico médico
 │   │   ├── reminder_service.dart       # 🔔 Gerenciamento de lembretes
+│   │   ├── health_statistics_service.dart # 📊 Gerenciamento de estatísticas de saúde
 │   │   └── specialty_translation_service.dart
 │   ├── utils/                          # Helpers e formatadores
 │   └── di/                             # Dependency Injection (GetIt)
@@ -285,6 +323,7 @@ lib/
 │   │   ├── favorite_model.dart         # ⭐ Model para favoritos (JSON)
 │   │   ├── medical_record_model.dart   # 📋 Model para histórico médico (Hive)
 │   │   ├── reminder_model.dart         # 🔔 Model para lembretes (Hive)
+│   │   ├── health_statistics_model.dart # 📊 Model para estatísticas de saúde (Hive)
 │   │   ├── user_model.dart             # Model da API
 │   │   ├── doctor_model.dart
 │   │   └── ...
@@ -296,12 +335,14 @@ lib/
 │       ├── favorites_repository_impl.dart      # ⭐ Impl de favoritos
 │       ├── medical_history_repository_impl.dart # 📋 Impl de histórico
 │       ├── reminder_repository_impl.dart       # 🔔 Impl de lembretes
+│       ├── health_statistics_repository_impl.dart # 📊 Impl de estatísticas
 │       └── ...
 ├── domain/                             # Camada de Domínio (Regras de Negócio)
 │   ├── repositories/                   # Contratos (interfaces abstratas)
 │   │   ├── favorites_repository.dart         # ⭐ Interface de favoritos
 │   │   ├── medical_history_repository.dart   # 📋 Interface de histórico
 │   │   ├── reminder_repository.dart          # 🔔 Interface de lembretes
+│   │   ├── health_statistics_repository.dart # 📊 Interface de estatísticas
 │   │   └── ...
 │   └── usecases/                       # Casos de uso
 ├── presentation/                       # Camada de Apresentação (UI)
@@ -309,10 +350,13 @@ lib/
 │   │   ├── favorites_provider.dart          # ⭐ Provider de favoritos
 │   │   ├── medical_history_provider.dart    # 📋 Provider de histórico
 │   │   ├── reminder_provider.dart           # 🔔 Provider de lembretes
+│   │   ├── health_statistics_provider.dart  # 📊 Provider de estatísticas
 │   │   └── ...
 │   └── widgets/                        # Widgets reutilizáveis
 │       ├── floating_nav_bar.dart       # 🆕 Bottom nav bar flutuante
 │       ├── favorite_button.dart        # ⭐ Botão de favoritar
+│       ├── health_chart_widget.dart   # 📊 Widgets de gráficos
+│       ├── health_statistics_widget.dart # 📊 Widgets de estatísticas
 │       └── ...
 ├── screens/                            # Telas principais
 │   ├── login_screen.dart
@@ -326,6 +370,7 @@ lib/
 │   ├── add_medical_record_screen.dart  # 📋 Formulário de registro médico
 │   ├── reminders_screen.dart           # 🔔 Tela de lembretes
 │   ├── add_reminder_screen.dart        # 🔔 Formulário de lembrete
+│   ├── health_statistics_screen.dart    # 📊 Tela de estatísticas de saúde
 │   └── ...
 ├── providers/                          # Providers globais
 │   └── locale_provider.dart
@@ -371,6 +416,8 @@ dependencies:
   crypto: ^3.0.3              # Hash de senhas (SHA256)
   shared_preferences: ^2.2.2  # ⭐ Armazenamento local (favoritos)
   json_annotation: ^4.8.1     # ⭐ Anotações JSON
+  fl_chart: ^0.68.0           # 📊 Gráficos interativos
+  uuid: ^4.4.0                # 📊 Geração de IDs únicos
 
 dev_dependencies:
   hive_generator: ^2.0.1      # Gerador de adapters Hive
@@ -571,6 +618,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [x] ~~Lembretes de consultas~~ ✅
 - [x] ~~Tela dedicada para consultas~~ ✅
 - [x] ~~Perfil otimizado com navegação por cards~~ ✅
+- [x] ~~Estatísticas de saúde com gráficos e análises~~ ✅
 
 ### Próximas Features 🚧
 - [ ] Autenticação com Firebase (OAuth, Google Sign-In)
@@ -581,7 +629,6 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 - [ ] Pagamento online integrado
 - [ ] Prescrições digitais
 - [ ] Upload de anexos no histórico médico
-- [ ] Estatísticas de saúde (gráficos e análises)
 
 ---
 

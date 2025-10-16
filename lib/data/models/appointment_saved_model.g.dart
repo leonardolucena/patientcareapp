@@ -27,9 +27,9 @@ class AppointmentSavedModelAdapter extends TypeAdapter<AppointmentSavedModel> {
       priority: fields[7] as String,
       paymentMethod: fields[8] as String,
       createdAt: fields[9] as DateTime,
-      isCompleted: (fields[10] as bool?) ?? false,
+      isCompleted: fields[10] as bool,
       completedAt: fields[11] as DateTime?,
-      isCancelled: (fields[12] as bool?) ?? false,
+      isCancelled: fields[12] as bool,
       cancelledAt: fields[13] as DateTime?,
     );
   }

@@ -14,11 +14,13 @@ import 'package:patientcareapp/presentation/providers/users_provider.dart';
 import 'package:patientcareapp/presentation/providers/favorites_provider.dart';
 import 'package:patientcareapp/presentation/providers/medical_history_provider.dart';
 import 'package:patientcareapp/presentation/providers/reminder_provider.dart';
+import 'package:patientcareapp/presentation/providers/health_statistics_provider.dart';
 import 'package:patientcareapp/core/di/injection_container.dart';
 import 'package:patientcareapp/data/models/local_user_model.dart';
 import 'package:patientcareapp/data/models/appointment_saved_model.dart';
 import 'package:patientcareapp/data/models/medical_record_model.dart';
 import 'package:patientcareapp/data/models/reminder_model.dart';
+import 'package:patientcareapp/data/models/health_statistics_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
@@ -30,6 +32,8 @@ void main() async {
   Hive.registerAdapter(AppointmentSavedModelAdapter());
   Hive.registerAdapter(MedicalRecordModelAdapter());
   Hive.registerAdapter(ReminderModelAdapter());
+  Hive.registerAdapter(HealthMetricModelAdapter());
+  Hive.registerAdapter(HealthStatisticsModelAdapter());
   
   // Inicializa o Dependency Injection (inclui AuthService)
   await initializeDependencies();
@@ -49,6 +53,20 @@ void main() async {
         ChangeNotifierProvider(create: (_) => FavoritesProvider(getIt())),
         ChangeNotifierProvider(create: (_) => MedicalHistoryProvider(getIt())),
         ChangeNotifierProvider(create: (_) => ReminderProvider(getIt())),
+        ChangeNotifierProvider(
+          create: (_) => HealthStatisticsProvider(
+            addHealthMetricUseCase: getIt(),
+            getHealthStatisticsUseCase: getIt(),
+            getHealthAnalysisUseCase: getIt(),
+            getChartDataUseCase: getIt(),
+            getMetricsByTypeUseCase: getIt(),
+            getRecentMetricsUseCase: getIt(),
+            getLatestMetricUseCase: getIt(),
+            updateHealthMetricUseCase: getIt(),
+            deleteHealthMetricUseCase: getIt(),
+            getAllMetricsUseCase: getIt(),
+          ),
+        ),
       ],
       child: const MyApp(),
     ),

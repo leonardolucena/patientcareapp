@@ -15,6 +15,7 @@ import 'package:patientcareapp/screens/add_medical_record_screen.dart';
 import 'package:patientcareapp/screens/reminders_screen.dart';
 import 'package:patientcareapp/screens/add_reminder_screen.dart';
 import 'package:patientcareapp/screens/my_appointments_screen.dart';
+import 'package:patientcareapp/screens/health_statistics_screen.dart';
 import 'package:patientcareapp/data/models/reminder_model.dart';
 
 class AppRouter {
@@ -124,6 +125,11 @@ class AppRouter {
         path: '/appointments',
         name: 'appointments',
         builder: (context, state) => const MyAppointmentsScreen(),
+      ),
+      GoRoute(
+        path: '/health-statistics',
+        name: 'health-statistics',
+        builder: (context, state) => const HealthStatisticsScreen(),
       ),
     ],
   );

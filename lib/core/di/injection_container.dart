@@ -39,6 +39,18 @@ import 'package:patientcareapp/domain/usecases/get_doctors_by_specialty_usecase.
 import 'package:patientcareapp/domain/usecases/search_clinics_usecase.dart';
 import 'package:patientcareapp/domain/usecases/search_doctors_usecase.dart';
 import 'package:patientcareapp/domain/usecases/search_users_usecase.dart';
+import 'package:patientcareapp/data/repositories/health_statistics_repository_impl.dart';
+import 'package:patientcareapp/domain/repositories/health_statistics_repository.dart';
+import 'package:patientcareapp/domain/usecases/add_health_metric_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_health_statistics_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_health_analysis_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_chart_data_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_metrics_by_type_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_recent_metrics_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_latest_metric_usecase.dart';
+import 'package:patientcareapp/domain/usecases/update_health_metric_usecase.dart';
+import 'package:patientcareapp/domain/usecases/delete_health_metric_usecase.dart';
+import 'package:patientcareapp/domain/usecases/get_all_metrics_usecase.dart';
 
 /// Container de injeção de dependências
 /// Implementa o Dependency Inversion Principle (DIP)
@@ -76,6 +88,11 @@ Future<void> initializeDependencies() async {
   final reminderService = ReminderService();
   await reminderService.initialize();
   getIt.registerSingleton<ReminderService>(reminderService);
+
+  // HealthStatisticsRepository (Singleton)
+  final healthStatisticsRepository = HealthStatisticsRepositoryImpl();
+  await healthStatisticsRepository.initialize();
+  getIt.registerSingleton<HealthStatisticsRepository>(healthStatisticsRepository);
 
   // ==================== NETWORK ====================
   
@@ -188,6 +205,46 @@ Future<void> initializeDependencies() async {
   
   getIt.registerFactory(
     () => SearchUsersUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => AddHealthMetricUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetHealthStatisticsUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetHealthAnalysisUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetChartDataUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetMetricsByTypeUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetRecentMetricsUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetLatestMetricUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => UpdateHealthMetricUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => DeleteHealthMetricUseCase(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetAllMetricsUseCase(getIt()),
   );
 }
 
