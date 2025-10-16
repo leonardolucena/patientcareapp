@@ -10,7 +10,12 @@ class HealthStatisticsRepositoryImpl implements HealthStatisticsRepository {
   final Uuid _uuid = const Uuid();
 
   Future<void> initialize() async {
-    _metricsBox = await Hive.openBox<HealthMetricModel>(_metricsBoxName);
+    try {
+      _metricsBox = await Hive.openBox<HealthMetricModel>(_metricsBoxName);
+    } catch (e) {
+      // Tenta abrir novamente em caso de erro
+      _metricsBox = await Hive.openBox<HealthMetricModel>(_metricsBoxName);
+    }
   }
 
   @override
@@ -35,6 +40,7 @@ class HealthStatisticsRepositoryImpl implements HealthStatisticsRepository {
     );
 
     await _metricsBox.put(id, metric);
+    
     return metric;
   }
 

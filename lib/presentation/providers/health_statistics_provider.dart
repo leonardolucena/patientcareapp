@@ -80,7 +80,7 @@ class HealthStatisticsProvider extends ChangeNotifier {
       _setLoading(true);
       _clearError();
 
-      final metric = await _addHealthMetricUseCase.call(
+      await _addHealthMetricUseCase.call(
         type: type,
         value: value,
         unit: unit,
@@ -88,7 +88,8 @@ class HealthStatisticsProvider extends ChangeNotifier {
         notes: notes,
       );
 
-      _allMetrics.add(metric);
+      // Recarrega todas as métricas para garantir consistência
+      _allMetrics = _getAllMetricsUseCase.call();
       _metricsByType[type] = _getMetricsByTypeUseCase.call(type);
       
       // Atualiza análises e dados de gráfico se necessário

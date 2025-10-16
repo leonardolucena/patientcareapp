@@ -277,6 +277,7 @@ class _HealthStatisticsScreenState extends State<HealthStatisticsScreen>
 
   Widget _buildMetricsSummary(HealthStatisticsProvider provider) {
     final metrics = provider.allMetrics;
+    
     if (metrics.isEmpty) {
       return _buildEmptyState('Nenhuma métrica registrada');
     }
@@ -285,6 +286,11 @@ class _HealthStatisticsScreenState extends State<HealthStatisticsScreen>
     final Map<HealthMetricType, List<HealthMetricModel>> groupedMetrics = {};
     for (final metric in metrics) {
       groupedMetrics.putIfAbsent(metric.type, () => []).add(metric);
+    }
+    
+    // Ordena métricas por data (mais recente primeiro)
+    for (final type in groupedMetrics.keys) {
+      groupedMetrics[type]!.sort((a, b) => b.date.compareTo(a.date));
     }
 
     return Column(
@@ -414,9 +420,11 @@ class _HealthStatisticsScreenState extends State<HealthStatisticsScreen>
   }
 
   void _showAddMetricDialog() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => _AddMetricDialog(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _AddMetricBottomSheet(
         onMetricAdded: () {
           context.read<HealthStatisticsProvider>().loadAllMetrics();
         },
@@ -553,121 +561,294 @@ class _HealthStatisticsScreenState extends State<HealthStatisticsScreen>
   }
 }
 
-/// Dialog para adicionar nova métrica
-class _AddMetricDialog extends StatefulWidget {
+/// BottomSheet para adicionar nova métrica
+class _AddMetricBottomSheet extends StatefulWidget {
   final VoidCallback onMetricAdded;
 
-  const _AddMetricDialog({required this.onMetricAdded});
+  const _AddMetricBottomSheet({required this.onMetricAdded});
 
   @override
-  State<_AddMetricDialog> createState() => _AddMetricDialogState();
+  State<_AddMetricBottomSheet> createState() => _AddMetricBottomSheetState();
 }
 
-class _AddMetricDialogState extends State<_AddMetricDialog> {
+class _AddMetricBottomSheetState extends State<_AddMetricBottomSheet> {
   HealthMetricType? _selectedType;
   final _valueController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _weightController = TextEditingController();
   final _notesController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
 
   @override
   void dispose() {
     _valueController.dispose();
+    _heightController.dispose();
+    _weightController.dispose();
     _notesController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Adicionar Métrica'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DropdownButtonFormField<HealthMetricType>(
-              value: _selectedType,
-              decoration: const InputDecoration(
-                labelText: 'Tipo de Métrica',
-                border: OutlineInputBorder(),
-              ),
-              items: HealthMetricType.values.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Text(_getMetricTitle(type)),
-                );
-              }).toList(),
-              onChanged: (value) => setState(() => _selectedType = value),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _valueController,
-              decoration: InputDecoration(
-                labelText: _getMetricLabel(_selectedType),
-                suffixText: _selectedType != null ? _getMetricUnit(_selectedType!) : null,
-                helperText: _getMetricHelperText(_selectedType),
-                border: const OutlineInputBorder(),
-              ),
-              keyboardType: _getKeyboardType(_selectedType),
-              inputFormatters: _getInputFormatters(_selectedType),
-            ),
-            const SizedBox(height: 16),
-            InkWell(
-              onTap: () async {
-                final date = await showDatePicker(
-                  context: context,
-                  initialDate: _selectedDate,
-                  firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                  lastDate: DateTime.now(),
-                );
-                if (date != null) {
-                  setState(() => _selectedDate = date);
-                }
-              },
-              child: InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Data',
-                  border: OutlineInputBorder(),
-                ),
-                child: Text(_formatDate(_selectedDate)),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notas (opcional)',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 3,
-            ),
-          ],
-        ),
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.9,
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCardBackground : AppColors.lightCardBackground,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancelar'),
-        ),
-        ElevatedButton(
-          onPressed: _selectedType != null && _valueController.text.isNotEmpty
-              ? _addMetric
-              : null,
-          child: const Text('Adicionar'),
-        ),
-      ],
+      child: Column(
+        children: [
+          // Handle
+          Container(
+            margin: const EdgeInsets.only(top: 12),
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          
+          // Header
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Adicionar Métrica',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(
+                    Icons.close,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          // Content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Tipo de Métrica
+                  DropdownButtonFormField<HealthMetricType>(
+                    value: _selectedType,
+                    decoration: const InputDecoration(
+                      labelText: 'Tipo de Métrica',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: HealthMetricType.values.map((type) {
+                      return DropdownMenuItem(
+                        value: type,
+                        child: Text(_getMetricTitle(type)),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedType = value;
+                        // Limpa todos os campos quando o tipo muda
+                        _valueController.clear();
+                        _heightController.clear();
+                        _weightController.clear();
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  // Campos dinâmicos baseados no tipo
+                  ..._buildDynamicFields(),
+                  
+                  const SizedBox(height: 20),
+                  
+                  // Data
+                  InkWell(
+                    onTap: () async {
+                      final date = await showDatePicker(
+                        context: context,
+                        initialDate: _selectedDate,
+                        firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                        lastDate: DateTime.now(),
+                      );
+                      if (date != null) {
+                        setState(() => _selectedDate = date);
+                      }
+                    },
+                    child: InputDecorator(
+                      decoration: const InputDecoration(
+                        labelText: 'Data',
+                        border: OutlineInputBorder(),
+                      ),
+                      child: Text(_formatDate(_selectedDate)),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  // Notas
+                  TextFormField(
+                    controller: _notesController,
+                    decoration: const InputDecoration(
+                      labelText: 'Notas (opcional)',
+                      border: OutlineInputBorder(),
+                    ),
+                    maxLines: 3,
+                  ),
+                  
+                  const SizedBox(height: 100), // Espaço para o botão fixo
+                ],
+              ),
+            ),
+          ),
+          
+          // Botão fixo na parte inferior
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkCardBackground : AppColors.lightCardBackground,
+              border: Border(
+                top: BorderSide(
+                  color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                ),
+              ),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _isFormValid() ? _addMetric : null,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Adicionar Métrica',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
+  List<Widget> _buildDynamicFields() {
+    if (_selectedType == null) return [];
+    
+    switch (_selectedType!) {
+      case HealthMetricType.bmi:
+        return [
+          TextFormField(
+            controller: _weightController,
+            decoration: const InputDecoration(
+              labelText: 'Peso (kg)',
+              suffixText: 'kg',
+              helperText: 'Ex: 70.5',
+              border: OutlineInputBorder(),
+            ),
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+            ],
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _heightController,
+            decoration: const InputDecoration(
+              labelText: 'Altura (cm)',
+              suffixText: 'cm',
+              helperText: 'Ex: 175',
+              border: OutlineInputBorder(),
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+          ),
+        ];
+      
+      case HealthMetricType.bloodPressure:
+        return [
+          TextFormField(
+            controller: _valueController,
+            decoration: const InputDecoration(
+              labelText: 'Pressão Sistólica (mmHg)',
+              suffixText: 'mmHg',
+              helperText: 'Ex: 120',
+              border: OutlineInputBorder(),
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+          ),
+        ];
+      
+      default:
+        return [
+          TextFormField(
+            key: ValueKey(_selectedType),
+            controller: _valueController,
+            decoration: InputDecoration(
+              labelText: _getMetricLabel(_selectedType),
+              suffixText: _getMetricUnit(_selectedType!),
+              helperText: _getMetricHelperText(_selectedType),
+              border: const OutlineInputBorder(),
+            ),
+            keyboardType: _getKeyboardType(_selectedType),
+            inputFormatters: _getInputFormatters(_selectedType),
+          ),
+        ];
+    }
+  }
+
+  bool _isFormValid() {
+    if (_selectedType == null) return false;
+    
+    switch (_selectedType!) {
+      case HealthMetricType.bmi:
+        return _weightController.text.isNotEmpty && 
+               _heightController.text.isNotEmpty;
+      default:
+        return _valueController.text.isNotEmpty;
+    }
+  }
+
   void _addMetric() async {
-    final value = double.tryParse(_valueController.text);
-    if (value == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Por favor, insira um valor válido'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
+    double value;
+    
+    // Calcula o valor baseado no tipo
+    if (_selectedType == HealthMetricType.bmi) {
+      final weight = double.tryParse(_weightController.text);
+      final height = double.tryParse(_heightController.text);
+      
+      if (weight == null || height == null) {
+        _showError('Por favor, insira valores válidos para peso e altura');
+        return;
+      }
+      
+      // IMC = peso (kg) / (altura (m))²
+      value = weight / ((height / 100) * (height / 100));
+    } else {
+      value = double.tryParse(_valueController.text) ?? 0;
+      if (value == 0) {
+        _showError('Por favor, insira um valor válido');
+        return;
+      }
     }
 
     // Validações específicas por tipo
@@ -704,6 +885,15 @@ class _AddMetricDialogState extends State<_AddMetricDialog> {
         );
       }
     }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   bool _validateMetricValue(HealthMetricType type, double value) {
