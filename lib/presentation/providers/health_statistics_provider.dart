@@ -50,9 +50,9 @@ class HealthStatisticsProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   List<HealthMetricModel> _allMetrics = [];
-  Map<HealthMetricType, List<HealthMetricModel>> _metricsByType = {};
-  Map<HealthMetricType, HealthAnalysisModel> _analyses = {};
-  Map<HealthMetricType, List<ChartDataModel>> _chartData = {};
+  final Map<HealthMetricType, List<HealthMetricModel>> _metricsByType = {};
+  final Map<HealthMetricType, HealthAnalysisModel> _analyses = {};
+  final Map<HealthMetricType, List<ChartDataModel>> _chartData = {};
   HealthMetricType? _selectedMetricType;
   DateTime _selectedStartDate = DateTime.now().subtract(const Duration(days: 30));
   DateTime _selectedEndDate = DateTime.now();

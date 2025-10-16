@@ -24,7 +24,7 @@ class ReminderModelAdapter extends TypeAdapter<ReminderModel> {
       reminderDate: fields[4] as DateTime,
       doctorName: fields[5] as String?,
       location: fields[6] as String?,
-      isCompleted: fields[7] as bool,
+      isCompleted: fields[7] as bool? ?? false,
       createdAt: fields[8] as DateTime,
       completedAt: fields[9] as DateTime?,
       notes: fields[10] as String?,
