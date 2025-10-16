@@ -623,7 +623,7 @@ Cada pasta contém 2 imagens (light e dark mode), exceto `modal_agendar_consulta
 ### Próximas Features 🚧
 - [ ] Autenticação com Firebase (OAuth, Google Sign-In)
 - [ ] Integração com Google Maps real
-- [ ] Sistema de notificações push (integrado com lembretes)
+- [ ] Sistema de notificações push
 - [ ] Sincronização com backend
 - [ ] Chat com médicos em tempo real
 - [ ] Pagamento online integrado
