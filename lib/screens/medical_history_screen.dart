@@ -304,9 +304,12 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
+              final provider = context.read<MedicalHistoryProvider>();
               context.push('/medical-history/add').then((_) {
                 // Recarrega após adicionar
-                context.read<MedicalHistoryProvider>().loadRecords();
+                if (mounted) {
+                  provider.loadRecords();
+                }
               });
             },
           ),

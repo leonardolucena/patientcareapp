@@ -355,7 +355,7 @@ class _HealthStatisticsScreenState extends State<HealthStatisticsScreen>
               provider.loadChartData(type);
             }
           },
-          selectedColor: isDark ? AppColors.darkPrimary.withOpacity(0.3) : AppColors.lightPrimary.withOpacity(0.3),
+          selectedColor: isDark ? AppColors.darkPrimary.withValues(alpha: 0.3) : AppColors.lightPrimary.withValues(alpha: 0.3),
           checkmarkColor: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
         );
       }).toList(),
@@ -468,7 +468,7 @@ class _HealthStatisticsScreenState extends State<HealthStatisticsScreen>
         end: _selectedEndDate,
       ),
     ).then((dateRange) {
-      if (dateRange != null) {
+      if (dateRange != null && mounted) {
         setState(() {
           _selectedStartDate = dateRange.start;
           _selectedEndDate = dateRange.end;

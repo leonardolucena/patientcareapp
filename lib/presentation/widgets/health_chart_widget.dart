@@ -133,7 +133,7 @@ class HealthLineChartWidget extends StatelessWidget {
                     gradient: LinearGradient(
                       colors: [
                         lineColor ?? (isDark ? AppColors.darkPrimary : AppColors.lightPrimary),
-                        lineColor?.withOpacity(0.3) ?? (isDark ? AppColors.darkPrimary.withOpacity(0.3) : AppColors.lightPrimary.withOpacity(0.3)),
+                        lineColor?.withValues(alpha: 0.3) ?? (isDark ? AppColors.darkPrimary.withValues(alpha: 0.3) : AppColors.lightPrimary.withValues(alpha: 0.3)),
                       ],
                     ),
                     barWidth: 3,
@@ -153,7 +153,7 @@ class HealthLineChartWidget extends StatelessWidget {
                       show: true,
                       gradient: LinearGradient(
                         colors: [
-                          lineColor?.withOpacity(0.1) ?? (isDark ? AppColors.darkPrimary.withOpacity(0.1) : AppColors.lightPrimary.withOpacity(0.1)),
+                          lineColor?.withValues(alpha: 0.1) ?? (isDark ? AppColors.darkPrimary.withValues(alpha: 0.1) : AppColors.lightPrimary.withValues(alpha: 0.1)),
                           Colors.transparent,
                         ],
                         begin: Alignment.topCenter,

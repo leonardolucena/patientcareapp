@@ -93,9 +93,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.3)),
+        border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -329,7 +329,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
           _reminderTime = const TimeOfDay(hour: 9, minute: 0);
         });
       },
-      backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      backgroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
       labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
     );
   }

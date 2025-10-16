@@ -98,7 +98,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
         context.read<ReminderProvider>().setFilter(value);
       },
       backgroundColor: Colors.grey[200],
-      selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+      selectedColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
       checkmarkColor: Theme.of(context).colorScheme.primary,
       labelStyle: TextStyle(
         color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey[700],
@@ -119,14 +119,14 @@ class _RemindersScreenState extends State<RemindersScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                Theme.of(context).colorScheme.secondary.withOpacity(0.1)
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1)
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -292,7 +292,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: reminder.isOverdue ? Colors.orange.withOpacity(0.3) : Colors.transparent,
+          color: reminder.isOverdue ? Colors.orange.withValues(alpha: 0.3) : Colors.transparent,
           width: 2,
         ),
       ),
@@ -311,7 +311,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
+                      color: statusColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(statusIcon, color: statusColor, size: 24),
@@ -337,7 +337,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: statusColor.withOpacity(0.2),
+                                color: statusColor.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
